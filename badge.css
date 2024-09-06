@@ -1,0 +1,112 @@
+.badge-desc {
+  position: relative;
+  width: 60%;
+  height: 30px;
+  border-radius: 15px;
+  border: 1px solid #080404;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25px auto 18px;
+}
+
+.badge-desc > span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #080404;
+}
+
+.badge-desc > .icon-arrow-down {
+  display: inline-flex;
+  width: 14.6px;
+  height: 14.6px;
+  margin-left: 5px;
+}
+
+.badge-desc > .icon-arrow-down::before {
+  background-color: #000;
+  width: 14.6px;
+  height: 14.6px;
+}
+
+.badge-desc-container {
+  position: relative;
+  margin: 0 auto 20px;
+  width: 93%;
+}
+
+.badge-desc-container > :nth-child(n) {
+  margin-bottom: 15px;
+}
+
+.badge-desc-container > .badge-desc-card {
+  width: 100%;
+  min-height: 110px;
+  height: 34vw;
+  max-height: 220px;
+  border-radius: 10px;
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .badge-desc-container > .badge-desc-card > .badge-img {
+  width: 33%;
+  height: 100%;
+  margin-right: 12px;
+} */
+
+.badge-desc-container > .badge-desc-card > img {
+  width: 33%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.badge-desc-container > .badge-desc-card > .desc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  color: #080404;
+  font-size: 14px;
+  font-family: NotoSansTC;
+}
+
+.badge-desc-container > .badge-desc-card > .desc > .title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.badge-desc-container > .badge-desc-card > .desc > .go-join {
+  width: 94px;
+  height: 27px;
+  background-color: #f7b933;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #080404;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 13px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.badge-desc-container > .badge-desc-card > .desc > .go-join > .icon-arrow-right {
+  display: inline-flex;
+  width: 10px;
+  height: 10px;
+}
+
+.badge-desc-container > .badge-desc-card > .desc > .go-join > .icon-arrow-right::before {
+  width: 10px;
+  height: 10px;
+  background: #080404;
+}

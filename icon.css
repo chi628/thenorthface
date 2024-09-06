@@ -1,0 +1,51 @@
+.icon--default::before {
+  content: '';
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+}
+
+.icon-checkmark::before {
+  content: '';
+  mask: url('./images/icon-checkmark.svg') no-repeat center center / contain;
+}
+
+.icon-arrow-down::before {
+  content: '';
+  mask: url('./images/icon-arrowdown.svg') no-repeat center center / contain;
+}
+
+.icon-arrow-right::before {
+  content: '';
+  mask: url('./images/icon-arrow-right.svg') no-repeat center center / contain;
+}
+
+.icon-notification::before {
+  content: '';
+  mask: url('./images/icon-notification.svg') no-repeat center center / contain;
+}
+
+.icon-cancel::before {
+  content: '';
+  mask: url('./images/icon-cancel.svg') no-repeat center center / contain;
+}
+
+.icon-circle-check::before {
+  content: '';
+  mask: url('./images/icon-circle-check.svg') no-repeat center center / contain;
+}
+
+.icon-pure-arrow-left::before {
+  content: '';
+  mask: url('./images/icon-pure-left.svg') no-repeat center center / contain;
+}
+
+.icon-pure-arrow-right::before {
+  content: '';
+  mask: url('./images/icon-pure-right.svg') no-repeat center center / contain;
+}
+
+.icon-arrow-left::before {
+  content: '';
+  mask: url('./images/icon-arrow-left.svg') no-repeat center center / contain;
+}

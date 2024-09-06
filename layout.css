@@ -1,0 +1,123 @@
+.layout-desc {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: NotoSansTC;
+  font-size: 18px;
+  font-weight: bold;
+  color: #080404;
+  border: 1px solid #080404;
+  border-radius: 15px;
+  width: 45%;
+  margin: 20px auto 40px;
+}
+
+.layout-desc > .icon-arrow-down {
+  display: inline-flex;
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+}
+
+.layout-desc > .icon-arrow-down::before {
+  width: 15px;
+  height: 15px;
+  background-color: #000000;
+}
+
+.layout-choose-btn {
+  position: relative;
+  width: 90%;
+  height: 61px;
+  background-color: #080404;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f7b933;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: NotoSansTC;
+  margin: 60px auto 0;
+}
+
+.layout-choose-btn > .icon-checkmark {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  margin-right: 5px;
+}
+
+.layout-choose-btn > .icon-checkmark::before {
+  background-color: #f7b933;
+}
+
+.layout-swiper {
+  position: relative;
+}
+
+.layout-swiper > .swiper-wrapper > .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.layout-swiper > .swiper-wrapper > .swiper-slide > img {
+  width: 74vw;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.layout-swiper-prev {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  z-index: 10;
+  width: 55px;
+  height: 55px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.layout-swiper-prev::before {
+  content: '';
+  display: inline-block;
+  width: 9px;
+  height: 18px;
+  mask: url('./images/icon-pure-left.svg') no-repeat center center / contain;
+  background-color: #080404;
+}
+
+.layout-swiper-next {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  z-index: 10;
+  width: 55px;
+  height: 55px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.layout-swiper-next::before {
+  content: '';
+  display: inline-block;
+  width: 9px;
+  height: 18px;
+  mask: url('./images/icon-pure-right.svg') no-repeat center center / contain;
+  background-color: #080404;
+}

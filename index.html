@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./initialize.css" />
+    <link rel="stylesheet" href="./icon.css" />
+    <style>
+      body {
+        width: 100vw;
+        max-width: 640px;
+        height: 100vh;
+        max-height: 100vh;
+      }
+      .main-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        background-color: #bedfe3;
+      }
+
+      .main-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(./images/indexbg.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      .main-container > .logo {
+        position: relative;
+        width: 45%;
+        margin: 0 auto;
+        padding-top: 20px;
+      }
+
+      .main-container > .logo > img {
+        width: 100%;
+        height: auto;
+      }
+
+      .main-container > .float-bar {
+        position: absolute;
+        width: 74px;
+        height: 187px;
+        right: 0;
+        top: 146px;
+        background-color: #080404;
+        border: 1px solid #6e9295;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        padding: 13px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 20;
+      }
+
+      .main-container > .float-bar > :not(:last-child) {
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #f7b933;
+      }
+
+      .main-container > .float-bar > a {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-container > .float-bar > a > img {
+        width: 26px;
+        height: auto;
+      }
+
+      .main-container > .float-bar > a > span {
+        font-size: 12px;
+        font-weight: bold;
+        color: #f7b933;
+      }
+
+      .main-container > .content {
+        padding-top: 110vw;
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .main-container > .content > .title {
+        font-size: 20px;
+        font-weight: 900;
+        color: #080404;
+        position: relative;
+        width: 90vw;
+        margin: 0 auto;
+      }
+
+      .main-container > .content > .title::before,
+      .main-container > .content > .title::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 50%;
+        border-top: 1px dashed black;
+        transform: translateY(-50%);
+      }
+
+      .main-container > .content > .title::before {
+        left: 0;
+        right: 50%;
+        margin-right: 27px;
+      }
+
+      .main-container > .content > .title::after {
+        right: 0;
+        left: 50%;
+        margin-left: 27px;
+      }
+
+      .main-container > .content > .bonus {
+        position: relative;
+        width: 95%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-container > .content > .bonus > :nth-child(n) {
+        width: 50%;
+        height: auto;
+      }
+
+      .join-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        height: 61px;
+        border-radius: 30px;
+        background-color: #080404;
+        position: relative;
+        cursor: pointer;
+        margin: 24px auto 0;
+      }
+
+      .join-btn > :nth-child(2) {
+        color: #f7b933;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 5px;
+      }
+
+      .join-btn > .checkmark {
+        display: inline-block;
+        width: 21px;
+        height: 21px;
+      }
+
+      .join-btn > .checkmark::before {
+        background-color: #f7b933;
+      }
+
+      .badge-container {
+        width: 85%;
+        margin: 42px auto;
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .badge-container > .badge {
+        width: 100%;
+        padding: 8px 5px;
+        border-radius: 8px;
+        box-shadow: 2px 7px 20px 0 rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+      }
+
+      .badge-container > .badge > img {
+        width: 90%;
+        height: auto;
+      }
+
+      .badge-container > .badge > span {
+        font-size: 18px;
+        color: #080404;
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="logo">
+        <img src="./images/logo.webp" alt="" />
+      </div>
+      <div class="float-bar">
+        <a href="">
+          <img src="./images/note.webp" alt="活動辦法" />
+          <span>活動辦法</span>
+        </a>
+        <a href="">
+          <img src="./images/video-camera.webp" alt="精彩直擊" />
+          <span>精彩直擊</span>
+        </a>
+        <a href="">
+          <img src="./images/photo-camera.webp" alt="攝影大賞" />
+          <span>攝影大賞</span>
+        </a>
+      </div>
+      <div class="content">
+        <div class="title">蒐集各徽章</div>
+        <div class="bonus">
+          <img src="./images/left-bonus.webp" alt="" />
+          <img src="./images/right-bonus.webp" alt="" />
+        </div>
+        <a href="./badge.html" class="join-btn">
+          <span class="icon--default icon-checkmark checkmark"></span>
+          <span>立即參加</span>
+        </a>
+
+        <div class="badge-container">
+          <div class="badge">
+            <img src="./images/01-badge.webp" alt="" />
+            <span>野營大廚師</span>
+          </div>
+          <div class="badge">
+            <img src="./images/02-badge.webp" alt="" />
+            <span>水上玩咖</span>
+          </div>
+          <div class="badge">
+            <img src="./images/03-badge.webp" alt="" />
+            <span>戶外露營家</span>
+          </div>
+          <div class="badge">
+            <img src="./images/04-badge.webp" alt="" />
+            <span>赤手登峰</span>
+          </div>
+          <div class="badge">
+            <img src="./images/05-badge.webp" alt="" />
+            <span>熱血勇跑家</span>
+          </div>
+          <div class="badge">
+            <img src="./images/06-badge.webp" alt="" />
+            <span>北面巔峰</span>
+          </div>
+          <div class="badge">
+            <img src="./images/07-badge.webp" alt="" />
+            <span>晴空之上</span>
+          </div>
+          <div class="badge">
+            <img src="./images/08-badge.webp" alt="" />
+            <span>山林對話</span>
+          </div>
+          <div class="badge">
+            <img src="./images/09-badge.webp" alt="" />
+            <span>手作體驗</span>
+          </div>
+
+          <div class="badge">
+            <img src="./images/11-badge.webp" alt="" />
+            <span>探險攝影師</span>
+          </div>
+
+          <div class="badge">
+            <img src="./images/12-badge.webp" alt="" />
+            <span>探險攝影師</span>
+          </div>
+
+          <div class="badge">
+            <img src="./images/10-badge.webp" alt="" />
+            <span>電車騎士</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

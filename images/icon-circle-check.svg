@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11.212" height="11.212" viewBox="0 0 11.212 11.212">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #d7f4f8;
+      }
+    </style>
+  </defs>
+  <path id="Icon_open-circle-check" data-name="Icon open-circle-check" class="cls-1" d="M5.606,0a5.606,5.606,0,1,0,5.606,5.606A5.6,5.6,0,0,0,5.606,0Zm2.8,2.495L9.418,3.5,4.905,8.016l-2.41-2.41L3.5,4.6,4.905,6Z"/>
+</svg>
