@@ -205,23 +205,23 @@ const badgeList = [
   },
 ]
 
-badgeList.forEach(badge => {
-  const imgList = [
-    badge.icon,
-    badge.blackIcon,
-    badge.layout[0],
-    badge.layout[1],
-    badge.layout[2],
-    badge.layout_noLogo[0],
-    badge.layout_noLogo[1],
-    badge.layout_noLogo[2],
-  ]
+// badgeList.forEach(badge => {
+//   const imgList = [
+//     badge.icon,
+//     badge.blackIcon,
+//     badge.layout[0],
+//     badge.layout[1],
+//     badge.layout[2],
+//     badge.layout_noLogo[0],
+//     badge.layout_noLogo[1],
+//     badge.layout_noLogo[2],
+//   ]
 
-  imgList.forEach(src => {
-    const img = new Image()
-    img.src = src
-  })
-})
+//   imgList.forEach(src => {
+//     const img = new Image()
+//     img.src = src
+//   })
+// })
 
 let dataList = []
 const fragment = new DocumentFragment()
@@ -591,9 +591,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('try option3')
+      console.log('try option4')
       const cropper = new Cropper(image, {
-        dragMode: 'move',
+        // dragMode: 'move',
         autoCropArea: 1,
         checkOrientation: false,
         background: false,
