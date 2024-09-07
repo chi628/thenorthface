@@ -255,7 +255,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     fragment.appendChild(div)
   })
 
-  const badgeContainer = document.getElementById('badgeContainer')
   const pageIndex = document.getElementById('pageIndex')
   const pageBadge = document.getElementById('pageBadge')
   const pageLayout = document.getElementById('page-layout')
@@ -401,6 +400,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     badgeObj = badgeList.find(badge => badge.id === id)
     const swiperEl = document.querySelector('.swiper-wrapper')
 
+    if (swiper) {
+      swiper.removeAllSlides()
+      swiper.init()
+    }
+
     swiper = new Swiper('.layout-swiper', {
       slidesPerView: 1.3,
       centeredSlides: true,
@@ -459,7 +463,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     layoutChooseBtn.addEventListener('click', () => {
       pageLayout.style.display = 'none'
       pageUploadImg.style.display = 'block'
-
+      resetUploadImg()
       switch (swiper.activeIndex) {
         case 0:
           current_photo_grid = photo_grid_1
@@ -479,9 +483,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         default:
           break
       }
-
-      swiper.removeAllSlides()
       currentLayout = 'pageUploadImg'
+    })
+  }
+
+  function resetUploadImg() {
+    photo_grid_1.style.display = 'none'
+    photo_grid_2.style.display = 'none'
+    photo_grid_3.style.display = 'none'
+
+    photo_grid_1.querySelectorAll('img').forEach(img => {
+      img.src = ''
+    })
+    photo_grid_2.querySelectorAll('img').forEach(img => {
+      img.src = ''
+    })
+    photo_grid_3.querySelectorAll('img').forEach(img => {
+      img.src = ''
     })
   }
 
@@ -510,6 +528,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const photo3Left = document.getElementById('grid-3-left')
   const photo3TopRight = document.getElementById('grid-3-top-right')
   const photo3BottomRight = document.getElementById('grid-3-bottom-right')
+
+  let photo1Cropper
+  let photo2LeftCropper
+  let photo2RightCropper
+  let photo3LeftCropper
+  let photo3TopRightCropper
+  let photo3BottomRightCropper
 
   if (photo1) {
     photo1.addEventListener('change', event => {
@@ -561,15 +586,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       eiHeight = parentEl.getBoundingClientRect().height
     }
 
-    console.log('elwidth', elWidth, eiHeight)
-
     const file = evt.target.files[0]
     const reader = new FileReader()
 
     reader.onload = function (e) {
       image.src = e.target.result
       console.log('img', image.naturalWidth, image.naturalHeight)
-      cropper = new Cropper(image, {
+      const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
         checkOrientation: false,
@@ -586,15 +609,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
       })
+
+      if (id === 'grid-1') {
+        photo1Cropper = cropper
+      } else if (id === 'grid-2-left') {
+        photo2LeftCropper = cropper
+      } else if (id === 'grid-2-right') {
+        photo2RightCropper = cropper
+      } else if (id === 'grid-3-left') {
+        photo3LeftCropper = cropper
+      } else if (id === 'grid-3-top-right') {
+        photo3TopRightCropper = cropper
+      } else if (id === 'grid-3-bottom-right') {
+        photo3BottomRightCropper = cropper
+      }
+
       if (cropperBtn) {
-        cropperBtn.style.display = 'flex'
         cropperBtn.addEventListener('click', () => {
-          const croppedCanvas = cropper.getCroppedCanvas()
-          console.log('crop box', cropper.getCropBoxData(), croppedCanvas)
+          let croppedCanvas
+          if (id === 'grid-1') {
+            croppedCanvas = photo1Cropper.getCroppedCanvas()
+          } else if (id === 'grid-2-left') {
+            croppedCanvas = photo2LeftCropper.getCroppedCanvas()
+          } else if (id === 'grid-2-right') {
+            croppedCanvas = photo2RightCropper.getCroppedCanvas()
+          } else if (id === 'grid-3-left') {
+            croppedCanvas = photo3LeftCropper.getCroppedCanvas()
+          } else if (id === 'grid-3-top-right') {
+            croppedCanvas = photo3TopRightCropper.getCroppedCanvas()
+          } else if (id === 'grid-3-bottom-right') {
+            croppedCanvas = photo3BottomRightCropper.getCroppedCanvas()
+          }
+
           const roundedCanvas = getCanvasImg(croppedCanvas)
           image.src = roundedCanvas.toDataURL()
-          cropperBtn.style.display = 'none'
-          cropper.destroy()
+
+          if (id === 'grid-1') {
+            photo1Cropper.destroy()
+          } else if (id === 'grid-2-left') {
+            photo2LeftCropper.destroy()
+          } else if (id === 'grid-2-right') {
+            photo2RightCropper.destroy()
+          } else if (id === 'grid-3-left') {
+            photo3LeftCropper.destroy()
+          } else if (id === 'grid-3-top-right') {
+            photo3TopRightCropper.destroy()
+          } else if (id === 'grid-3-bottom-right') {
+            photo3BottomRightCropper.destroy()
+          }
         })
       }
     }
@@ -603,77 +665,135 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // 組合拍立得照片，並轉成base64
   const photoUploadBtn = document.getElementById('photo-upload-btn')
-
   let base64Url
+  let base64Url_nologo
   if (photoUploadBtn) {
-    photoUploadBtn.addEventListener('click', () => {
-      if (cropper) {
-        console.log('cropper', cropper, cropper.element)
-        // const croppedCanvas = cropper.getCroppedCanvas()
-        // const roundedCanvas = getCanvasImg(croppedCanvas)
-        // if (cropper.element) {
-        //   cropper.element.src = roundedCanvas.toDataURL()
-        // }
-        // cropper.destroy()
+    photoUploadBtn.addEventListener('click', async () => {
+      switch (swiper.activeIndex) {
+        case 0:
+          const btn = document.getElementById(`grid-1-cropper-btn`)
+          btn.click()
+
+          await new Promise(resolve => {
+            const wait = setInterval(() => {
+              clearInterval(wait)
+              resolve()
+            }, 100)
+          })
+          break
+        case 1:
+          document.getElementById('grid-2-left-cropper-btn').click()
+          document.getElementById('grid-2-right-cropper-btn').click()
+          await new Promise(resolve => {
+            const wait = setInterval(() => {
+              clearInterval(wait)
+              resolve()
+            }, 100)
+          })
+
+          break
+        case 2:
+          document.getElementById('grid-3-left-cropper-btn').click()
+          document.getElementById('grid-3-top-right-cropper-btn').click()
+          document.getElementById('grid-3-bottom-right-cropper-btn').click()
+          await new Promise(resolve => {
+            const wait = setInterval(() => {
+              clearInterval(wait)
+              resolve()
+            }, 100)
+          })
+          break
+        default:
+          break
       }
       const bgImg = current_photo_grid.querySelector('.bg-photo > img')
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
+      const canvas2 = document.createElement('canvas')
+      const cxt = canvas2.getContext('2d')
       const width = bgImg.getBoundingClientRect().width
       const height = bgImg.getBoundingClientRect().height
       canvas.width = width
       canvas.height = height
+      canvas2.width = width
+      canvas2.height = height
       context.imageSmoothingEnabled = true
       // 先畫拍立得底圖
       context.drawImage(bgImg, 0, 0, width, height)
-
       // 再找出拍立得上所有的 img
       const allImages = current_photo_grid.querySelectorAll('img')
       const filteredImages = Array.from(allImages).filter(img => {
         return !img.closest('.bg-photo')
       })
-
       filteredImages.forEach(img => {
-        console.log('img', img, img.getBoundingClientRect())
         const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
         const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
         const _width = img.getBoundingClientRect().width
         const _height = img.getBoundingClientRect().height
         context.drawImage(img, xPos, yPos, _width, _height)
       })
-
       base64Url = canvas.toDataURL()
+
+      const noLogoImg = document.createElement('img')
+      noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
+
+      await new Promise(resolve => {
+        let wait2 = setInterval(() => {
+          clearInterval(wait2)
+          resolve()
+        }, 100)
+      })
+
+      // 先畫拍立得底圖
+      cxt.drawImage(noLogoImg, 0, 0, width, height)
+      filteredImages.forEach(img => {
+        const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
+        const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
+        const _width = img.getBoundingClientRect().width
+        const _height = img.getBoundingClientRect().height
+        cxt.drawImage(img, xPos, yPos, _width, _height)
+      })
+      base64Url_nologo = canvas2.toDataURL()
+
       pageUploadImg.style.display = 'none'
       pageShared.style.display = 'block'
-      console.log('base 64', base64Url)
-      document.getElementById('share-img').src = base64Url
+      document.getElementById('share-img').src = base64Url_nologo
       currentLayout = 'pageShared'
     })
   }
 
+  // 是否填寫過資料
+  let isDoneForm = false
   const shareBtn = document.getElementById('share-btn')
-
   if (shareBtn) {
     shareBtn.addEventListener('click', () => {
+      badgeTaskDone()
       pageShared.style.display = 'none'
-      pageForm.style.display = 'block'
+      if (isDoneForm) {
+        pageIndex.style.display = 'block'
+      } else {
+        pageForm.style.display = 'block'
+      }
       mainContainer.setAttribute('bg', 'right')
       currentLayout = 'pageForm'
     })
   }
 
   const submitFormBtn = document.getElementById('submit-form-btn')
-
   if (submitFormBtn) {
     submitFormBtn.addEventListener('click', () => {
       // 傳送資料
+      // 假定已經填寫過資料
+      isDoneForm = true
       pageForm.style.display = 'none'
       pageIndex.style.display = 'block'
     })
   }
 
   const photoModal = document.getElementById('photo-modal')
+  // 監聽精彩直擊按鈕
   const waterfallBtn = document.getElementById('waterfall')
   if (waterfallBtn) {
     waterfallBtn.addEventListener('click', () => {
@@ -715,6 +835,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       bottomEl && observer.observe(bottomEl)
     })
   }
+  // 監聽精彩直擊頁面的立即參加按鈕
+  const waterfallJoinBtn = document.getElementById('waterfall-join-btn')
+  if (waterfallJoinBtn) {
+    pageWaterfall.style.display = 'none'
+    pageIndex.style.display = 'block'
+  }
   const receiveBtn = document.getElementById('receive-btn')
   if (receiveBtn) {
     receiveBtn.addEventListener('click', () => {
@@ -723,7 +849,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       showCouponBtn.style.display = 'flex'
     })
   }
-
   const showCouponBtn = document.getElementById('show-coupon-btn')
   if (showCouponBtn) {
     showCouponBtn.addEventListener('click', () => {
@@ -770,24 +895,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
-  const badgeBackBtn = document.getElementById('badge-back')
-
-  badgeBackBtn.addEventListener('click', () => {
+  const backBtn = document.getElementById('back-btn')
+  backBtn.addEventListener('click', () => {
+    console.log('click')
     if (currentLayout === 'pageBadge') {
       currentLayout = 'pageIndex'
       pageBadge.style.display = 'none'
-      badgeContainer.style.display = 'none'
       pageIndex.style.display = 'block'
     } else if (currentLayout === 'couponTemplate') {
       couponTemplate.style.display = 'none'
       pageBadge.style.display = 'block'
       currentLayout = 'pageBadge'
     } else if (currentLayout === 'pageLayout') {
+      swiper.removeAllSlides()
       pageLayout.style.display = 'none'
       pageBadge.style.display = 'block'
       currentLayout = 'pageBadge'
-
-      swiper.removeAllSlides()
     } else if (currentLayout === 'pageUploadImg') {
       pageUploadImg.style.display = 'none'
       pageLayout.style.display = 'block'
@@ -797,33 +920,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageUploadImg.style.display = 'block'
       currentLayout = 'pageUploadImg'
     } else if (currentLayout === 'pageForm') {
-    } else if (currentLayout === 'pageWaterfall') {
-    }
-  })
-
-  const formBackBtn = document.getElementById('form-back')
-
-  if (formBackBtn) {
-    formBackBtn.addEventListener('click', () => {
       pageForm.style.display = 'none'
       pageShared.style.display = 'block'
-      badgeContainer.style.display = 'block'
-
       currentLayout = 'pageShared'
-    })
-  }
-
-  const waterfallBackBtn = document.getElementById('waterfall-back')
-
-  if (waterfallBackBtn) {
-    waterfallBackBtn.addEventListener('click', () => {
+    } else if (currentLayout === 'pageWaterfall') {
       pageWaterfall.style.display = 'none'
       pageIndex.style.display = 'block'
       currentLayout = 'pageIndex'
-    })
-  }
-
-  function changePage(currPage, nextPage) {}
+    }
+  })
 
   function appendPhoto() {
     const displayContainer = document.getElementById('display-container')
@@ -862,8 +967,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  let cropper
-
   function getCanvasImg(sourceCanvas) {
     var canvas = document.createElement('canvas')
     var context = canvas.getContext('2d')
@@ -875,5 +978,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     context.imageSmoothingEnabled = true
     context.drawImage(sourceCanvas, 0, 0, width, height)
     return canvas
+  }
+
+  function badgeTaskDone() {
+    const taskCard = document.getElementById(selectedBadge)
+    if (taskCard) {
+      taskCard.querySelector('img').src = badgeObj.icon
+    }
   }
 })

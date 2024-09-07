@@ -98,6 +98,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .grid-2-upload-left,
@@ -111,6 +112,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .grid-2-upload-right {
@@ -124,6 +126,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .grid-3-upload-top-right {
@@ -137,6 +140,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .grid-3-upload-bottom-right {
@@ -150,6 +154,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .grid-1-upload > input,
@@ -219,6 +224,5 @@
   height: auto;
   display: block;
   object-fit: contain;
-  /* z-index: 10; */
   overflow: hidden;
 }
