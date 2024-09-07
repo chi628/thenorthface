@@ -384,41 +384,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
-  const swiper = new Swiper('.layout-swiper', {
-    slidesPerView: 1.3,
-    centeredSlides: true,
-    spaceBetween: 10,
-    navigation: {
-      nextEl: '.layout-swiper-next',
-      prevEl: '.layout-swiper-prev',
-    },
-    on: {
-      init() {
-        const prevEl = document.querySelector('.layout-swiper-prev')
-
-        if (prevEl) {
-          prevEl.style.display = 'none'
-        }
-      },
-      slideChange() {
-        const prevEl = document.querySelector('.layout-swiper-prev')
-        const nextEl = document.querySelector('.layout-swiper-next')
-
-        if (this.activeIndex === 0) {
-          prevEl.style.display = 'none'
-        } else {
-          prevEl.style.display = 'flex'
-        }
-
-        if (this.activeIndex === this.slides.length - 1) {
-          nextEl.style.display = 'none'
-        } else {
-          nextEl.style.display = 'flex'
-        }
-      },
-    },
-  })
-
   let badgeObj
   if (layoutChooseBtn) {
     layoutChooseBtn.addEventListener('click', () => {
@@ -690,6 +655,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageLayout.style.display = 'none'
       pageBadge.style.display = 'block'
       currentLayout = 'pageBadge'
+
+      swiper.removeAllSlides()
     } else if (currentLayout === 'pageUploadImg') {
       pageUploadImg.style.display = 'none'
       pageLayout.style.display = 'block'
@@ -762,10 +729,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  let swiper
+
   function appendSwiperSlides(id) {
     selectedBadge = id
     badgeObj = badgeList.find(badge => badge.id === id)
-    const swiper = document.querySelector('.swiper-wrapper')
+    const swiperEl = document.querySelector('.swiper-wrapper')
+
+    swiper = new Swiper('.layout-swiper', {
+      slidesPerView: 1.3,
+      centeredSlides: true,
+      spaceBetween: 10,
+      navigation: {
+        nextEl: '.layout-swiper-next',
+        prevEl: '.layout-swiper-prev',
+      },
+      on: {
+        init() {
+          const prevEl = document.querySelector('.layout-swiper-prev')
+
+          if (prevEl) {
+            prevEl.style.display = 'none'
+          }
+        },
+        slideChange() {
+          const prevEl = document.querySelector('.layout-swiper-prev')
+          const nextEl = document.querySelector('.layout-swiper-next')
+
+          if (this.activeIndex === 0) {
+            prevEl.style.display = 'none'
+          } else {
+            prevEl.style.display = 'flex'
+          }
+
+          if (this.activeIndex === this.slides.length - 1) {
+            nextEl.style.display = 'none'
+          } else {
+            nextEl.style.display = 'flex'
+          }
+        },
+      },
+    })
 
     console.log('obj', badgeObj)
     for (let i = 0; i < badgeObj.layout.length; i++) {
@@ -776,7 +780,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       imgEl.src = badgeObj.layout[i]
 
       slide.appendChild(imgEl)
-      swiper.appendChild(slide)
+      swiperEl.appendChild(slide)
     }
 
     if (pageBadge && pageLayout) {
