@@ -262,6 +262,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pageShared = document.getElementById('page-share')
   const pageForm = document.getElementById('pageForm')
   const pageWaterfall = document.getElementById('pageWaterfall')
+  const couponTemplate = document.getElementById('coupon-template')
 
   const mainContainer = document.querySelector('.main-container')
   const badgeContainer = document.getElementById('badgeContainer')
@@ -421,7 +422,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let badgeObj
   if (layoutChooseBtn) {
     layoutChooseBtn.addEventListener('click', () => {
-      console.log('index', swiper.activeIndex, badgeObj)
       pageLayout.style.display = 'none'
       pageUploadImg.style.display = 'block'
 
@@ -444,6 +444,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         default:
           break
       }
+      swiper.removeAllSlides()
 
       currentLayout = 'pageUploadImg'
     })
@@ -630,7 +631,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
-  const couponTemplate = document.getElementById('coupon-template')
   const showCouponBtn = document.getElementById('show-coupon-btn')
   if (showCouponBtn) {
     showCouponBtn.addEventListener('click', () => {
@@ -833,13 +833,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         minCropBoxWidth: elWidth,
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
+        ready() {},
       })
       if (cropperBtn) {
         cropperBtn.style.display = 'flex'
         cropperBtn.addEventListener('click', () => {
           const croppedCanvas = cropper.getCroppedCanvas()
           const roundedCanvas = getCanvasImg(croppedCanvas)
-          console.log('base64url', roundedCanvas.toDataURL())
+          console.log('base64url', roundedCanvas, roundedCanvas.toDataURL())
           image.src = roundedCanvas.toDataURL()
           cropperBtn.style.display = 'none'
           cropper.destroy()
