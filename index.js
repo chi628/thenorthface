@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('try option update bg')
+      console.log('try option update bg2')
       const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
@@ -601,12 +601,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         modal: false,
         cropBoxMovable: false,
         cropBoxResizable: false,
+        minContainerWidth: elWidth,
+        minContainerHeight: eiHeight,
+        minCanvasWidth: elWidth,
+        minCanvasHeight: eiHeight,
         minCropBoxWidth: elWidth,
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
         ready() {
-          // this.cropper.crop()
-          // this.cropper.setCanvasData(0, 0, elWidth, eiHeight)
           this.cropper.move(1, 0)
           this.cropper.zoom(0.3)
         },
