@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       context.imageSmoothingEnabled = true
       await new Promise(resolve => {
         let wait3 = setInterval(() => {
-          clearInterval(wait3s)
+          clearInterval(wait3)
           resolve()
         }, 100)
       })
