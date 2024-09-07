@@ -49,3 +49,8 @@
   content: '';
   mask: url('./images/icon-arrow-left.svg') no-repeat center center / contain;
 }
+
+.icon-check::before {
+  content: '';
+  mask: url('./images/icon-check.svg') no-repeat center center / contain;
+}

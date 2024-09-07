@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Waterfall</title>
+    <link rel="stylesheet" href="./initialize.css" />
+    <link rel="stylesheet" href="./icon.css" />
+    <link rel="stylesheet" href="./waterfall.css" />
+  </head>
+  <body>
+    <div class="waterfall-container">
+      <div class="logo">
+        <img src="./images/logo.webp" alt="" />
+      </div>
+      <div class="back-btn">
+        <span class="icon--default icon-arrow-left"></span>
+      </div>
+      <div id="display-container" class="display-container"></div>
+      <div class="common-btn">
+        <span class="icon--default icon-checkmark"></span>
+        <span>立即參加</span>
+      </div>
+      <div id="bottom-more" class="bottom-more"></div>
+    </div>
+    <div id="photo-modal" class="photo-modal">
+      <div class="photo-modal-container">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img id="user-avatar" src="" alt="" />
+          </div>
+          <span id="user-name"></span>
+        </div>
+        <div class="user-photo">
+          <img id="user-photo" src="https://thenorthface-oa.bigc.tw/Content/MF2024/6.jpg" alt="" />
+        </div>
+      </div>
+    </div>
+    <script>
+      let dataList = []
+      const fragment = new DocumentFragment()
+      async function fetchData() {
+        try {
+          const response = await fetch('./pic.json')
+          if (!response.ok) {
+            throw new Error('Network response was not ok')
+          }
+          const data = await response.json()
+          dataList = data
+        } catch (error) {
+          console.error('error', error)
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        await fetchData()
+        const limit = 20
+
+        dataList.forEach((data, index) => {
+          const div = document.createElement('div')
+          const img = document.createElement('img')
+          img.src = data.pic
+          div.classList.add('display-img')
+          div.setAttribute('data-index', index)
+          div.appendChild(img)
+          div.addEventListener('click', openPhotoModal.bind(null, index))
+          fragment.appendChild(div)
+        })
+
+        appendPhoto()
+
+        function appendPhoto() {
+          const displayContainer = document.getElementById('display-container')
+          const fragmentChildren = Array.from(fragment.childNodes)
+
+          if (displayContainer && fragmentChildren.length) {
+            const tmpFragment = new DocumentFragment()
+            for (let i = 0; i < limit; i++) {
+              if (fragmentChildren[i]) {
+                tmpFragment.appendChild(fragmentChildren[i])
+              }
+            }
+            displayContainer.appendChild(tmpFragment)
+          }
+        }
+        console.log('fragment', fragment)
+
+        const photoModal = document.getElementById('photo-modal')
+        if (photoModal) {
+          photoModal.addEventListener('click', () => {
+            photoModal.style.display = 'none'
+          })
+        }
+
+        function openPhotoModal(index, event) {
+          const avatar = document.getElementById('user-avatar')
+          const name = document.getElementById('user-name')
+          const photo = document.getElementById('user-photo')
+
+          if (avatar) {
+            avatar.src = dataList[index].displaypic
+          }
+
+          if (name) {
+            name.innerText = dataList[index].displayname
+          }
+
+          if (photo) {
+            photo.src = dataList[index].pic
+          }
+
+          if (photoModal) {
+            photoModal.style.display = 'flex'
+          }
+        }
+
+        const bottomEl = document.getElementById('bottom-more')
+        let needCallAgain = false
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                needCallAgain = true
+                if (entry.target === bottomEl) {
+                  appendPhoto()
+                  setTimeout(() => {
+                    if (needCallAgain) {
+                      appendPhoto()
+                    }
+                  }, 500)
+                }
+              } else {
+                needCallAgain = false
+              }
+            })
+          },
+          {
+            rootMargin: '0px',
+            threshold: 0,
+          }
+        )
+        bottomEl && observer.observe(bottomEl)
+      })
+    </script>
+  </body>
+</html>

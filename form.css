@@ -1,0 +1,209 @@
+.form-conatiner {
+  width: 100%;
+  height: 100%;
+  background: #bedfe3;
+}
+.form-conatiner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(./images/bg2.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.form-modal-container {
+  width: 100%;
+  max-width: 640px;
+  height: 486px;
+  background-color: #fff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  box-shadow: 0 -5px 45px 0 rgba(0, 0, 0, 0.6);
+  padding: 24px 32px 20px;
+}
+
+.form-modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #080404;
+}
+
+.form-modal-title {
+  color: #080404;
+  font-size: 26px;
+  font-weight: 900;
+  font-family: NotoSansTC;
+  display: block;
+}
+
+.form-modal-desc {
+  color: #080404;
+  font-size: 18px;
+  font-family: NotoSansTC;
+  display: block;
+  margin-top: 5px;
+}
+
+.form-modal-header > :last-child {
+  width: 45%;
+  margin-left: 15px;
+}
+
+.form-modal-header > :last-child > img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.form-modal-body {
+  width: 100%;
+  padding: 14px 0 20px;
+}
+
+.form-modal-body > .member-checkbox {
+  color: #6e9ab2;
+  font-size: 17px;
+  font-family: NotoSansTC;
+  display: flex;
+  align-items: center;
+}
+.form-modal-body > .privacy-term {
+  color: #6e9ab2;
+  font-size: 17px;
+  font-family: NotoSansTC;
+  display: flex;
+  align-items: center;
+}
+
+.form-modal-body > .member-checkbox > input[type='checkbox'] {
+  display: none;
+}
+.form-modal-body > .privacy-term > input[type='checkbox'] {
+  display: none;
+}
+
+.form-modal-body > .member-checkbox > .icon-check {
+  width: 20px;
+  height: 20px;
+  background-color: #6e9ab2;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 6px;
+}
+.form-modal-body > .privacy-term > .icon-check {
+  width: 20px;
+  height: 20px;
+  background-color: #6e9ab2;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 6px;
+}
+.form-modal-body > .member-checkbox > .icon-check::before {
+  background-color: rgba(221, 250, 237, 0.4);
+  width: 14px;
+  height: 14px;
+}
+.form-modal-body > .privacy-term > .icon-check::before {
+  background-color: rgba(221, 250, 237, 0.4);
+  width: 14px;
+  height: 14px;
+}
+
+.form-modal-body > .member-checkbox > input[type='checkbox']:not(:cheked) + .icon-check::before {
+  background-color: rgba(221, 250, 237, 0.4);
+}
+.form-modal-body > .member-checkbox > input[type='checkbox']:checked + .icon-check::before {
+  background-color: rgba(221, 250, 237);
+}
+
+.form-modal-body > .privacy-term > input[type='checkbox']:not(:cheked) + .icon-check::before {
+  background-color: rgba(221, 250, 237, 0.4);
+}
+
+.form-modal-body > .privacy-term > input[type='checkbox']:checked + .icon-check::before {
+  background-color: rgba(221, 250, 237);
+}
+
+.form-modal-body > .form-input {
+  margin: 15px 0;
+}
+.form-modal-body > .form-input > :not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.form-modal-body > .form-input > input {
+  width: 100%;
+  height: 60px;
+  border: 1px solid #77b3d3;
+  border-radius: 10px;
+  background-color: #f5feff;
+  color: #90b5c9;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.form-modal-body > .form-input > input:focus {
+  outline: none;
+}
+
+::placeholder {
+  color: #90b5c9;
+  opacity: 1;
+}
+
+::-ms-input-placeholder {
+  /* Edge 12-18 */
+  color: #90b5c9;
+}
+
+.common-btn {
+  position: fixed;
+  width: 90vw;
+  max-width: 575px;
+  height: 61px;
+  border-radius: 30px;
+  background-color: #080404;
+  font-size: 20;
+  font-family: NotoSansTC;
+  font-weight: bold;
+  color: #f7b933;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.common-btn > .icon-checkmark {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  margin-right: 5px;
+}
+
+.common-btn > .icon-checkmark::before {
+  background-color: #f7b933;
+}

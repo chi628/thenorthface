@@ -1,3 +1,23 @@
+.badge-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #bedfe3;
+  /* padding-bottom: 36px; */
+}
+.badge-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(./images/normalbg.webp);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 .badge-desc {
   position: relative;
   width: 60%;

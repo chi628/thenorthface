@@ -367,79 +367,72 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
-  const layoutChooseBtn = document.getElementById('layout-choose-btn')
-  if (layoutChooseBtn) {
-    layoutChooseBtn.addEventListener('click', () => {
-      pageLayout.style.display = 'none'
-      pageUploadImg.style.display = 'block'
-    })
-  }
+  // const layoutChooseBtn = document.getElementById('layout-choose-btn')
+  // if (layoutChooseBtn) {
+  //   layoutChooseBtn.addEventListener('click', () => {
+  //     pageLayout.style.display = 'none'
+  //     pageUploadImg.style.display = 'block'
+  //   })
+  // }
 
-  const layout_photo1 = document.getElementById('photo-1')
-  const layout_photo2 = document.getElementById('photo-2')
-  const layout_photo3 = document.getElementById('photo-3')
+  // 處理上傳照片後，調整照片大小
+  let current_photo_grid
+  const photo_grid_1 = document.getElementById('photo-grid-1')
+  const photo_grid_2 = document.getElementById('photo-grid-2')
+  const photo_grid_3 = document.getElementById('photo-grid-3')
 
-  if (layout_photo1) {
-    layout_photo1.style.display = 'none'
-  }
-  if (layout_photo2) {
-    layout_photo2.style.display = 'none'
-  }
-  if (layout_photo3) {
-    layout_photo3.style.display = 'none'
-  }
+  const photo1 = document.getElementById('grid-1')
+  const photo2Left = document.getElementById('grid-2-left')
+  const photo2Right = document.getElementById('grid-2-right')
+  const photo3Left = document.getElementById('grid-3-left')
+  const photo3TopRight = document.getElementById('grid-3-top-right')
+  const photo3BottomRight = document.getElementById('grid-3-bottom-right')
 
-  layout_photo1.style.display = 'block'
-
-  const photo1 = document.getElementById('photo1')
-  const photo2Left = document.getElementById('photo-2-left')
-  const photo2Right = document.getElementById('photo-2-right')
-  const photo3Left = document.getElementById('photo-3-left')
-  const photo3TopRight = document.getElementById('photo-3-top-right')
-  const photo3BottomRight = document.getElementById('photo-3-bottom-right')
+  current_photo_grid = photo_grid_1
+  photo_grid_1.style.display = 'block'
 
   if (photo1) {
     photo1.addEventListener('change', event => {
-      tmp2(event, 'photo-1-img', 'photo-1-cropper-btn')
+      cropImg(event, 'grid-1')
     })
   }
 
   if (photo2Left) {
     photo2Left.addEventListener('change', event => {
-      tmp2(event, 'photo-2-left-img', 'photo-2-left-cropper-btn')
+      cropImg(event, 'grid-2-left')
     })
   }
 
   if (photo2Right) {
     photo2Right.addEventListener('change', event => {
-      tmp2(event, 'photo-2-right-img', 'photo-2-right-cropper-btn')
+      cropImg(event, 'grid-2-right')
     })
   }
 
   if (photo3Left) {
     photo3Left.addEventListener('change', event => {
-      tmp2(event, 'photo-3-left-img', 'photo-3-left-cropper-btn')
+      cropImg(event, 'grid-3-left')
     })
   }
 
   if (photo3TopRight) {
     photo3TopRight.addEventListener('change', event => {
-      tmp2(event, 'photo-3-top-right-img', 'photo-3-top-right-cropper-btn')
+      cropImg(event, 'grid-3-top-right')
     })
   }
 
   if (photo3BottomRight) {
     photo3BottomRight.addEventListener('change', event => {
-      tmp2(event, 'photo-3-bottom-right-img', 'photo-3-bottom-right-cropper-btn')
+      cropImg(event, 'grid-3-bottom-right')
     })
   }
 
-  const photoUploadBtn = document.getElementById('photo-upload')
+  const photoUploadBtn = document.getElementById('photo-upload-btn')
 
   let base64Url
   if (photoUploadBtn) {
     photoUploadBtn.addEventListener('click', () => {
-      const bgImg = layout_photo1.querySelector('.bg-photo > img')
+      const bgImg = current_photo_grid.querySelector('.bg-photo > img')
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
       const width = bgImg.getBoundingClientRect().width
@@ -447,21 +440,27 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.width = width
       canvas.height = height
       context.imageSmoothingEnabled = true
+      // 先畫拍立得底圖
       context.drawImage(bgImg, 0, 0, width, height)
 
-      const allImages = layout_photo1.querySelectorAll('img')
+      // 再找出拍立得上所有的 img
+      const allImages = current_photo_grid.querySelectorAll('img')
       const filteredImages = Array.from(allImages).filter(img => {
         return !img.closest('.bg-photo')
       })
 
+      console.log('filteredImages', filteredImages)
+
       filteredImages.forEach(img => {
-        const drawX = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
-        const drawY = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
-        context.drawImage(img, drawX, drawY, img.getBoundingClientRect().width, img.getBoundingClientRect().height)
+        const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
+        const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
+        const _width = img.getBoundingClientRect().width
+        const _height = img.getBoundingClientRect().height
+        context.drawImage(img, xPos, yPos, _width, _height)
       })
 
       base64Url = canvas.toDataURL()
-      console.log('base64', base64Url)
+      // console.log('base64', base64Url)
       pageUploadImg.style.display = 'none'
       pageShare.style.display = 'block'
 
@@ -493,29 +492,46 @@ document.addEventListener('DOMContentLoaded', () => {
     pageLayout.style.display = 'block'
   }
 
-  function tmp2(evt, imgId, btnId) {
-    const image = document.getElementById(imgId)
-    const cropperBtn = document.getElementById(btnId)
+  function cropImg(evt, id) {
+    const image = document.getElementById(`${id}-img`)
+    const cropperBtn = document.getElementById(`${id}-cropper-btn`)
+    let parentEl
+    if (image) {
+      parentEl = image.parentElement
+    }
+    let elWidth
+    let eiHeight
+    if (parentEl) {
+      elWidth = parentEl.getBoundingClientRect().width
+      eiHeight = parentEl.getBoundingClientRect().height
+    }
+
     const file = evt.target.files[0]
     const reader = new FileReader()
-
-    console.log('img', image, cropperBtn)
 
     reader.onload = function (e) {
       image.src = e.target.result
       const cropper = new Cropper(image, {
-        ready() {
-          console.log('crope', this.cropper, this.cropper.cropper)
-          if (this.cropper.cropper) {
-            this.cropper.cropper.style.zIndex = 20
-          }
-        },
+        dragMode: 'move',
+        autoCropArea: 1,
+        background: false,
+        highlight: false,
+        modal: false,
+        cropBoxMovable: false,
+        cropBoxResizable: false,
+        minContainerWidth: elWidth,
+        minContainerHeight: eiHeight,
+        minCanvasWidth: elWidth,
+        minCanvasHeight: eiHeight,
+        minCropBoxWidth: elWidth,
+        minCropBoxHeight: eiHeight,
+        aspectRatio: elWidth / eiHeight,
       })
       if (cropperBtn) {
         cropperBtn.style.display = 'flex'
         cropperBtn.addEventListener('click', () => {
           const croppedCanvas = cropper.getCroppedCanvas()
-          const roundedCanvas = getRoundedCanvas(croppedCanvas)
+          const roundedCanvas = getCanvasImg(croppedCanvas)
           image.src = roundedCanvas.toDataURL()
           cropperBtn.style.display = 'none'
           cropper.destroy()
@@ -527,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function getRoundedCanvas(sourceCanvas) {
+  function getCanvasImg(sourceCanvas) {
     var canvas = document.createElement('canvas')
     var context = canvas.getContext('2d')
     var width = sourceCanvas.width

@@ -1,0 +1,78 @@
+body {
+  position: relative;
+  width: 100vw;
+  max-width: 640px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.logo {
+  position: relative;
+  width: 45%;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.logo > img {
+  width: 100%;
+  height: auto;
+}
+
+.back-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #080404;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.back-btn > .icon-arrow-left {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.back-btn > .icon-arrow-left::before {
+  background-color: #f7b933;
+  width: 16px;
+  height: 16px;
+}
+
+.common-btn {
+  position: fixed;
+  width: 90vw;
+  max-width: 575px;
+  height: 61px;
+  border-radius: 30px;
+  background-color: #080404;
+  font-size: 20px;
+  font-family: NotoSansTC;
+  font-weight: bold;
+  color: #f7b933;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.common-btn > .icon-checkmark {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  margin-right: 5px;
+}
+
+.common-btn > .icon-checkmark::before {
+  background-color: #f7b933;
+}

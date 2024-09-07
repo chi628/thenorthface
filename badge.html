@@ -6,9 +6,11 @@
     <title>Badge</title>
     <link rel="stylesheet" href="./initialize.css" />
     <link rel="stylesheet" href="./icon.css" />
+    <link rel="stylesheet" href="./index.css" />
     <link rel="stylesheet" href="./progress.css" />
     <link rel="stylesheet" href="./badge.css" />
     <link rel="stylesheet" href="./layout.css" />
+    <link rel="stylesheet" href="./photo.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -17,221 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
     <style>
-      .badge-container {
-        width: 100vw;
-        max-width: 640px;
-        height: 100vh;
-        max-height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
-        position: relative;
-        background: #bedfe3;
-        /* padding-bottom: 36px; */
-      }
-      .badge-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url(./images/normalbg.webp);
-        background-size: contain;
-        background-repeat: no-repeat;
-      }
-
-      .logo {
-        position: relative;
-        width: 45%;
-        margin: 0 auto;
-        padding-top: 20px;
-      }
-
-      .logo > img {
-        width: 100%;
-        height: auto;
-      }
-
-      .back-btn {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #080404;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .back-btn > .icon-arrow-left {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-      }
-
-      .back-btn > .icon-arrow-left::before {
-        background-color: #f7b933;
-        width: 16px;
-        height: 16px;
-      }
-
-      .progress-container {
-        position: relative;
-        width: 85%;
-        height: 35vw;
-        margin: 17px auto 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .progress-container > .content {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
-      .progress-container > .progress {
-        width: 25%;
-        height: 100%;
-      }
-
-      .progress-container > .progress > .badge-icon {
-        width: 100%;
-        height: 34%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .progress-container > .progress > .badge-icon > img {
-        height: 100%;
-        width: auto;
-      }
-
-      .progress-container > .progress > span {
-        display: inline-block;
-        color: #222;
-        font-size: 12px;
-        font-weight: bold;
-      }
-
-      .progress-container > .progress > .progress-bar {
-        width: 100%;
-        height: 24px;
-        position: relative;
-      }
-
-      .progress-container > .progress > .progress-bar::before {
-        content: '';
-        position: absolute;
-        height: 3px;
-        width: 28px;
-        background-color: #000;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-      }
-
-      .progress-container > .progress > .progress-bar::after {
-        content: '';
-        position: absolute;
-        height: 3px;
-        width: 28px;
-        background-color: #000;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-      }
-
-      .progress-container > .progress > .progress-bar > .progress-number {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        color: #fff;
-        background-color: #000;
-        display: block;
-        text-align: center;
-        line-height: 24px;
-        position: absolute;
-        left: 28px;
-      }
-
-      .progress-container > .progress > .progress-desc > span {
-        font-size: 12px;
-        font-family: NotoSansTC;
-        color: #080404;
-      }
-
-      .progress-container > .progress > .progress-desc > .bind-btn {
-        color: #080404;
-        font-size: 12px;
-        font-weight: bold;
-        font-family: NotoSansTC;
-        width: 80%;
-        height: 24px;
-        border-radius: 12px;
-        background-color: #ffc938;
-        border: 1px solid #080404;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .progress-container > .progress > .progress-desc > .lucky-qualify {
-        width: 80%;
-        height: 30px;
-        position: relative;
-      }
-
-      .progress-container > .progress > .progress-desc > .lucky-qualify > .lucky-qualify-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('./images/bg-dialog.svg');
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-      }
-
-      .progress-container > .progress > .progress-desc > .lucky-qualify > .lucky-qualify-txt {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #d7f4f8;
-        font-size: 12px;
-        color: #d7f4f8;
-        position: absolute;
-        left: 50%;
-        bottom: 10%;
-        width: 100%;
-        transform: translateX(-50%);
-      }
-
-      .progress-container > .progress > .progress-desc > .lucky-qualify > .lucky-qualify-txt > .icon-circle-check {
-        display: inline-flex;
-        width: 10px;
-        height: 10px;
-        margin-right: 2px;
-      }
-
-      .progress-container
-        > .progress
-        > .progress-desc
-        > .lucky-qualify
-        > .lucky-qualify-txt
-        > .icon-circle-check::before {
-        width: 10px;
-        height: 10px;
-        background-color: #d7f4f8;
-      }
-
       .bottle-coupon {
         width: 86%;
         height: 136vw;
@@ -475,420 +262,6 @@
         background-color: #080404;
       }
 
-      .cropper-btn {
-        background-color: white;
-        border-radius: 10px;
-        display: flex;
-        position: absolute;
-        bottom: -15px;
-        padding: 5px;
-        z-index: 30;
-        cursor: pointer;
-        color: #f7b933;
-        background-color: #080404;
-        display: none;
-      }
-      .cropper-btn > .icon-circle-check {
-        display: inline-block;
-        width: 21px;
-        height: 21px;
-        margin-right: 5px;
-      }
-      .cropper-btn > .icon-circle-check::before {
-        background-color: #f7b933;
-      }
-
-      .photo-container {
-        position: relative;
-        width: 78vw;
-        height: 83vw;
-        margin: 15px auto;
-      }
-
-      .photo-container > .bg-photo {
-        width: 100%;
-        height: 100%;
-      }
-
-      .photo-container > .bg-photo > img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-      }
-
-      .photo-1 {
-        position: absolute;
-        top: 4.5%;
-        left: 5%;
-        right: 5%;
-        bottom: 29%;
-        background-color: transparent;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .photo-2-left,
-      .photo-3-left {
-        position: absolute;
-        top: 4.5%;
-        left: 5%;
-        right: 51%;
-        bottom: 29%;
-        background-color: transparent;
-        /* border: 1px solid red; */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .photo-2-right {
-        position: absolute;
-        top: 4.5%;
-        right: 5%;
-        left: 51%;
-        bottom: 29%;
-        background-color: transparent;
-        /* border: 1px solid red; */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .photo-3-top-right {
-        position: absolute;
-        top: 4.5%;
-        right: 5%;
-        left: 51.5%;
-        bottom: 63.5%;
-        background-color: transparent;
-      }
-
-      .photo-3-bottom-right {
-        position: absolute;
-        top: 38.5%;
-        right: 5%;
-        left: 51.5%;
-        bottom: 29%;
-        background-color: transparent;
-      }
-
-      .photo-1 > img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        z-index: 10;
-        overflow: hidden;
-      }
-      .photo-2-right > img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        z-index: 10;
-        overflow: hidden;
-      }
-      .photo-2-left > img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        z-index: 10;
-        overflow: hidden;
-      }
-      .photo-3-left > img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        z-index: 10;
-        overflow: hidden;
-      }
-      .photo-3-top-right > img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        z-index: 10;
-        overflow: hidden;
-      }
-      .photo-3-bottom-right > img {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: contain;
-        z-index: 10;
-        overflow: hidden;
-      }
-
-      .photo-1 > input {
-        display: none;
-      }
-      .photo-2-left > input {
-        display: none;
-      }
-      .photo-2-right > input {
-        display: none;
-      }
-      .photo-3-left > input {
-        display: none;
-      }
-      .photo-3-top-right > input {
-        display: none;
-      }
-      .photo-3-bottom-right > input {
-        display: none;
-      }
-
-      .photo-1 > label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      .photo-2-left > label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      .photo-2-right > label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      .photo-3-left > label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      .photo-3-top-right > label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      .photo-3-bottom-right > label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-
-      .photo-1 > label::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-2-right > label::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-2-left > label::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-3-left > label::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-3-top-right > label::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-3-bottom-right > label::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-
-      .photo-1 > label::after {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        mask: url('./images/icon-plus.svg') no-repeat center center / contain;
-        background-color: #000;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-2-right > label::after {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        mask: url('./images/icon-plus.svg') no-repeat center center / contain;
-        background-color: #000;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-2-left > label::after {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        mask: url('./images/icon-plus.svg') no-repeat center center / contain;
-        background-color: #000;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-3-left > label::after {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        mask: url('./images/icon-plus.svg') no-repeat center center / contain;
-        background-color: #000;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-3-top-right > label::after {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        mask: url('./images/icon-plus.svg') no-repeat center center / contain;
-        background-color: #000;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-      .photo-3-bottom-right > label::after {
-        content: '';
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        mask: url('./images/icon-plus.svg') no-repeat center center / contain;
-        background-color: #000;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateY(-50%);
-      }
-
-      .photo-upload-btn {
-        position: relative;
-        width: 90%;
-        height: 61px;
-        background-color: #080404;
-        border-radius: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #f7b933;
-        font-size: 20px;
-        font-weight: bold;
-        font-family: NotoSansTC;
-        margin: 20px auto 0;
-      }
-
-      .photo-upload-btn > .icon-checkmark {
-        display: inline-block;
-        width: 21px;
-        height: 21px;
-        margin-right: 5px;
-      }
-
-      .photo-upload-btn > .icon-checkmark::before {
-        background-color: #f7b933;
-      }
-
-      .upload-desc {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: NotoSansTC;
-        font-size: 18px;
-        font-weight: bold;
-        color: #080404;
-        border: 1px solid #080404;
-        border-radius: 15px;
-        width: 45%;
-        margin: 20px auto 0;
-      }
-
-      .upload-desc > .icon-arrow-down {
-        display: inline-flex;
-        width: 15px;
-        height: 15px;
-        margin-left: 5px;
-      }
-
-      .upload-desc > .icon-arrow-down::before {
-        width: 15px;
-        height: 15px;
-        background-color: #000000;
-      }
-
-      .page-desc {
-        position: relative;
-        font-size: 18px;
-        font-family: NotoSansTC;
-        color: #080404;
-        text-align: center;
-      }
-
       #page-share {
         position: relative;
       }
@@ -992,77 +365,78 @@
           <span>請選擇您的照片</span>
           <span class="icon--default icon-arrow-down"></span>
         </div>
-        <div id="photo-1" class="photo-container">
+
+        <div id="photo-grid-1" class="photo-container">
           <div class="bg-photo">
-            <img src="./images/layout_logo/01-layout-1.png" alt="" />
+            <img src="./images/layout_logo/02-layout-1.png" alt="" />
           </div>
-          <div class="photo-1">
-            <label for="photo1"></label>
-            <input type="file" id="photo1" accept="image/*" />
-            <img id="photo-1-img" />
-            <div id="photo-1-cropper-btn" class="cropper-btn">
+          <div class="grid-1-upload">
+            <label for="grid-1"></label>
+            <input type="file" id="grid-1" accept="image/*" />
+            <img id="grid-1-img" />
+            <div id="grid-1-cropper-btn" class="cropper-btn">
               <span class="icon--default icon-circle-check"></span>
               <span>完成</span>
             </div>
           </div>
         </div>
-        <div id="photo-2" class="photo-container">
+        <div id="photo-grid-2" class="photo-container">
           <div class="bg-photo">
-            <img src="./images/layout_logo/01-layout-2.png" alt="" />
+            <img src="./images/layout_logo/02-layout-2.png" alt="" />
           </div>
-          <div class="photo-2-left">
-            <label for="photo-2-left"></label>
-            <input type="file" id="photo-2-left" accept="image/*" />
-            <img id="photo-2-left-img" />
-            <div id="photo-2-left-cropper-btn" class="cropper-btn">
+          <div class="grid-2-upload-left">
+            <label for="grid-2-left"></label>
+            <input type="file" id="grid-2-left" accept="image/*" />
+            <img id="grid-2-left-img" />
+            <div id="grid-2-left-cropper-btn" class="cropper-btn">
               <span class="icon--default icon-circle-check"></span>
               <span>完成</span>
             </div>
           </div>
-          <div class="photo-2-right">
-            <label for="photo-2-right"></label>
-            <input type="file" id="photo-2-right" />
-            <img id="photo-2-right-img" />
-            <div id="photo-2-right-cropper-btn" class="cropper-btn">
+          <div class="grid-2-upload-right">
+            <label for="grid-2-right"></label>
+            <input type="file" id="grid-2-right" accept="image/*" />
+            <img id="grid-2-right-img" />
+            <div id="grid-2-right-cropper-btn" class="cropper-btn">
               <span class="icon--default icon-circle-check"></span>
               <span>完成</span>
             </div>
           </div>
         </div>
-        <div id="photo-3" class="photo-container">
+        <div id="photo-grid-3" class="photo-container">
           <div class="bg-photo">
-            <img src="./images/layout_logo/01-layout-3.png" alt="" />
+            <img src="./images/layout_logo/02-layout-3.png" alt="" />
           </div>
-          <div class="photo-3-left">
-            <label for="photo-3-left"></label>
-            <input type="file" id="photo-3-left" accept="image/*" />
-            <img id="photo-3-left-img" />
-            <div id="photo-3-left-cropper-btn" class="cropper-btn">
+          <div class="grid-3-upload-left">
+            <label for="grid-3-left"></label>
+            <input type="file" id="grid-3-left" accept="image/*" />
+            <img id="grid-3-left-img" />
+            <div id="grid-3-left-cropper-btn" class="cropper-btn">
               <span class="icon--default icon-circle-check"></span>
               <span>完成</span>
             </div>
           </div>
-          <div class="photo-3-top-right">
-            <label for="photo-3-top-right"></label>
-            <input type="file" id="photo-3-top-right" />
-            <img id="photo-3-top-right-img" />
-            <div id="photo-3-top-right-cropper-btn" class="cropper-btn">
+          <div class="grid-3-upload-top-right">
+            <label for="grid-3-top-right"></label>
+            <input type="file" id="grid-3-top-right" accept="image/*" />
+            <img id="grid-3-top-right-img" />
+            <div id="grid-3-top-right-cropper-btn" class="cropper-btn">
               <span class="icon--default icon-circle-check"></span>
               <span>完成</span>
             </div>
           </div>
-          <div class="photo-3-bottom-right">
-            <label for="photo-3-bottom-right"></label>
-            <input type="file" id="photo-3-bottom-right" />
-            <img id="photo-3-bottom-right-img" />
-            <div id="photo-3-bottom-right-cropper-btn" class="cropper-btn">
+          <div class="grid-3-upload-bottom-right">
+            <label for="grid-3-bottom-right"></label>
+            <input type="file" id="grid-3-bottom-right" accept="image/*" />
+            <img id="grid-3-bottom-right-img" />
+            <div id="grid-3-bottom-right-cropper-btn" class="cropper-btn">
               <span class="icon--default icon-circle-check"></span>
               <span>完成</span>
             </div>
           </div>
         </div>
         <p class="page-desc">幫今晚的大廚拍張照吧！</p>
-        <div id="photo-upload" class="photo-upload-btn">
+        <div id="photo-upload-btn" class="common-btn">
           <span class="icon--default icon-checkmark"></span>
           <span>確定</span>
         </div>
@@ -1091,73 +465,59 @@
 
       <div id="page-badge">
         <div class="progress-container">
-          <div class="progress">
-            <div class="badge-icon">
-              <img src="./images/bottle.webp" alt="山植石微景瓶" />
+          <div class="upper">
+            <div class="progress-uper">
+              <div class="progress-icon">
+                <img src="./images/bottle.webp" alt="山植石微景瓶" />
+              </div>
+              <span>山植石微景瓶</span>
             </div>
-            <span>山植石微景瓶</span>
-            <div class="progress-bar">
-              <span class="progress-number">3</span>
+            <div class="progress-uper">
+              <div class="progress-icon">
+                <img src="./images/bag.webp" alt="北面限定小包" />
+              </div>
+              <span>北面限定小包</span>
             </div>
-            <div class="progress-desc">
-              <span>手作體驗</span>
-              <div class="bind-btn">綁定領取</div>
+            <div class="progress-uper">
+              <div class="progress-icon">
+                <img src="./images/sofa.webp" alt="北面訂製充氣沙發" />
+              </div>
+              <span>北面訂製充氣沙發</span>
+            </div>
+            <div class="progress-uper">
+              <div class="progress-icon">
+                <img src="./images/box.webp" alt="萬元北面大禮包" />
+              </div>
+              <span>萬元北面大禮包</span>
             </div>
           </div>
-          <div class="progress">
-            <div class="badge-icon">
-              <img src="./images/bag.webp" alt="北面限定小包" />
-            </div>
-            <span>北面限定小包</span>
-            <div class="progress-bar">
-              <span class="progress-number">6</span>
-            </div>
-            <div class="progress-desc">
+          <div class="down">
+            <div class="progress-down">
               <span>手作體驗</span>
-              <div class="lucky-qualify">
-                <div class="lucky-qualify-bg"></div>
-                <div class="lucky-qualify-txt">
-                  <span class="icon--default icon-circle-check"></span>
-                  <span>已獲得</span>
-                </div>
+              <div class="receive-btn">
+                <span>綁定領取</span>
+                <span class="icon--default icon-solid-arrow-left"></span>
               </div>
             </div>
-          </div>
-          <div class="progress">
-            <div class="badge-icon">
-              <img src="./images/sofa.webp" alt="山植石微景瓶" />
-            </div>
-            <span>山植石微景瓶</span>
-            <div class="progress-bar">
-              <span class="progress-number">3</span>
-            </div>
-            <div class="progress-desc">
-              <span>手作體驗</span>
-              <div class="lucky-qualify">
-                <div class="lucky-qualify-bg"></div>
-                <div class="lucky-qualify-txt">
-                  <span class="icon--default icon-circle-check"></span>
-                  <span>已獲得</span>
-                </div>
+            <div class="progress-down">
+              <span>抽獎資格</span>
+              <div class="qualify">
+                <span class="icon--default icon-circle-check"></span>
+                <span>已獲得</span>
               </div>
             </div>
-          </div>
-          <div class="progress">
-            <div class="badge-icon">
-              <img src="./images/box.webp" alt="山植石微景瓶" />
+            <div class="progress-down">
+              <span>抽獎資格</span>
+              <div class="qualify">
+                <span class="icon--default icon-circle-check"></span>
+                <span>已獲得</span>
+              </div>
             </div>
-            <span>山植石微景瓶</span>
-            <div class="progress-bar">
-              <span class="progress-number">3</span>
-            </div>
-            <div class="progress-desc">
-              <span>手作體驗</span>
-              <div class="lucky-qualify">
-                <div class="lucky-qualify-bg"></div>
-                <div class="lucky-qualify-txt">
-                  <span class="icon--default icon-circle-check"></span>
-                  <span>已獲得</span>
-                </div>
+            <div class="progress-down">
+              <span>抽獎資格</span>
+              <div class="qualify">
+                <span class="icon--default icon-circle-check"></span>
+                <span>已獲得</span>
               </div>
             </div>
           </div>
