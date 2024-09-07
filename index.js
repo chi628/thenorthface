@@ -223,15 +223,45 @@ badgeList.forEach(badge => {
   })
 })
 
-let selectedBadge = ''
+let dataList = []
+const fragment = new DocumentFragment()
+async function fetchData() {
+  try {
+    const response = await fetch('./pic.json')
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    const data = await response.json()
+    dataList = data
+  } catch (error) {
+    console.error('error', error)
+  }
+}
 
-document.addEventListener('DOMContentLoaded', () => {
+let selectedBadge = ''
+let currentLayout = 'pageIndex'
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchData()
+  const limit = 20
+  dataList.forEach((data, index) => {
+    const div = document.createElement('div')
+    const img = document.createElement('img')
+    img.src = data.pic
+    div.classList.add('display-img')
+    div.setAttribute('data-index', index)
+    div.appendChild(img)
+    div.addEventListener('click', openPhotoModal.bind(null, index))
+    fragment.appendChild(div)
+  })
+
   const pageIndex = document.getElementById('pageIndex')
   const pageBadge = document.getElementById('pageBadge')
   const pageLayout = document.getElementById('page-layout')
   const pageUploadImg = document.getElementById('page-uploadImg')
   const pageShared = document.getElementById('page-share')
   const pageForm = document.getElementById('pageForm')
+  const pageWaterfall = document.getElementById('pageWaterfall')
 
   const mainContainer = document.querySelector('.main-container')
   const badgeContainer = document.getElementById('badgeContainer')
@@ -263,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pageIndex.style.display = 'none'
         badgeContainer.style.display = 'block'
         pageBadge.style.display = 'block'
+        currentLayout = 'pageBadge'
       }
     })
   }
@@ -413,6 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
         default:
           break
       }
+
+      currentLayout = 'pageUploadImg'
     })
   }
 
@@ -522,6 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pageShared.style.display = 'block'
       console.log('base 64', base64Url)
       document.getElementById('share-img').src = base64Url
+      currentLayout = 'pageShared'
     })
   }
 
@@ -532,6 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pageShared.style.display = 'none'
       badgeContainer.style.display = 'none'
       pageForm.style.display = 'block'
+      currentLayout = 'pageForm'
     })
   }
 
@@ -543,6 +578,188 @@ document.addEventListener('DOMContentLoaded', () => {
       pageForm.style.display = 'none'
       pageIndex.style.display = 'block'
     })
+  }
+
+  const photoModal = document.getElementById('photo-modal')
+  const waterfallBtn = document.getElementById('waterfall')
+  if (waterfallBtn) {
+    waterfallBtn.addEventListener('click', () => {
+      pageIndex.style.display = 'none'
+      pageWaterfall.style.display = 'block'
+      currentLayout = 'pageWaterfall'
+      appendPhoto()
+      if (photoModal) {
+        photoModal.addEventListener('click', () => {
+          photoModal.style.display = 'none'
+        })
+      }
+      const bottomEl = document.getElementById('bottom-more')
+      let needCallAgain = false
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              needCallAgain = true
+              if (entry.target === bottomEl) {
+                appendPhoto()
+                setTimeout(() => {
+                  if (needCallAgain) {
+                    appendPhoto()
+                  }
+                }, 500)
+              }
+            } else {
+              needCallAgain = false
+            }
+          })
+        },
+        {
+          rootMargin: '0px',
+          threshold: 0,
+        }
+      )
+      bottomEl && observer.observe(bottomEl)
+    })
+  }
+  const receiveBtn = document.getElementById('receive-btn')
+  if (receiveBtn) {
+    receiveBtn.addEventListener('click', () => {
+      window.open('https://maac.io/2LRej')
+      receiveBtn.style.display = 'none'
+      showCouponBtn.style.display = 'flex'
+    })
+  }
+
+  const couponTemplate = document.getElementById('coupon-template')
+  const showCouponBtn = document.getElementById('show-coupon-btn')
+  if (showCouponBtn) {
+    showCouponBtn.addEventListener('click', () => {
+      console.log('hihi')
+      if (couponTemplate) {
+        couponTemplate.style.display = 'block'
+        pageBadge.style.display = 'none'
+        currentLayout = 'couponTemplate'
+      }
+    })
+  }
+
+  const couponExchangeBtn = document.getElementById('coupon-exchange-btn')
+
+  const couponModal = document.getElementById('coupon-modal-template')
+
+  if (couponExchangeBtn) {
+    couponExchangeBtn.addEventListener('click', () => {
+      if (couponModal) {
+        couponModal.style.display = 'block'
+      }
+    })
+  }
+
+  const cancelCouponModalBtn = document.getElementById('coupon-modal-cancel')
+  const couponModalExchange = document.getElementById('coupon-modal-exchange')
+  const bottleCoupon = document.getElementById('bottle-coupon')
+
+  if (couponModalExchange) {
+    couponModalExchange.addEventListener('click', () => {
+      couponModal.style.display = 'none'
+      if (bottleCoupon) {
+        bottleCoupon.classList.add('disabled')
+      }
+    })
+  }
+
+  if (cancelCouponModalBtn) {
+    cancelCouponModalBtn.addEventListener('click', () => {
+      couponModal.style.display = 'none'
+    })
+  }
+
+  const badgeBackBtn = document.getElementById('badge-back')
+
+  badgeBackBtn.addEventListener('click', () => {
+    if (currentLayout === 'pageBadge') {
+      currentLayout = 'pageIndex'
+      pageBadge.style.display = 'none'
+      badgeContainer.style.display = 'none'
+      pageIndex.style.display = 'block'
+    } else if (currentLayout === 'couponTemplate') {
+      couponTemplate.style.display = 'none'
+      pageBadge.style.display = 'block'
+      currentLayout = 'pageBadge'
+    } else if (currentLayout === 'pageLayout') {
+      pageLayout.style.display = 'none'
+      pageBadge.style.display = 'block'
+      currentLayout = 'pageBadge'
+    } else if (currentLayout === 'pageUploadImg') {
+      pageUploadImg.style.display = 'none'
+      pageLayout.style.display = 'block'
+      currentLayout = 'pageLayout'
+    } else if (currentLayout === 'pageShared') {
+      pageShared.style.display = 'none'
+      pageUploadImg.style.display = 'block'
+      currentLayout = 'pageUploadImg'
+    } else if (currentLayout === 'pageForm') {
+    } else if (currentLayout === 'pageWaterfall') {
+    }
+  })
+
+  const formBackBtn = document.getElementById('form-back')
+
+  if (formBackBtn) {
+    formBackBtn.addEventListener('click', () => {
+      pageForm.style.display = 'none'
+      pageShared.style.display = 'block'
+      badgeContainer.style.display = 'block'
+
+      currentLayout = 'pageShared'
+    })
+  }
+
+  const waterfallBackBtn = document.getElementById('waterfall-back')
+
+  if (waterfallBackBtn) {
+    waterfallBackBtn.addEventListener('click', () => {
+      pageWaterfall.style.display = 'none'
+      pageIndex.style.display = 'block'
+      currentLayout = 'pageIndex'
+    })
+  }
+
+  function appendPhoto() {
+    const displayContainer = document.getElementById('display-container')
+    const fragmentChildren = Array.from(fragment.childNodes)
+
+    if (displayContainer && fragmentChildren.length) {
+      const tmpFragment = new DocumentFragment()
+      for (let i = 0; i < limit; i++) {
+        if (fragmentChildren[i]) {
+          tmpFragment.appendChild(fragmentChildren[i])
+        }
+      }
+      displayContainer.appendChild(tmpFragment)
+    }
+  }
+
+  function openPhotoModal(index, event) {
+    const avatar = document.getElementById('user-avatar')
+    const name = document.getElementById('user-name')
+    const photo = document.getElementById('user-photo')
+
+    if (avatar) {
+      avatar.src = dataList[index].displaypic
+    }
+
+    if (name) {
+      name.innerText = dataList[index].displayname
+    }
+
+    if (photo) {
+      photo.src = dataList[index].pic
+    }
+
+    if (photoModal) {
+      photoModal.style.display = 'flex'
+    }
   }
 
   function appendSwiperSlides(id) {
@@ -565,6 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pageBadge && pageLayout) {
       pageBadge.style.display = 'none'
       pageLayout.style.display = 'block'
+      currentLayout = 'pageLayout'
     }
   }
 

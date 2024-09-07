@@ -42,20 +42,20 @@
   border-bottom: 1px dashed #f7b933;
 }
 
-.main-container > .float-bar > a {
-  text-decoration: none;
+.main-container > .float-bar > div {
+  /* text-decoration: none; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.main-container > .float-bar > a > img {
+.main-container > .float-bar > div > img {
   width: 26px;
   height: auto;
 }
 
-.main-container > .float-bar > a > span {
+.main-container > .float-bar > div > span {
   font-size: 12px;
   font-weight: bold;
   color: #f7b933;

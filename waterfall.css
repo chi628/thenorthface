@@ -148,7 +148,7 @@
   border-color: transparent;
 }
 
-.common-btn {
+/* .common-btn {
   position: fixed;
   width: 90vw;
   max-width: 575px;
@@ -177,4 +177,4 @@
 
 .common-btn > .icon-checkmark::before {
   background-color: #f7b933;
-}
+} */

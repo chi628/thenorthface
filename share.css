@@ -101,7 +101,7 @@
   margin-block-start: 5px;
 }
 
-.bottle-coupon > .coupon-btn {
+.bottle-coupon > .coupon-exchange-btn {
   width: 100%;
   height: 12%;
   background-color: #191616;
@@ -119,14 +119,14 @@
   cursor: pointer;
 }
 
-.bottle-coupon > .coupon-btn > .icon-checkmark {
+.bottle-coupon > .coupon-exchange-btn > .icon-checkmark {
   display: inline-block;
   width: 21px;
   height: 21px;
   margin-right: 5px;
 }
 
-.bottle-coupon > .coupon-btn > .icon-checkmark::before {
+.bottle-coupon > .coupon-exchange-btn > .icon-checkmark::before {
   background-color: #f7b933;
 }
 
@@ -134,21 +134,21 @@
   visibility: visible;
 }
 
-.bottle-coupon.disabled > .coupon-btn {
+.bottle-coupon.disabled > .coupon-exchange-btn {
   background-color: #888888;
   color: #c6c6c6;
 }
 
-.bottle-coupon.disabled > .coupon-btn > .icon-checkmark::before {
+.bottle-coupon.disabled > .coupon-exchange-btn > .icon-checkmark::before {
   background-color: #c6c6c6;
 }
 
-.bottle-coupon-modal.show {
+/* .bottle-coupon-modal.show {
   display: flex;
 }
 .bottle-coupon-modal.close {
   display: none;
-}
+} */
 
 .bottle-coupon-modal {
   position: fixed;

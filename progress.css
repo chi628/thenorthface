@@ -10,6 +10,29 @@
   justify-content: space-between;
 }
 
+.upper > :nth-child(1) > .progress-icon {
+  position: relative;
+}
+.upper > :nth-child(1) > .progress-icon > .redeem-stamp {
+  font-family: NotoSansTC;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(350deg) scale(0.8);
+  background-color: rgba(204, 204, 204, 0.55);
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: 3px solid #fff;
+  width: 100%;
+  text-align: center;
+  visibility: hidden;
+}
+.upper > :nth-child(1)[exchanged] > .progress-icon > .redeem-stamp {
+  visibility: visible;
+}
+
 .upper {
   width: 100%;
   height: 52%;
@@ -460,20 +483,26 @@
   display: none;
 }
 
-.receive-btn {
+.receive-btn,
+.coupon-btn {
   width: 75%;
   height: 24px;
   border-radius: 12px;
   border: 1px solid #080404;
-  background-color: #ffc938;
+  background-color: #418fb9;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #080404;
+  color: #ffffff;
   font-size: 12px;
   font-weight: bold;
 }
-.receive-btn > .icon-triangle {
+.receive-btn {
+  background-color: #ffc938;
+  color: #080404;
+}
+.receive-btn > .icon-triangle,
+.coupon-btn > .icon-triangle {
   display: inline-flex;
   width: 5px;
   height: 5px;
@@ -483,6 +512,12 @@
   width: 5px;
   height: 5px;
   background-color: #080404;
+}
+
+.coupon-btn > .icon-triangle::before {
+  width: 5px;
+  height: 5px;
+  background-color: #ffffff;
 }
 
 .progress-down {
