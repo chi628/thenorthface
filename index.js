@@ -608,6 +608,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         minCropBoxWidth: elWidth,
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
+        ready() {
+          cropper.zoom(0.1)
+        },
       })
 
       if (id === 'grid-1') {
