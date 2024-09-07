@@ -609,7 +609,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
         ready() {
-          cropper.zoom(0.1)
+          cropper.setCanvasData(0, 0, elWidth, eiHeight)
+          cropper.move(0, 0)
+          cropper.zoom(0.3)
         },
       })
 
