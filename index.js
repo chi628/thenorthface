@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('try option7')
+      console.log('try option8')
       const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
@@ -722,6 +722,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       canvas2.width = width
       canvas2.height = height
       context.imageSmoothingEnabled = true
+      await new Promise(resolve => {
+        let wait3 = setInterval(() => {
+          clearInterval(wait3s)
+          resolve()
+        }, 100)
+      })
       // 先畫拍立得底圖
       context.drawImage(bgImg, 0, 0, width, height)
       // 再找出拍立得上所有的 img
