@@ -568,6 +568,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
+      console.log('img', image.naturalWidth, image.naturalHeight)
       cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
@@ -591,7 +592,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           const croppedCanvas = cropper.getCroppedCanvas()
           console.log('crop box', cropper.getCropBoxData(), croppedCanvas)
           const roundedCanvas = getCanvasImg(croppedCanvas)
-          console.log('base64url', roundedCanvas, roundedCanvas.toDataURL())
           image.src = roundedCanvas.toDataURL()
           cropperBtn.style.display = 'none'
           cropper.destroy()
