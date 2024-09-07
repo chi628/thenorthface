@@ -596,6 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cropperBtn.addEventListener('click', () => {
           const croppedCanvas = cropper.getCroppedCanvas()
           const roundedCanvas = getCanvasImg(croppedCanvas)
+          console.log('base64url', roundedCanvas.toDataURL())
           image.src = roundedCanvas.toDataURL()
           cropperBtn.style.display = 'none'
           cropper.destroy()
