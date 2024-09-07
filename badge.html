@@ -359,112 +359,9 @@
         </div>
       </div>
 
-      <!-- 上傳照片 -->
-      <div id="page-uploadImg">
-        <div class="upload-desc">
-          <span>請選擇您的照片</span>
-          <span class="icon--default icon-arrow-down"></span>
-        </div>
-
-        <div id="photo-grid-1" class="photo-container">
-          <div class="bg-photo">
-            <img src="./images/layout_logo/02-layout-1.png" alt="" />
-          </div>
-          <div class="grid-1-upload">
-            <label for="grid-1"></label>
-            <input type="file" id="grid-1" accept="image/*" />
-            <img id="grid-1-img" />
-            <div id="grid-1-cropper-btn" class="cropper-btn">
-              <span class="icon--default icon-circle-check"></span>
-              <span>完成</span>
-            </div>
-          </div>
-        </div>
-        <div id="photo-grid-2" class="photo-container">
-          <div class="bg-photo">
-            <img src="./images/layout_logo/02-layout-2.png" alt="" />
-          </div>
-          <div class="grid-2-upload-left">
-            <label for="grid-2-left"></label>
-            <input type="file" id="grid-2-left" accept="image/*" />
-            <img id="grid-2-left-img" />
-            <div id="grid-2-left-cropper-btn" class="cropper-btn">
-              <span class="icon--default icon-circle-check"></span>
-              <span>完成</span>
-            </div>
-          </div>
-          <div class="grid-2-upload-right">
-            <label for="grid-2-right"></label>
-            <input type="file" id="grid-2-right" accept="image/*" />
-            <img id="grid-2-right-img" />
-            <div id="grid-2-right-cropper-btn" class="cropper-btn">
-              <span class="icon--default icon-circle-check"></span>
-              <span>完成</span>
-            </div>
-          </div>
-        </div>
-        <div id="photo-grid-3" class="photo-container">
-          <div class="bg-photo">
-            <img src="./images/layout_logo/02-layout-3.png" alt="" />
-          </div>
-          <div class="grid-3-upload-left">
-            <label for="grid-3-left"></label>
-            <input type="file" id="grid-3-left" accept="image/*" />
-            <img id="grid-3-left-img" />
-            <div id="grid-3-left-cropper-btn" class="cropper-btn">
-              <span class="icon--default icon-circle-check"></span>
-              <span>完成</span>
-            </div>
-          </div>
-          <div class="grid-3-upload-top-right">
-            <label for="grid-3-top-right"></label>
-            <input type="file" id="grid-3-top-right" accept="image/*" />
-            <img id="grid-3-top-right-img" />
-            <div id="grid-3-top-right-cropper-btn" class="cropper-btn">
-              <span class="icon--default icon-circle-check"></span>
-              <span>完成</span>
-            </div>
-          </div>
-          <div class="grid-3-upload-bottom-right">
-            <label for="grid-3-bottom-right"></label>
-            <input type="file" id="grid-3-bottom-right" accept="image/*" />
-            <img id="grid-3-bottom-right-img" />
-            <div id="grid-3-bottom-right-cropper-btn" class="cropper-btn">
-              <span class="icon--default icon-circle-check"></span>
-              <span>完成</span>
-            </div>
-          </div>
-        </div>
-        <p class="page-desc">幫今晚的大廚拍張照吧！</p>
-        <div id="photo-upload-btn" class="common-btn">
-          <span class="icon--default icon-checkmark"></span>
-          <span>確定</span>
-        </div>
-      </div>
-      <!-- 上傳照片 end -->
-
-      <!-- 選擇版型 -->
-      <div id="page-layout">
-        <div class="layout-desc">
-          <span>請選擇一款版型</span>
-          <span class="icon--default icon-arrow-down"></span>
-        </div>
-
-        <div class="layout-swiper">
-          <div class="swiper-wrapper"></div>
-          <div class="layout-swiper-prev"></div>
-          <div class="layout-swiper-next"></div>
-        </div>
-
-        <div id="layout-choose-btn" class="layout-choose-btn">
-          <span class="icon--default icon-checkmark"></span>
-          <span>確定</span>
-        </div>
-      </div>
-      <!-- 選擇版型 end -->
-
       <div id="page-badge">
-        <div class="progress-container">
+        <!-- 在class="progress-container"加上 step=X 就會有相對應的樣式-->
+        <div class="progress-container" step="1">
           <div class="upper">
             <div class="progress-uper">
               <div class="progress-icon">
@@ -478,7 +375,7 @@
               </div>
               <span>北面限定小包</span>
             </div>
-            <div class="progress-uper">
+            <div class="progress-uper larger">
               <div class="progress-icon">
                 <img src="./images/sofa.webp" alt="北面訂製充氣沙發" />
               </div>
@@ -491,33 +388,69 @@
               <span>萬元北面大禮包</span>
             </div>
           </div>
+          <div class="progress-bar">
+            <div class="step-outer">
+              <div class="step-bar"></div>
+              <div class="step">3</div>
+            </div>
+            <div class="step-outer">
+              <div class="step-bar"></div>
+              <div class="step">6</div>
+              <div class="step-bar-after"></div>
+            </div>
+            <div class="step-outer">
+              <div class="step-bar"></div>
+              <div class="step">9</div>
+              <div class="step-bar-after"></div>
+            </div>
+            <div class="step-outer">
+              <div class="step-bar"></div>
+              <div class="step">12</div>
+              <div class="step-bar-after"></div>
+            </div>
+          </div>
           <div class="down">
             <div class="progress-down">
               <span>手作體驗</span>
               <div class="receive-btn">
                 <span>綁定領取</span>
-                <span class="icon--default icon-solid-arrow-left"></span>
+                <span class="icon--default icon-triangle"></span>
               </div>
             </div>
             <div class="progress-down">
               <span>抽獎資格</span>
+              <div class="bg-dialog"></div>
               <div class="qualify">
                 <span class="icon--default icon-circle-check"></span>
                 <span>已獲得</span>
               </div>
-            </div>
-            <div class="progress-down">
-              <span>抽獎資格</span>
-              <div class="qualify">
-                <span class="icon--default icon-circle-check"></span>
-                <span>已獲得</span>
+              <div class="no-qualify">
+                <span class="icon--default icon-cancel"></span>
+                <span>未獲得</span>
               </div>
             </div>
             <div class="progress-down">
               <span>抽獎資格</span>
+              <div class="bg-dialog"></div>
               <div class="qualify">
                 <span class="icon--default icon-circle-check"></span>
                 <span>已獲得</span>
+              </div>
+              <div class="no-qualify">
+                <span class="icon--default icon-cancel"></span>
+                <span>未獲得</span>
+              </div>
+            </div>
+            <div class="progress-down">
+              <span>抽獎資格</span>
+              <div class="bg-dialog"></div>
+              <div class="qualify">
+                <span class="icon--default icon-circle-check"></span>
+                <span>已獲得</span>
+              </div>
+              <div class="no-qualify">
+                <span class="icon--default icon-cancel"></span>
+                <span>未獲得</span>
               </div>
             </div>
           </div>
@@ -719,7 +652,7 @@
       </div>
     </template>
     <!-- <script src="./coupon.js"></script> -->
-    <script src="./badge.js"></script>
+    <!-- <script src="./badge.js"></script> -->
     <!-- <script src="./layout.js"></script> -->
   </body>
 </html>

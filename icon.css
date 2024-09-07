@@ -54,3 +54,8 @@
   content: '';
   mask: url('./images/icon-check.svg') no-repeat center center / contain;
 }
+
+.icon-triangle::before {
+  content: '';
+  mask: url('./images/icon-triangle.svg') no-repeat center center / contain;
+}

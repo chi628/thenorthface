@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pageShare.style.display = 'none'
   }
 
-  pageUploadImg.style.display = 'block'
+  pageBadge.style.display = 'block'
 
   const badge01Card = document.getElementById('badge01')
   const badge02Card = document.getElementById('badge02')
