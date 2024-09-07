@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./share.css" />
     <link rel="stylesheet" href="./form.css" />
     <link rel="stylesheet" href="./waterfall.css" />
+    <link rel="stylesheet" href="./coupon.css" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -40,111 +41,116 @@
       #show-coupon-btn {
         display: none;
       }
+
+      /* #pageIndex {
+        display: none;
+      }
+
+      #coupon-template {
+        display: block;
+      } */
     </style>
   </head>
   <body>
-    <!-- 首頁 -->
-    <div id="pageIndex" class="main-container">
-      <div class="logo">
-        <img src="./images/logo.webp" alt="" />
-      </div>
-      <div class="float-bar">
-        <div id="activity-rule">
-          <img src="./images/note.webp" alt="活動辦法" />
-          <span>活動辦法</span>
-        </div>
-        <div id="waterfall">
-          <img src="./images/video-camera.webp" alt="精彩直擊" />
-          <span>精彩直擊</span>
-        </div>
-        <div id="photo-award">
-          <img src="./images/photo-camera.webp" alt="攝影大賞" />
-          <span>攝影大賞</span>
-        </div>
-      </div>
-      <div class="content">
-        <div class="title">蒐集各徽章</div>
-        <div class="bonus">
-          <img src="./images/left-bonus.webp" alt="" />
-          <img src="./images/right-bonus.webp" alt="" />
-          <span class="cheer">\等你來拿/</span>
-        </div>
-        <div id="index-join-btn" class="common-btn index-join-btn">
-          <span class="icon--default icon-checkmark"></span>
-          <span>立即參加</span>
-        </div>
-
-        <div id="look-more" class="look-more">
-          <span>看更多</span>
-          <span class="icon--default icon-pure-arrow-left"></span>
-        </div>
-
-        <div id="index-badge-title" class="badge-title">北面山地節徽章</div>
-        <div class="index-badge-container">
-          <div class="badge">
-            <img src="./images/01-badge.webp" alt="" />
-            <span>野營大廚師</span>
-          </div>
-          <div class="badge">
-            <img src="./images/02-badge.webp" alt="" />
-            <span>水上玩咖</span>
-          </div>
-          <div class="badge">
-            <img src="./images/03-badge.webp" alt="" />
-            <span>戶外露營家</span>
-          </div>
-          <div class="badge">
-            <img src="./images/04-badge.webp" alt="" />
-            <span>赤手登峰</span>
-          </div>
-          <div class="badge">
-            <img src="./images/05-badge.webp" alt="" />
-            <span>熱血勇跑家</span>
-          </div>
-          <div class="badge">
-            <img src="./images/06-badge.webp" alt="" />
-            <span>北面巔峰</span>
-          </div>
-          <div class="badge">
-            <img src="./images/07-badge.webp" alt="" />
-            <span>晴空之上</span>
-          </div>
-          <div class="badge">
-            <img src="./images/08-badge.webp" alt="" />
-            <span>山林對話</span>
-          </div>
-          <div class="badge">
-            <img src="./images/09-badge.webp" alt="" />
-            <span>手作體驗</span>
-          </div>
-
-          <div class="badge">
-            <img src="./images/11-badge.webp" alt="" />
-            <span>探險攝影師</span>
-          </div>
-
-          <div class="badge">
-            <img src="./images/12-badge.webp" alt="" />
-            <span>探險攝影師</span>
-          </div>
-
-          <div class="badge">
-            <img src="./images/10-badge.webp" alt="" />
-            <span>電車騎士</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="badgeContainer" class="badge-container">
+    <div class="main-container">
       <div class="logo">
         <img src="./images/logo.webp" alt="" />
       </div>
       <div id="badge-back" class="back-btn">
         <span class="icon--default icon-arrow-left"></span>
       </div>
+      <!-- 首頁 -->
+      <div id="pageIndex">
+        <div class="float-bar">
+          <div id="activity-rule">
+            <img src="./images/note.webp" alt="活動辦法" />
+            <span>活動辦法</span>
+          </div>
+          <div id="waterfall">
+            <img src="./images/video-camera.webp" alt="精彩直擊" />
+            <span>精彩直擊</span>
+          </div>
+          <div id="photo-award">
+            <img src="./images/photo-camera.webp" alt="攝影大賞" />
+            <span>攝影大賞</span>
+          </div>
+        </div>
+        <div class="index-container">
+          <div class="title">蒐集各徽章</div>
+          <div class="bonus">
+            <img src="./images/left-bonus.webp" alt="" />
+            <img src="./images/right-bonus.webp" alt="" />
+            <span class="cheer">\等你來拿/</span>
+          </div>
+          <div id="index-join-btn" class="common-btn index-join-btn">
+            <span class="icon--default icon-checkmark"></span>
+            <span>立即參加</span>
+          </div>
+
+          <div id="look-more" class="look-more">
+            <span>看更多</span>
+            <span class="icon--default icon-pure-arrow-left"></span>
+          </div>
+
+          <div id="index-badge-title" class="badge-title">北面山地節徽章</div>
+          <div class="index-badge-container">
+            <div class="badge">
+              <img src="./images/01-badge.webp" alt="" />
+              <span>野營大廚師</span>
+            </div>
+            <div class="badge">
+              <img src="./images/02-badge.webp" alt="" />
+              <span>水上玩咖</span>
+            </div>
+            <div class="badge">
+              <img src="./images/03-badge.webp" alt="" />
+              <span>戶外露營家</span>
+            </div>
+            <div class="badge">
+              <img src="./images/04-badge.webp" alt="" />
+              <span>赤手登峰</span>
+            </div>
+            <div class="badge">
+              <img src="./images/05-badge.webp" alt="" />
+              <span>熱血勇跑家</span>
+            </div>
+            <div class="badge">
+              <img src="./images/06-badge.webp" alt="" />
+              <span>北面巔峰</span>
+            </div>
+            <div class="badge">
+              <img src="./images/07-badge.webp" alt="" />
+              <span>晴空之上</span>
+            </div>
+            <div class="badge">
+              <img src="./images/08-badge.webp" alt="" />
+              <span>山林對話</span>
+            </div>
+            <div class="badge">
+              <img src="./images/09-badge.webp" alt="" />
+              <span>手作體驗</span>
+            </div>
+
+            <div class="badge">
+              <img src="./images/11-badge.webp" alt="" />
+              <span>探險攝影師</span>
+            </div>
+
+            <div class="badge">
+              <img src="./images/12-badge.webp" alt="" />
+              <span>探險攝影師</span>
+            </div>
+
+            <div class="badge">
+              <img src="./images/10-badge.webp" alt="" />
+              <span>電車騎士</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- 徽章頁面 -->
-      <div id="pageBadge">
+      <div id="pageBadge" class="badge-container">
         <!-- 在class="progress-container"加上 step="1" 就會有相對應的樣式-->
         <!-- <div class="progress-container" step="0"> -->
         <div class="progress-container">
@@ -253,8 +259,8 @@
           <span>請選擇你想拿到的徽章</span>
           <span class="icon--default icon-arrow-down"></span>
         </div>
-        <div class="badge-desc-container">
-          <div id="badge01" class="badge-desc-card">
+        <div class="badge-card-container">
+          <div id="badge01" class="badge-card">
             <img src="./images/01-N-badge.webp" alt="野營大廚師" />
             <div class="desc">
               <span class="title">野營大廚師</span>
@@ -265,7 +271,7 @@
               </div>
             </div>
           </div>
-          <div id="badge02" class="badge-desc-card">
+          <div id="badge02" class="badge-card">
             <img src="./images/02-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">水上玩咖</span>
@@ -276,7 +282,7 @@
               </div>
             </div>
           </div>
-          <div id="badge03" class="badge-desc-card">
+          <div id="badge03" class="badge-card">
             <img src="./images/03-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">戶外露營家</span>
@@ -287,7 +293,7 @@
               </div>
             </div>
           </div>
-          <div id="badge04" class="badge-desc-card">
+          <div id="badge04" class="badge-card">
             <img src="./images/04-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">赤手登峰</span>
@@ -298,7 +304,7 @@
               </div>
             </div>
           </div>
-          <div id="badge05" class="badge-desc-card">
+          <div id="badge05" class="badge-card">
             <img src="./images/05-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">熱血勇跑家</span>
@@ -309,7 +315,7 @@
               </div>
             </div>
           </div>
-          <div id="badge06" class="badge-desc-card">
+          <div id="badge06" class="badge-card">
             <img src="./images/06-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">北面巔峰</span>
@@ -320,7 +326,7 @@
               </div>
             </div>
           </div>
-          <div id="badge07" class="badge-desc-card">
+          <div id="badge07" class="badge-card">
             <img src="./images/07-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">晴空之上</span>
@@ -331,7 +337,7 @@
               </div>
             </div>
           </div>
-          <div id="badge08" class="badge-desc-card">
+          <div id="badge08" class="badge-card">
             <img src="./images/08-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">山林對話</span>
@@ -342,7 +348,7 @@
               </div>
             </div>
           </div>
-          <div id="badge09" class="badge-desc-card">
+          <div id="badge09" class="badge-card">
             <img src="./images/09-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">手作體驗</span>
@@ -353,7 +359,7 @@
               </div>
             </div>
           </div>
-          <div id="badge10" class="badge-desc-card">
+          <div id="badge10" class="badge-card">
             <img src="./images/10-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">電車騎士</span>
@@ -364,7 +370,7 @@
               </div>
             </div>
           </div>
-          <div id="badge11" class="badge-desc-card">
+          <div id="badge11" class="badge-card">
             <img src="./images/11-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">探險攝影師</span>
@@ -375,7 +381,7 @@
               </div>
             </div>
           </div>
-          <div id="badge12" class="badge-desc-card">
+          <div id="badge12" class="badge-card">
             <img src="./images/12-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">精準導航員</span>
@@ -390,8 +396,66 @@
       </div>
       <!-- 徽章頁面 end -->
 
+      <!-- 兌換券 -->
+      <div id="coupon-template" class="coupon-container">
+        <!-- 已兌換過的coupon在#bottle-coupon加上disabled這個 class 就好-->
+        <div id="bottle-coupon" class="bottle-coupon">
+          <span class="bottle-title">山植石微景瓶</span>
+          <div>
+            <span class="bottle-tag">手作體驗券</span>
+            <span class="bottle-expire">2024.09.21~22</span>
+          </div>
+          <div class="bottle-coupon-image">
+            <img src="./images/bottle-coupon.webp" alt="" />
+            <div class="redeem-stamp">已兌換</div>
+          </div>
+          <div class="bottle-coupon-notice">
+            <div class="notice-header">
+              <span class="icon--default icon-notification"></span>
+              <span>注意事項</span>
+            </div>
+            <ol>
+              <li>本券限 2024 年 9 月 21 日或 22 日使用，逾期無效</li>
+              <li>本券由現場工作人員操作兌換，每人限一次兌換機會</li>
+              <li>山植石微景瓶手作體驗數量有限，換完為止； 如遇當時段體驗排隊人潮較多，將由工作人員協助進行預約</li>
+            </ol>
+          </div>
+          <div id="coupon-exchange-btn" class="coupon-exchange-btn">
+            <span class="icon--default icon-checkmark"></span>
+            <span>點我兌換</span>
+          </div>
+        </div>
+      </div>
+      <!-- 兌換券end -->
+
+      <!-- 兌換券彈窗 -->
+      <div id="coupon-modal-template">
+        <div id="bottle-coupon-modal" class="bottle-coupon-modal close">
+          <div class="bottle-coupon-container">
+            <span class="coupon-modal-title">山植石微景瓶</span>
+            <div>
+              <span class="bottle-tag">手作體驗券</span>
+              <span class="bottle-expire">2024.09.21~22</span>
+            </div>
+            <p class="coupon-modal-desc">抵達攤位後，請向工作人員出示此畫面，進行兌換作業</p>
+            <input type="text" name="" id="coupon-modal-input" placeholder="輸入兌換碼" />
+            <div class="coupon-modal-operate-btn">
+              <div id="coupon-modal-cancel">
+                <span class="icon--default icon-cancel"></span>
+                <span>取消</span>
+              </div>
+              <div id="coupon-modal-exchange">
+                <span class="icon--default icon-checkmark"></span>
+                <span>兌換</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 兌換券彈窗end -->
+
       <!-- 選擇版型 -->
-      <div id="page-layout">
+      <div id="page-layout" class="layout-container">
         <div class="layout-desc">
           <span>請選擇一款版型</span>
           <span class="icon--default icon-arrow-down"></span>
@@ -411,7 +475,7 @@
       <!-- 選擇版型 end -->
 
       <!-- 上傳照片 -->
-      <div id="page-uploadImg">
+      <div id="page-uploadImg" class="uploadImg-container">
         <div class="upload-desc">
           <span>請選擇您的照片</span>
           <span class="icon--default icon-arrow-down"></span>
@@ -495,7 +559,7 @@
       <!-- 上傳照片 end -->
 
       <!-- 分享好友 -->
-      <div id="page-share">
+      <div id="page-share" class="share-container">
         <div class="share-img">
           <img id="share-img" src="" alt="" />
         </div>
@@ -513,63 +577,79 @@
       </div>
       <!-- 分享好友end -->
 
-      <div id="coupon-template">
-        <!-- 已兌換過的coupon在#bottle-coupon加上disabled這個 class 就好-->
-        <div id="bottle-coupon" class="bottle-coupon">
-          <span class="bottle-title">山植石微景瓶</span>
-          <div>
-            <span class="bottle-tag">手作體驗券</span>
-            <span class="bottle-expire">2024.09.21~22</span>
-          </div>
-          <div class="bottle-coupon-image">
-            <img src="./images/bottle-coupon.webp" alt="" />
-            <div class="redeem-stamp">已兌換</div>
-          </div>
-          <div class="bottle-coupon-notice">
-            <div class="notice-header">
-              <span class="icon--default icon-notification"></span>
-              <span>注意事項</span>
+      <!-- 填寫資訊 -->
+      <div id="pageForm" class="form-conatiner">
+        <div class="form-modal">
+          <div class="form-modal-container">
+            <div class="form-modal-header">
+              <div>
+                <span class="form-modal-title">分享好友抽好禮</span>
+                <span class="form-modal-desc">留下資料並立即分享好友<br />即有機會獲得北面購物袋 (限量300份)</span>
+              </div>
+              <div>
+                <img src="./images/bags.webp" alt="" />
+              </div>
             </div>
-            <ol>
-              <li>本券限 2024 年 9 月 21 日或 22 日使用，逾期無效</li>
-              <li>本券由現場工作人員操作兌換，每人限一次兌換機會</li>
-              <li>山植石微景瓶手作體驗數量有限，換完為止； 如遇當時段體驗排隊人潮較多，將由工作人員協助進行預約</li>
-            </ol>
+            <div class="form-modal-body">
+              <label class="member-checkbox">
+                <input type="checkbox" id="member" />
+                <span class="icon--default icon-check"></span>
+                留下資料即視同加入品牌會員
+              </label>
+              <label class="privacy-term">
+                <input type="checkbox" id="privacy" />
+                <span class="icon--default icon-check"></span>
+                我同意<u>隱私權使用政策</u>
+              </label>
+              <div class="form-input">
+                <input type="text" placeholder="姓名" />
+                <input type="text" placeholder="手機" />
+              </div>
+              <div id="submit-form-btn" class="common-btn">
+                <span class="icon--default icon-checkmark"></span>
+                <span>確認送出</span>
+              </div>
+            </div>
           </div>
-          <div id="coupon-exchange-btn" class="coupon-exchange-btn">
-            <span class="icon--default icon-checkmark"></span>
-            <span>點我兌換</span>
+        </div>
+      </div>
+
+      <!-- 填寫資訊end -->
+
+      <div id="pageWaterfall" class="waterfall-container">
+        <div id="display-container" class="display-container"></div>
+        <div class="common-btn">
+          <span class="icon--default icon-checkmark"></span>
+          <span>立即參加</span>
+        </div>
+        <div id="bottom-more" class="bottom-more"></div>
+
+        <div id="photo-modal" class="photo-modal">
+          <div class="photo-modal-container">
+            <div class="user-info">
+              <div class="user-avatar">
+                <img id="user-avatar" src="" alt="" />
+              </div>
+              <span id="user-name"></span>
+            </div>
+            <div class="user-photo">
+              <img id="user-photo" src="https://thenorthface-oa.bigc.tw/Content/MF2024/6.jpg" alt="" />
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="coupon-modal-template">
-      <!-- show: 顯示彈窗 / close: 關閉彈窗 -->
-      <div id="bottle-coupon-modal" class="bottle-coupon-modal close">
-        <div class="bottle-coupon-container">
-          <span class="coupon-modal-title">山植石微景瓶</span>
-          <div>
-            <span class="bottle-tag">手作體驗券</span>
-            <span class="bottle-expire">2024.09.21~22</span>
-          </div>
-          <p class="coupon-modal-desc">抵達攤位後，請向工作人員出示此畫面，進行兌換作業</p>
-          <input type="text" name="" id="" placeholder="輸入兌換碼" />
-          <div class="coupon-modal-operate-btn">
-            <div id="coupon-modal-cancel">
-              <span class="icon--default icon-cancel"></span>
-              <span>取消</span>
-            </div>
-            <div id="coupon-modal-exchange">
-              <span class="icon--default icon-checkmark"></span>
-              <span>兌換</span>
-            </div>
-          </div>
-        </div>
+    <!-- <div id="badgeContainer" class="badge-container">
+      <div class="logo">
+        <img src="./images/logo.webp" alt="" />
       </div>
-    </div>
+      <div id="badge-back" class="back-btn">
+        <span class="icon--default icon-arrow-left"></span>
+      </div>
+    </div> -->
 
-    <div id="pageForm" class="form-conatiner">
+    <!-- <div id="pageForm" class="form-conatiner">
       <div class="logo">
         <img src="./images/logo.webp" alt="" />
       </div>
@@ -609,9 +689,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div id="pageWaterfall">
+    <!-- <div id="pageWaterfall">
       <div class="waterfall-container">
         <div class="logo">
           <img src="./images/logo.webp" alt="" />
@@ -639,7 +719,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <script src="index.js"></script>
   </body>
 </html>

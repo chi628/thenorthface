@@ -1,25 +1,13 @@
-.badge-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background: #bedfe3;
-  /* padding-bottom: 36px; */
+.badge-container,
+.coupon-container,
+.layout-container,
+.uploadImg-container,
+.share-container,
+.waterfall-container {
+  padding-top: 40vw;
 }
-.badge-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(./images/normalbg.webp);
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+
 .badge-desc {
-  position: relative;
   width: 60%;
   height: 30px;
   border-radius: 15px;
@@ -38,28 +26,28 @@
 
 .badge-desc > .icon-arrow-down {
   display: inline-flex;
-  width: 14.6px;
-  height: 14.6px;
+  width: 15px;
+  height: 15px;
   margin-left: 5px;
 }
 
 .badge-desc > .icon-arrow-down::before {
   background-color: #000;
-  width: 14.6px;
-  height: 14.6px;
+  width: 15px;
+  height: 15px;
 }
 
-.badge-desc-container {
-  position: relative;
-  margin: 0 auto 20px;
+.badge-card-container {
+  margin: 0 auto;
+  padding-bottom: 35px;
   width: 93%;
 }
 
-.badge-desc-container > :nth-child(n) {
+.badge-card-container > :nth-child(n) {
   margin-bottom: 15px;
 }
 
-.badge-desc-container > .badge-desc-card {
+.badge-card-container > .badge-card {
   width: 100%;
   min-height: 110px;
   height: 34vw;
@@ -73,13 +61,7 @@
   align-items: center;
 }
 
-/* .badge-desc-container > .badge-desc-card > .badge-img {
-  width: 33%;
-  height: 100%;
-  margin-right: 12px;
-} */
-
-.badge-desc-container > .badge-desc-card > img {
+.badge-card-container > .badge-card > img {
   width: 33%;
   height: auto;
   display: block;
@@ -87,7 +69,7 @@
   margin-right: 12px;
 }
 
-.badge-desc-container > .badge-desc-card > .desc {
+.badge-card-container > .badge-card > .desc {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -98,12 +80,12 @@
   font-family: NotoSansTC;
 }
 
-.badge-desc-container > .badge-desc-card > .desc > .title {
+.badge-card-container > .badge-card > .desc > .title {
   font-size: 18px;
   font-weight: bold;
 }
 
-.badge-desc-container > .badge-desc-card > .desc > .go-join {
+.badge-card-container > .badge-card > .desc > .go-join {
   width: 94px;
   height: 27px;
   background-color: #f7b933;
@@ -119,13 +101,13 @@
   right: 0;
 }
 
-.badge-desc-container > .badge-desc-card > .desc > .go-join > .icon-arrow-right {
+.badge-card-container > .badge-card > .desc > .go-join > .icon-arrow-right {
   display: inline-flex;
   width: 10px;
   height: 10px;
 }
 
-.badge-desc-container > .badge-desc-card > .desc > .go-join > .icon-arrow-right::before {
+.badge-card-container > .badge-card > .desc > .go-join > .icon-arrow-right::before {
   width: 10px;
   height: 10px;
   background: #080404;

@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     fragment.appendChild(div)
   })
 
+  const badgeContainer = document.getElementById('badgeContainer')
   const pageIndex = document.getElementById('pageIndex')
   const pageBadge = document.getElementById('pageBadge')
   const pageLayout = document.getElementById('page-layout')
@@ -263,38 +264,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pageForm = document.getElementById('pageForm')
   const pageWaterfall = document.getElementById('pageWaterfall')
   const couponTemplate = document.getElementById('coupon-template')
+  const pageCoupon = document.getElementById('coupon-template')
 
   const mainContainer = document.querySelector('.main-container')
-  const badgeContainer = document.getElementById('badgeContainer')
   const lookMore = document.getElementById('look-more')
   const indexBadgeTitle = document.getElementById('index-badge-title')
   const indexJoinBtn = document.getElementById('index-join-btn')
   const layoutChooseBtn = document.getElementById('layout-choose-btn')
 
-  if (mainContainer) {
-    if (window.innerHeight < mainContainer.scrollHeight) {
+  // 監聽首頁顯示 看更多
+  if (mainContainer && indexBadgeTitle && lookMore) {
+    console.log('window height', window.innerHeight)
+    const titleBottom = indexBadgeTitle.getBoundingClientRect().bottom
+    let needHideTitle = false
+
+    if (window.innerHeight - titleBottom < 110) {
       lookMore.style.display = 'flex'
       indexBadgeTitle.style.visibility = 'hidden'
+      needHideTitle = true
     }
 
-    mainContainer.addEventListener('scroll', () => {
-      if (mainContainer.scrollTop > 0) {
-        lookMore.style.display = 'none'
-        indexBadgeTitle.style.visibility = 'visible'
-      } else {
-        lookMore.style.display = 'flex'
-        indexBadgeTitle.style.visibility = 'hidden'
+    document.addEventListener('scroll', () => {
+      if (needHideTitle) {
+        if (window.scrollY > 0) {
+          lookMore.style.display = 'none'
+          indexBadgeTitle.style.visibility = 'visible'
+        } else {
+          lookMore.style.display = 'flex'
+          indexBadgeTitle.style.visibility = 'hidden'
+        }
       }
     })
   }
 
+  // 監聽首頁參加活動按鈕
   if (indexJoinBtn) {
     indexJoinBtn.addEventListener('click', () => {
       if (pageIndex && pageBadge) {
         pageIndex.style.display = 'none'
-        badgeContainer.style.display = 'block'
         pageBadge.style.display = 'block'
         currentLayout = 'pageBadge'
+        mainContainer.setAttribute('bg', 'mask')
       }
     })
   }
@@ -384,7 +394,67 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
+  let swiper
   let badgeObj
+  function appendSwiperSlides(id) {
+    selectedBadge = id
+    badgeObj = badgeList.find(badge => badge.id === id)
+    const swiperEl = document.querySelector('.swiper-wrapper')
+
+    swiper = new Swiper('.layout-swiper', {
+      slidesPerView: 1.3,
+      centeredSlides: true,
+      spaceBetween: 10,
+      navigation: {
+        nextEl: '.layout-swiper-next',
+        prevEl: '.layout-swiper-prev',
+      },
+      on: {
+        init() {
+          const prevEl = document.querySelector('.layout-swiper-prev')
+
+          if (prevEl) {
+            prevEl.style.display = 'none'
+          }
+        },
+        slideChange() {
+          const prevEl = document.querySelector('.layout-swiper-prev')
+          const nextEl = document.querySelector('.layout-swiper-next')
+
+          if (this.activeIndex === 0) {
+            prevEl.style.display = 'none'
+          } else {
+            prevEl.style.display = 'flex'
+          }
+
+          if (this.activeIndex === this.slides.length - 1) {
+            nextEl.style.display = 'none'
+          } else {
+            nextEl.style.display = 'flex'
+          }
+        },
+      },
+    })
+
+    for (let i = 0; i < badgeObj.layout.length; i++) {
+      const slide = document.createElement('div')
+      slide.classList.add('swiper-slide')
+
+      const imgEl = document.createElement('img')
+      imgEl.src = badgeObj.layout[i]
+
+      slide.appendChild(imgEl)
+      swiperEl.appendChild(slide)
+    }
+
+    if (pageBadge && pageLayout) {
+      pageBadge.style.display = 'none'
+      pageLayout.style.display = 'block'
+      currentLayout = 'pageLayout'
+    }
+  }
+
+  // 監聽選擇版型按鈕
   if (layoutChooseBtn) {
     layoutChooseBtn.addEventListener('click', () => {
       pageLayout.style.display = 'none'
@@ -409,12 +479,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         default:
           break
       }
-      swiper.removeAllSlides()
 
+      swiper.removeAllSlides()
       currentLayout = 'pageUploadImg'
     })
   }
 
+  // 繪製上傳相片的拍立得底圖
   function setBgImg(el) {
     const bgImgEl = el.querySelector('.bg-photo > img')
     const descContainer = document.getElementById('photo-short-desc')
@@ -476,6 +547,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
+  function cropImg(evt, id) {
+    const image = document.getElementById(`${id}-img`)
+    const cropperBtn = document.getElementById(`${id}-cropper-btn`)
+    let parentEl
+    if (image) {
+      parentEl = image.parentElement
+    }
+    let elWidth
+    let eiHeight
+    if (parentEl) {
+      elWidth = parentEl.getBoundingClientRect().width
+      eiHeight = parentEl.getBoundingClientRect().height
+    }
+
+    console.log('elwidth', elWidth, eiHeight)
+
+    const file = evt.target.files[0]
+    const reader = new FileReader()
+
+    reader.onload = function (e) {
+      image.src = e.target.result
+      cropper = new Cropper(image, {
+        dragMode: 'move',
+        autoCropArea: 1,
+        checkOrientation: false,
+        background: false,
+        highlight: false,
+        modal: false,
+        cropBoxMovable: false,
+        cropBoxResizable: false,
+        minContainerWidth: elWidth,
+        minContainerHeight: eiHeight,
+        minCanvasWidth: elWidth,
+        minCanvasHeight: eiHeight,
+        minCropBoxWidth: elWidth,
+        minCropBoxHeight: eiHeight,
+        aspectRatio: elWidth / eiHeight,
+      })
+      if (cropperBtn) {
+        cropperBtn.style.display = 'flex'
+        cropperBtn.addEventListener('click', () => {
+          const croppedCanvas = cropper.getCroppedCanvas()
+          console.log('crop box', cropper.getCropBoxData(), croppedCanvas)
+          const roundedCanvas = getCanvasImg(croppedCanvas)
+          console.log('base64url', roundedCanvas, roundedCanvas.toDataURL())
+          image.src = roundedCanvas.toDataURL()
+          cropperBtn.style.display = 'none'
+          cropper.destroy()
+        })
+      }
+    }
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
+
   const photoUploadBtn = document.getElementById('photo-upload-btn')
 
   let base64Url
@@ -530,8 +657,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (shareBtn) {
     shareBtn.addEventListener('click', () => {
       pageShared.style.display = 'none'
-      badgeContainer.style.display = 'none'
       pageForm.style.display = 'block'
+      mainContainer.setAttribute('bg', 'right')
       currentLayout = 'pageForm'
     })
   }
@@ -553,6 +680,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageIndex.style.display = 'none'
       pageWaterfall.style.display = 'block'
       currentLayout = 'pageWaterfall'
+      mainContainer.setAttribute('bg', 'right')
       appendPhoto()
       if (photoModal) {
         photoModal.addEventListener('click', () => {
@@ -609,7 +737,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const couponExchangeBtn = document.getElementById('coupon-exchange-btn')
-
   const couponModal = document.getElementById('coupon-modal-template')
 
   if (couponExchangeBtn) {
@@ -622,13 +749,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const cancelCouponModalBtn = document.getElementById('coupon-modal-cancel')
   const couponModalExchange = document.getElementById('coupon-modal-exchange')
+
+  const coupontModalInput = document.getElementById('coupon-modal-input')
   const bottleCoupon = document.getElementById('bottle-coupon')
 
   if (couponModalExchange) {
     couponModalExchange.addEventListener('click', () => {
-      couponModal.style.display = 'none'
-      if (bottleCoupon) {
-        bottleCoupon.classList.add('disabled')
+      if (coupontModalInput.value) {
+        couponModal.style.display = 'none'
+        if (bottleCoupon) {
+          bottleCoupon.classList.add('disabled')
+        }
       }
     })
   }
@@ -692,6 +823,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
+  function changePage(currPage, nextPage) {}
+
   function appendPhoto() {
     const displayContainer = document.getElementById('display-container')
     const fragmentChildren = Array.from(fragment.childNodes)
@@ -729,132 +862,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  let swiper
-
-  function appendSwiperSlides(id) {
-    selectedBadge = id
-    badgeObj = badgeList.find(badge => badge.id === id)
-    const swiperEl = document.querySelector('.swiper-wrapper')
-
-    swiper = new Swiper('.layout-swiper', {
-      slidesPerView: 1.3,
-      centeredSlides: true,
-      spaceBetween: 10,
-      navigation: {
-        nextEl: '.layout-swiper-next',
-        prevEl: '.layout-swiper-prev',
-      },
-      on: {
-        init() {
-          const prevEl = document.querySelector('.layout-swiper-prev')
-
-          if (prevEl) {
-            prevEl.style.display = 'none'
-          }
-        },
-        slideChange() {
-          const prevEl = document.querySelector('.layout-swiper-prev')
-          const nextEl = document.querySelector('.layout-swiper-next')
-
-          if (this.activeIndex === 0) {
-            prevEl.style.display = 'none'
-          } else {
-            prevEl.style.display = 'flex'
-          }
-
-          if (this.activeIndex === this.slides.length - 1) {
-            nextEl.style.display = 'none'
-          } else {
-            nextEl.style.display = 'flex'
-          }
-        },
-      },
-    })
-
-    console.log('obj', badgeObj)
-    for (let i = 0; i < badgeObj.layout.length; i++) {
-      const slide = document.createElement('div')
-      slide.classList.add('swiper-slide')
-
-      const imgEl = document.createElement('img')
-      imgEl.src = badgeObj.layout[i]
-
-      slide.appendChild(imgEl)
-      swiperEl.appendChild(slide)
-    }
-
-    if (pageBadge && pageLayout) {
-      pageBadge.style.display = 'none'
-      pageLayout.style.display = 'block'
-      currentLayout = 'pageLayout'
-    }
-  }
-
   let cropper
-
-  function cropImg(evt, id) {
-    // if (cropper) {
-    //   const croppedCanvas = cropper.getCroppedCanvas()
-    //   const roundedCanvas = getCanvasImg(croppedCanvas)
-    //   if (cropper.element) {
-    //     cropper.element.src = roundedCanvas.toDataURL()
-    //   }
-    //   cropper.destroy()
-    // }
-    const image = document.getElementById(`${id}-img`)
-    const cropperBtn = document.getElementById(`${id}-cropper-btn`)
-    let parentEl
-    if (image) {
-      parentEl = image.parentElement
-    }
-    let elWidth
-    let eiHeight
-    if (parentEl) {
-      elWidth = parentEl.getBoundingClientRect().width
-      eiHeight = parentEl.getBoundingClientRect().height
-    }
-
-    console.log('elwidth', elWidth, eiHeight)
-
-    const file = evt.target.files[0]
-    const reader = new FileReader()
-
-    reader.onload = function (e) {
-      image.src = e.target.result
-      cropper = new Cropper(image, {
-        dragMode: 'move',
-        autoCropArea: 1,
-        checkOrientation: false,
-        background: false,
-        highlight: false,
-        modal: false,
-        cropBoxMovable: false,
-        cropBoxResizable: false,
-        minContainerWidth: elWidth,
-        minContainerHeight: eiHeight,
-        minCanvasWidth: elWidth,
-        minCanvasHeight: eiHeight,
-        minCropBoxWidth: elWidth,
-        minCropBoxHeight: eiHeight,
-        aspectRatio: elWidth / eiHeight,
-        ready() {},
-      })
-      if (cropperBtn) {
-        cropperBtn.style.display = 'flex'
-        cropperBtn.addEventListener('click', () => {
-          const croppedCanvas = cropper.getCroppedCanvas()
-          const roundedCanvas = getCanvasImg(croppedCanvas)
-          console.log('base64url', roundedCanvas, roundedCanvas.toDataURL())
-          image.src = roundedCanvas.toDataURL()
-          cropperBtn.style.display = 'none'
-          cropper.destroy()
-        })
-      }
-    }
-    if (file) {
-      reader.readAsDataURL(file)
-    }
-  }
 
   function getCanvasImg(sourceCanvas) {
     var canvas = document.createElement('canvas')

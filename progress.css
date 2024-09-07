@@ -10,6 +10,18 @@
   justify-content: space-between;
 }
 
+.upper {
+  width: 100%;
+  height: 52%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  position: relative;
+}
+
+.upper > * {
+  opacity: 0.5;
+}
+
 .upper > :nth-child(1) > .progress-icon {
   position: relative;
 }
@@ -31,18 +43,6 @@
 }
 .upper > :nth-child(1)[exchanged] > .progress-icon > .redeem-stamp {
   visibility: visible;
-}
-
-.upper {
-  width: 100%;
-  height: 52%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  position: relative;
-}
-
-.upper > * {
-  opacity: 0.5;
 }
 
 .progress-container[step='3'] > .upper > :nth-child(1),
