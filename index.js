@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('img', image.naturalWidth, image.naturalHeight)
+      console.log('try option')
       const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
@@ -608,6 +608,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         minCropBoxWidth: elWidth,
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
+        rotatable: false,
+        scalable: false,
         ready() {
           cropper.setCanvasData(0, 0, elWidth, eiHeight)
           cropper.move(0, 0)
