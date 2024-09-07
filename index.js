@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pageUploadImg.style.display = 'none'
       pageShared.style.display = 'block'
       console.log('base 64', base64Url)
-      document.getElementById('shard-img').src = base64Url
+      document.getElementById('share-img').src = base64Url
     })
   }
 
