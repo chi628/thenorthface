@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageLayout = document.getElementById('page-layout')
   const pageUploadImg = document.getElementById('page-uploadImg')
   const pageShared = document.getElementById('page-share')
+  const pageForm = document.getElementById('pageForm')
 
   const mainContainer = document.querySelector('.main-container')
   const badgeContainer = document.getElementById('badgeContainer')
@@ -481,14 +482,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let base64Url
   if (photoUploadBtn) {
     photoUploadBtn.addEventListener('click', () => {
-      // if (cropper) {
-      //   const croppedCanvas = cropper.getCroppedCanvas()
-      //   const roundedCanvas = getCanvasImg(croppedCanvas)
-      //   if (cropper.element) {
-      //     cropper.element.src = roundedCanvas.toDataURL()
-      //   }
-      //   cropper.destroy()
-      // }
+      if (cropper) {
+        console.log('cropper', cropper, cropper.element)
+        // const croppedCanvas = cropper.getCroppedCanvas()
+        // const roundedCanvas = getCanvasImg(croppedCanvas)
+        // if (cropper.element) {
+        //   cropper.element.src = roundedCanvas.toDataURL()
+        // }
+        // cropper.destroy()
+      }
       const bgImg = current_photo_grid.querySelector('.bg-photo > img')
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
@@ -507,6 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
 
       filteredImages.forEach(img => {
+        console.log('img', img, img.getBoundingClientRect())
         const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
         const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
         const _width = img.getBoundingClientRect().width
@@ -519,6 +522,26 @@ document.addEventListener('DOMContentLoaded', () => {
       pageShared.style.display = 'block'
       console.log('base 64', base64Url)
       document.getElementById('share-img').src = base64Url
+    })
+  }
+
+  const shareBtn = document.getElementById('share-btn')
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      pageShared.style.display = 'none'
+      badgeContainer.style.display = 'none'
+      pageForm.style.display = 'block'
+    })
+  }
+
+  const submitFormBtn = document.getElementById('submit-form-btn')
+
+  if (submitFormBtn) {
+    submitFormBtn.addEventListener('click', () => {
+      // 傳送資料
+      pageForm.style.display = 'none'
+      pageIndex.style.display = 'block'
     })
   }
 
@@ -548,14 +571,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let cropper
 
   function cropImg(evt, id) {
-    if (cropper) {
-      const croppedCanvas = cropper.getCroppedCanvas()
-      const roundedCanvas = getCanvasImg(croppedCanvas)
-      if (cropper.element) {
-        cropper.element.src = roundedCanvas.toDataURL()
-      }
-      cropper.destroy()
-    }
+    // if (cropper) {
+    //   const croppedCanvas = cropper.getCroppedCanvas()
+    //   const roundedCanvas = getCanvasImg(croppedCanvas)
+    //   if (cropper.element) {
+    //     cropper.element.src = roundedCanvas.toDataURL()
+    //   }
+    //   cropper.destroy()
+    // }
     const image = document.getElementById(`${id}-img`)
     const cropperBtn = document.getElementById(`${id}-cropper-btn`)
     let parentEl
@@ -569,6 +592,8 @@ document.addEventListener('DOMContentLoaded', () => {
       eiHeight = parentEl.getBoundingClientRect().height
     }
 
+    console.log('elwidth', elWidth, eiHeight)
+
     const file = evt.target.files[0]
     const reader = new FileReader()
 
@@ -577,6 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
+        checkOrientation: false,
         background: false,
         highlight: false,
         modal: false,
@@ -590,7 +616,6 @@ document.addEventListener('DOMContentLoaded', () => {
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
       })
-      console.log('crope', cropper)
       if (cropperBtn) {
         cropperBtn.style.display = 'flex'
         cropperBtn.addEventListener('click', () => {
