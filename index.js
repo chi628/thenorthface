@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('try option8')
+      console.log('try option update bg')
       const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
@@ -723,8 +723,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       canvas2.height = height
       context.imageSmoothingEnabled = true
 
-      // 先畫拍立得底圖
-      context.drawImage(bgImg, 0, 0, width, height)
       // 再找出拍立得上所有的 img
       const allImages = current_photo_grid.querySelectorAll('img')
       const filteredImages = Array.from(allImages).filter(img => {
@@ -737,6 +735,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const _height = img.getBoundingClientRect().height
         context.drawImage(img, xPos, yPos, _width, _height)
       })
+      // 先畫拍立得底圖
+      context.drawImage(bgImg, 0, 0, width, height)
       base64Url = canvas.toDataURL()
 
       const noLogoImg = document.createElement('img')
