@@ -591,11 +591,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('try option2')
+      console.log('try option3')
       const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
-        // checkOrientation: false,
+        checkOrientation: false,
         background: false,
         highlight: false,
         modal: false,
@@ -609,8 +609,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         minCropBoxHeight: eiHeight,
         aspectRatio: elWidth / eiHeight,
         ready() {
+          cropper.crop()
           cropper.setCanvasData(0, 0, elWidth, eiHeight)
-          cropper.move(0, 0)
+          cropper.move(1, 0)
+          cropper.move(-1, 0)
           cropper.zoom(0.1)
         },
       })
