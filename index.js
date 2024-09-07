@@ -607,8 +607,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         ready() {
           // this.cropper.crop()
           // this.cropper.setCanvasData(0, 0, elWidth, eiHeight)
-          this.cropper.move(1, 0).move(-1, 0)
-          this.cropper.zoom(0.1)
+          this.cropper.move(1, 0)
+          this.cropper.zoom(0.5)
         },
       })
 
