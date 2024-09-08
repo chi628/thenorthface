@@ -245,7 +245,7 @@ let currentLayout = 'pageIndex'
 let current_photo_grid
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v3')
+  console.log('v3 see data')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -614,7 +614,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (cropperBtn) {
         cropperBtn.addEventListener('click', () => {
           let croppedCanvas
+          // const cropData = cropper.getData(); // 獲取裁剪區域資料
+          let cropData
+          const minWidth = 50
+          const minHeight = 50
           if (id === 'grid-1') {
+            cropData = photo1Cropper.getData()
+            // if (cropData.width < minWidth || cropData.height < minHeight) {
+            //   // alert('裁剪區域太小，請調整裁剪區域。');
+            //   // return null;
+            // }
+            console.log('cropper data', photo1Cropper.getData(), photo1Cropper.getCanvasData())
             croppedCanvas = photo1Cropper.getCroppedCanvas()
           } else if (id === 'grid-2-left') {
             croppedCanvas = photo2LeftCropper.getCroppedCanvas()
