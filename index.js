@@ -205,23 +205,23 @@ const badgeList = [
   },
 ]
 
-// badgeList.forEach(badge => {
-//   const imgList = [
-//     badge.icon,
-//     badge.blackIcon,
-//     badge.layout[0],
-//     badge.layout[1],
-//     badge.layout[2],
-//     badge.layout_noLogo[0],
-//     badge.layout_noLogo[1],
-//     badge.layout_noLogo[2],
-//   ]
+badgeList.forEach(badge => {
+  const imgList = [
+    badge.icon,
+    badge.blackIcon,
+    badge.layout[0],
+    badge.layout[1],
+    badge.layout[2],
+    badge.layout_noLogo[0],
+    badge.layout_noLogo[1],
+    badge.layout_noLogo[2],
+  ]
 
-//   imgList.forEach(src => {
-//     const img = new Image()
-//     img.src = src
-//   })
-// })
+  imgList.forEach(src => {
+    const img = new Image()
+    img.src = src
+  })
+})
 
 let dataList = []
 const fragment = new DocumentFragment()
@@ -464,6 +464,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageLayout.style.display = 'none'
       pageUploadImg.style.display = 'block'
       resetUploadImg()
+      console.log('swiper', swiper)
       switch (swiper.activeIndex) {
         case 0:
           current_photo_grid = photo_grid_1
@@ -591,7 +592,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
-      console.log('try option update bg2')
+      console.log('fixed swiper')
       const cropper = new Cropper(image, {
         dragMode: 'move',
         autoCropArea: 1,
@@ -748,7 +749,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         let wait2 = setInterval(() => {
           clearInterval(wait2)
           resolve()
-        }, 100)
+        }, 200)
       })
 
       // 先畫拍立得底圖
@@ -778,11 +779,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageShared.style.display = 'none'
       if (isDoneForm) {
         pageIndex.style.display = 'block'
+        mainContainer.removeAttribute('bg')
+        currentLayout = 'pageIndex'
       } else {
         pageForm.style.display = 'block'
+        mainContainer.setAttribute('bg', 'right')
+        currentLayout = 'pageForm'
       }
-      mainContainer.setAttribute('bg', 'right')
-      currentLayout = 'pageForm'
+      swiper.destroy()
     })
   }
 
@@ -794,6 +798,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       isDoneForm = true
       pageForm.style.display = 'none'
       pageIndex.style.display = 'block'
+      mainContainer.removeAttribute('bg')
     })
   }
 
@@ -849,9 +854,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const receiveBtn = document.getElementById('receive-btn')
   if (receiveBtn) {
     receiveBtn.addEventListener('click', () => {
-      window.open('https://maac.io/2LRej')
-      receiveBtn.style.display = 'none'
-      showCouponBtn.style.display = 'flex'
+      const progessContainer = document.querySelector('.progress-container')
+      const step = progessContainer.getAttribute('step')
+      if (parseInt(step) >= 3) {
+        window.open('https://maac.io/2LRej')
+        receiveBtn.style.display = 'none'
+        showCouponBtn.style.display = 'flex'
+      }
     })
   }
   const showCouponBtn = document.getElementById('show-coupon-btn')
@@ -907,6 +916,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       currentLayout = 'pageIndex'
       pageBadge.style.display = 'none'
       pageIndex.style.display = 'block'
+      mainContainer.removeAttribute('bg')
     } else if (currentLayout === 'couponTemplate') {
       couponTemplate.style.display = 'none'
       pageBadge.style.display = 'block'
@@ -927,11 +937,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else if (currentLayout === 'pageForm') {
       pageForm.style.display = 'none'
       pageShared.style.display = 'block'
+      mainContainer.setAttribute('bg', 'mask')
       currentLayout = 'pageShared'
     } else if (currentLayout === 'pageWaterfall') {
       pageWaterfall.style.display = 'none'
       pageIndex.style.display = 'block'
       currentLayout = 'pageIndex'
+      mainContainer.removeAttribute('bg')
     }
   })
 

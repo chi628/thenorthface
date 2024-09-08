@@ -19,7 +19,7 @@
 }
 
 .upper > * {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .upper > :nth-child(1) > .progress-icon {
