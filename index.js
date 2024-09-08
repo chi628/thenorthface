@@ -245,6 +245,7 @@ let currentLayout = 'pageIndex'
 let current_photo_grid
 
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log('v1')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -578,9 +579,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // autoCrop: false,
         autoCropArea: 1,
         checkOrientation: false,
-        // background: false,
-        // highlight: false,
-        // modal: false,
+        background: false,
+        highlight: false,
+        modal: false,
         cropBoxMovable: false,
         cropBoxResizable: false,
         // minContainerWidth: elWidth,
@@ -591,8 +592,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         // minCropBoxHeight: eiHeight,
         // aspectRatio: elWidth / eiHeight,
         ready() {
-          // this.cropper.move(1, 0)
-          // this.cropper.zoom(0.3)
+          // this.cropper.setCanvasData({
+          //   left: 0,
+          //   top: 0,
+          //   width: elWidth,
+          //   height: eiHeight,
+          // })
+          this.cropper.setCropBoxData({
+            left: 0,
+            top: 0,
+            width: elWidth,
+            height: eiHeight,
+          })
+          console.log('cropper', this.cropper)
         },
       })
 
