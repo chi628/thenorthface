@@ -133,3 +133,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+::placeholder {
+  color: #90b5c9;
+  opacity: 1;
+}
+
+::-ms-input-placeholder {
+  /* Edge 12-18 */
+  color: #90b5c9;
+}

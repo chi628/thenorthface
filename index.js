@@ -243,9 +243,10 @@ let badgeObj
 let selectedBadge = ''
 let currentLayout = 'pageIndex'
 let current_photo_grid
+let isDoneForm = false // 是否填過表單
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v3 see data')
+  console.log('v4')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -311,22 +312,28 @@ document.addEventListener('DOMContentLoaded', async () => {
       // }
     })
   }
+
+  function appendPhoto() {
+    const displayContainer = document.getElementById('display-container')
+    const fragmentChildren = Array.from(fragment.childNodes)
+
+    if (displayContainer && fragmentChildren.length) {
+      const tmpFragment = new DocumentFragment()
+      for (let i = 0; i < limit; i++) {
+        if (fragmentChildren[i]) {
+          tmpFragment.appendChild(fragmentChildren[i])
+        }
+      }
+      displayContainer.appendChild(tmpFragment)
+    }
+  }
   // 2. 監聽精彩直擊按鈕
   const waterfallBtn = document.getElementById('waterfall')
   if (waterfallBtn) {
     waterfallBtn.addEventListener('click', () => {
-      // pageIndex.style.display = 'none'
-      // pageWaterfall.style.display = 'block'
-      // currentLayout = 'pageWaterfall'
-      // mainContainer.setAttribute('bg', 'right')
       nextPage('pageWaterfall')
       appendPhoto()
 
-      if (photoModal) {
-        photoModal.addEventListener('click', () => {
-          photoModal.style.display = 'none'
-        })
-      }
       const bottomEl = document.getElementById('bottom-more')
       let needCallAgain = false
       const observer = new IntersectionObserver(
@@ -353,6 +360,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       )
       bottomEl && observer.observe(bottomEl)
+    })
+  }
+  // 精彩直擊頁面
+  // 1. 監聽立即參加按鈕
+  const waterfallJoinBtn = document.getElementById('waterfall-join-btn')
+  if (waterfallJoinBtn) {
+    waterfallJoinBtn.addEventListener('click', () => {
+      nextPage('pageIndex')
+    })
+  }
+  // 2. 監聽每個作品彈窗是否被點擊 > 點擊後關閉彈窗
+  const photoModal = document.getElementById('photo-modal')
+  if (photoModal) {
+    photoModal.addEventListener('click', () => {
+      photoModal.style.display = 'none'
     })
   }
 
@@ -434,11 +456,39 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (showCouponBtn) {
     showCouponBtn.addEventListener('click', () => {
       nextPage('pageCoupon')
-      // if (pageCoupon) {
-      //   pageCoupon.style.display = 'block'
-      //   pageBadge.style.display = 'none'
-      //   currentLayout = 'pageCoupon'
-      // }
+    })
+  }
+  // 兌換券
+  const couponExchangeBtn = document.getElementById('coupon-exchange-btn')
+  const couponModal = document.getElementById('coupon-modal-template')
+  if (couponExchangeBtn) {
+    couponExchangeBtn.addEventListener('click', () => {
+      if (couponModal) {
+        couponModal.style.display = 'block'
+      }
+    })
+  }
+
+  const couponModalExchange = document.getElementById('coupon-modal-exchange')
+  const cancelCouponModalBtn = document.getElementById('coupon-modal-cancel')
+  const coupontModalInput = document.getElementById('coupon-modal-input')
+  const bottleCoupon = document.getElementById('bottle-coupon')
+
+  if (couponModalExchange) {
+    couponModalExchange.addEventListener('click', () => {
+      if (coupontModalInput.value) {
+        couponModal.style.display = 'none'
+        if (bottleCoupon) {
+          // 已兌換樣式
+          bottleCoupon.classList.add('disabled')
+        }
+      }
+    })
+  }
+
+  if (cancelCouponModalBtn) {
+    cancelCouponModalBtn.addEventListener('click', () => {
+      couponModal.style.display = 'none'
     })
   }
 
@@ -446,9 +496,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 1. 監聽確定按鈕
   if (layoutChooseBtn) {
     layoutChooseBtn.addEventListener('click', () => {
-      // pageLayout.style.display = 'none'
-      // pageUploadImg.style.display = 'block'
-      // currentLayout = 'pageUploadImg'
       nextPage('pageUploadImg')
       resetUploadImg()
       console.log('swiper', swiper.activeIndex)
@@ -569,7 +616,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const reader = new FileReader()
 
     reader.onload = function (e) {
-      console.log('e', e)
       image.src = e.target.result
       const cropper = new Cropper(image, {
         viewMode: 0,
@@ -593,7 +639,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             width: elWidth,
             height: eiHeight,
           })
-          // console.log('cropper', this.cropper)
+          this.cropper.zoom(0.3)
         },
       })
 
@@ -614,17 +660,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (cropperBtn) {
         cropperBtn.addEventListener('click', () => {
           let croppedCanvas
-          // const cropData = cropper.getData(); // 獲取裁剪區域資料
-          let cropData
-          const minWidth = 50
-          const minHeight = 50
           if (id === 'grid-1') {
-            cropData = photo1Cropper.getData()
-            // if (cropData.width < minWidth || cropData.height < minHeight) {
-            //   // alert('裁剪區域太小，請調整裁剪區域。');
-            //   // return null;
-            // }
-            console.log('cropper data', photo1Cropper.getData(), photo1Cropper.getCanvasData())
             croppedCanvas = photo1Cropper.getCroppedCanvas()
           } else if (id === 'grid-2-left') {
             croppedCanvas = photo2LeftCropper.getCroppedCanvas()
@@ -755,153 +791,132 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
       base64Url_nologo = canvas2.toDataURL()
 
-      pageUploadImg.style.display = 'none'
-      pageShared.style.display = 'block'
+      nextPage('pageShared')
       document.getElementById('share-img').src = base64Url
       document.getElementById('photo-nologo').src = base64Url_nologo
-      currentLayout = 'pageShared'
     })
   }
 
-  // 是否填寫過資料
-  let isDoneForm = false
+  // 分享好友頁面
+  // 1. 監聽分享好友按鈕
+  // > 沒填寫過表單才會前往表單頁
+  // > 按下按鈕後，視同搜集徽章
   const shareBtn = document.getElementById('share-btn')
   if (shareBtn) {
     shareBtn.addEventListener('click', () => {
       badgeTaskDone()
-      pageShared.style.display = 'none'
       if (isDoneForm) {
-        pageIndex.style.display = 'block'
-        mainContainer.removeAttribute('bg')
-        currentLayout = 'pageIndex'
+        nextPage('pageIndex')
       } else {
-        pageForm.style.display = 'block'
-        mainContainer.setAttribute('bg', 'right')
-        currentLayout = 'pageForm'
+        nextPage('pageForm')
       }
-      // swiper.destroy()
     })
   }
+  function badgeTaskDone() {
+    const taskCard = document.getElementById(selectedBadge)
+    if (taskCard) {
+      taskCard.querySelector('img').src = badgeObj.icon
+    }
+  }
 
+  // 填寫資料頁面
+  // 1.監聽確認送出按鈕 >> 送出前檢查 input 的值
   const submitFormBtn = document.getElementById('submit-form-btn')
   if (submitFormBtn) {
     submitFormBtn.addEventListener('click', () => {
       // 傳送資料
-      // 假定已經填寫過資料
-      isDoneForm = true
-      pageForm.style.display = 'none'
-      pageIndex.style.display = 'block'
-      mainContainer.removeAttribute('bg')
-    })
-  }
-
-  const photoModal = document.getElementById('photo-modal')
-
-  // 監聽精彩直擊頁面的立即參加按鈕
-  const waterfallJoinBtn = document.getElementById('waterfall-join-btn')
-  if (waterfallJoinBtn) {
-    pageWaterfall.style.display = 'none'
-    pageIndex.style.display = 'block'
-  }
-
-  const couponExchangeBtn = document.getElementById('coupon-exchange-btn')
-  const couponModal = document.getElementById('coupon-modal-template')
-
-  if (couponExchangeBtn) {
-    couponExchangeBtn.addEventListener('click', () => {
-      if (couponModal) {
-        couponModal.style.display = 'block'
+      const errorHint = document.getElementById('error-hint')
+      const inputName = document.getElementById('form-input-name')
+      const inputTel = document.getElementById('form-input-tel')
+      const telPattern = /09\d{2}(\d{6}|-\d{3}-\d{3})/
+      if (!telPattern.test(inputTel.value)) {
+        errorHint.innerText = '請輸入正確號碼格式'
       }
-    })
-  }
+      const memberCheck = document.getElementById('member')
+      const privacyCheck = document.getElementById('privacy')
+      // if (!memberCheck.checked || !privacyCheck.checked) {
+      //   errorHint.innerText = '請勾選'
+      // }
 
-  const cancelCouponModalBtn = document.getElementById('coupon-modal-cancel')
-  const couponModalExchange = document.getElementById('coupon-modal-exchange')
-
-  const coupontModalInput = document.getElementById('coupon-modal-input')
-  const bottleCoupon = document.getElementById('bottle-coupon')
-
-  if (couponModalExchange) {
-    couponModalExchange.addEventListener('click', () => {
-      if (coupontModalInput.value) {
-        couponModal.style.display = 'none'
-        if (bottleCoupon) {
-          bottleCoupon.classList.add('disabled')
-        }
+      if (inputName.value && inputTel.value && memberCheck.checked && privacyCheck.checked) {
+        // 假定已經填寫過資料
+        isDoneForm = true
+        nextPage('pageIndex')
+      } else {
+        errorHint.innerText = '請輸入資料'
       }
-    })
-  }
-
-  if (cancelCouponModalBtn) {
-    cancelCouponModalBtn.addEventListener('click', () => {
-      couponModal.style.display = 'none'
     })
   }
 
   const backBtn = document.getElementById('back-btn')
   backBtn.addEventListener('click', () => {
-    console.log('click')
-    if (currentLayout === 'pageBadge') {
-      currentLayout = 'pageIndex'
-      pageBadge.style.display = 'none'
-      pageIndex.style.display = 'block'
-      mainContainer.removeAttribute('bg')
-    } else if (currentLayout === 'pageCoupon') {
-      pageCoupon.style.display = 'none'
-      pageBadge.style.display = 'block'
-      currentLayout = 'pageBadge'
-    } else if (currentLayout === 'pageLayout') {
-      // swiper.removeAllSlides()
-      pageLayout.style.display = 'none'
-      pageBadge.style.display = 'block'
-      currentLayout = 'pageBadge'
-    } else if (currentLayout === 'pageUploadImg') {
-      pageUploadImg.style.display = 'none'
-      pageLayout.style.display = 'block'
-      currentLayout = 'pageLayout'
-    } else if (currentLayout === 'pageShared') {
-      pageShared.style.display = 'none'
-      pageUploadImg.style.display = 'block'
-      currentLayout = 'pageUploadImg'
-    } else if (currentLayout === 'pageForm') {
-      pageForm.style.display = 'none'
-      pageShared.style.display = 'block'
-      mainContainer.setAttribute('bg', 'mask')
-      currentLayout = 'pageShared'
-    } else if (currentLayout === 'pageWaterfall') {
-      pageWaterfall.style.display = 'none'
-      pageIndex.style.display = 'block'
-      currentLayout = 'pageIndex'
-      mainContainer.removeAttribute('bg')
+    switch (currentLayout) {
+      case 'pageBadge':
+        nextPage('pageIndex')
+        break
+      case 'pageCoupon':
+        nextPage('pageBadge')
+        break
+      case 'pageLayout':
+        nextPage('pageBadge')
+        break
+      case 'pageUploadImg':
+        nextPage('pageLayout')
+        break
+      case 'pageShared':
+        nextPage('pageUploadImg')
+        break
+      case 'pageForm':
+        nextPage('pageShared')
+        break
+      case 'pageWaterfall':
+        nextPage('pageIndex')
+        break
+      default:
+        break
     }
   })
 
   function nextPage(page) {
+    const pageList = [pageIndex, pageBadge, pageLayout, pageUploadImg, pageShared, pageForm, pageWaterfall, pageCoupon]
+
+    pageList.forEach(page => {
+      page.style.display = 'none'
+    })
     switch (page) {
+      case 'pageIndex':
+        pageIndex.style.display = 'block'
+        currentLayout = 'pageIndex'
+        break
       case 'pageBadge':
-        pageIndex.style.display = 'none'
         pageBadge.style.display = 'block'
         currentLayout = 'pageBadge'
         break
       case 'pageCoupon':
-        pageBadge.style.display = 'none'
         pageCoupon.style.display = 'block'
         currentLayout = 'pageCoupon'
         break
       case 'pageLayout':
-        pageBadge.style.display = 'none'
         pageLayout.style.display = 'block'
         currentLayout = 'pageLayout'
         break
       case 'pageUploadImg':
-        pageLayout.style.display = 'none'
         pageUploadImg.style.display = 'block'
         currentLayout = 'pageUploadImg'
         break
+      case 'pageShared':
+        pageShared.style.display = 'block'
+        currentLayout = 'pageShared'
+        break
+      case 'pageForm':
+        pageForm.style.display = 'block'
+        currentLayout = 'pageForm'
+        break
       case 'pageWaterfall':
-        pageIndex.style.display = 'none'
         pageWaterfall.style.display = 'block'
         currentLayout = 'pageWaterfall'
+        break
+      default:
         break
     }
 
@@ -911,21 +926,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       mainContainer.removeAttribute('bg')
     } else {
       mainContainer.setAttribute('bg', 'mask')
-    }
-  }
-
-  function appendPhoto() {
-    const displayContainer = document.getElementById('display-container')
-    const fragmentChildren = Array.from(fragment.childNodes)
-
-    if (displayContainer && fragmentChildren.length) {
-      const tmpFragment = new DocumentFragment()
-      for (let i = 0; i < limit; i++) {
-        if (fragmentChildren[i]) {
-          tmpFragment.appendChild(fragmentChildren[i])
-        }
-      }
-      displayContainer.appendChild(tmpFragment)
     }
   }
 
@@ -962,13 +962,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     context.imageSmoothingEnabled = true
     context.drawImage(sourceCanvas, 0, 0, width, height)
     return canvas
-  }
-
-  function badgeTaskDone() {
-    const taskCard = document.getElementById(selectedBadge)
-    if (taskCard) {
-      taskCard.querySelector('img').src = badgeObj.icon
-    }
   }
 
   document.getElementById('nologo-btn').addEventListener('click', () => {
