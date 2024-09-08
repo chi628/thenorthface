@@ -241,6 +241,8 @@ async function fetchData() {
 let selectedBadge = ''
 let currentLayout = 'pageIndex'
 
+let mainContainer, indexBadgeTitle, lookMore
+
 document.addEventListener('DOMContentLoaded', async () => {
   await fetchData()
   const limit = 20
@@ -265,36 +267,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const couponTemplate = document.getElementById('coupon-template')
   const pageCoupon = document.getElementById('coupon-template')
 
-  const mainContainer = document.querySelector('.main-container')
-  const lookMore = document.getElementById('look-more')
-  const indexBadgeTitle = document.getElementById('index-badge-title')
+  mainContainer = document.querySelector('.main-container')
+  lookMore = document.getElementById('look-more')
+  indexBadgeTitle = document.getElementById('index-badge-title')
   const indexJoinBtn = document.getElementById('index-join-btn')
   const layoutChooseBtn = document.getElementById('layout-choose-btn')
 
   // 監聽首頁顯示 看更多
-  if (mainContainer && indexBadgeTitle && lookMore) {
-    console.log('window height', window.innerHeight)
-    const titleBottom = indexBadgeTitle.getBoundingClientRect().bottom
-    let needHideTitle = false
-
-    if (window.innerHeight - titleBottom < 110) {
-      lookMore.style.display = 'flex'
-      indexBadgeTitle.style.visibility = 'hidden'
-      needHideTitle = true
-    }
-
-    document.addEventListener('scroll', () => {
-      if (needHideTitle) {
-        if (window.scrollY > 0) {
-          lookMore.style.display = 'none'
-          indexBadgeTitle.style.visibility = 'visible'
-        } else {
-          lookMore.style.display = 'flex'
-          indexBadgeTitle.style.visibility = 'hidden'
-        }
-      }
-    })
-  }
+  showLookMore()
 
   // 監聽首頁參加活動按鈕
   if (indexJoinBtn) {
@@ -399,11 +379,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     selectedBadge = id
     badgeObj = badgeList.find(badge => badge.id === id)
     const swiperEl = document.querySelector('.swiper-wrapper')
-
-    if (swiper) {
-      swiper.removeAllSlides()
-      swiper.init()
-    }
+    console.log('swiper', swiper)
+    // if (swiper) {
+    //   swiper.removeAllSlides()
+    //   swiper.init()
+    // }
 
     swiper = new Swiper('.layout-swiper', {
       slidesPerView: 1.3,
@@ -1004,3 +984,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 })
+
+function showLookMore() {
+  if (mainContainer && indexBadgeTitle && lookMore) {
+    const titleBottom = indexBadgeTitle.getBoundingClientRect().bottom
+    let needHideTitle = false
+
+    if (window.innerHeight - titleBottom < 110) {
+      lookMore.style.display = 'flex'
+      indexBadgeTitle.style.visibility = 'hidden'
+      needHideTitle = true
+    }
+
+    document.addEventListener('scroll', () => {
+      if (needHideTitle) {
+        if (window.scrollY > 0) {
+          lookMore.style.display = 'none'
+          indexBadgeTitle.style.visibility = 'visible'
+        } else {
+          lookMore.style.display = 'flex'
+          indexBadgeTitle.style.visibility = 'hidden'
+        }
+      }
+    })
+  }
+}
