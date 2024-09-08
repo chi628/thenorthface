@@ -244,6 +244,7 @@ let selectedBadge = ''
 let currentLayout = 'pageIndex'
 let current_photo_grid
 let isDoneForm = false // 是否填過表單
+let badgeCount = 0
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('v4')
@@ -256,7 +257,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     div.classList.add('display-img')
     div.setAttribute('data-index', index)
     div.appendChild(img)
-    div.addEventListener('click', openPhotoModal.bind(null, index))
+    div.addEventListener('click', debounce(openPhotoModal.bind(null, index)))
     fragment.appendChild(div)
   })
 
@@ -302,15 +303,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 首頁
   // 1. 監聽立即參加按鈕
   if (indexJoinBtn) {
-    indexJoinBtn.addEventListener('click', () => {
-      nextPage('pageBadge')
-      // if (pageIndex && pageBadge) {
-      //   pageIndex.style.display = 'none'
-      //   pageBadge.style.display = 'block'
-      //   currentLayout = 'pageBadge'
-      //   mainContainer.setAttribute('bg', 'mask')
-      // }
-    })
+    indexJoinBtn.addEventListener(
+      'click',
+      debounce(() => {
+        nextPage('pageBadge')
+      })
+    )
   }
 
   function appendPhoto() {
@@ -330,52 +328,61 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 2. 監聽精彩直擊按鈕
   const waterfallBtn = document.getElementById('waterfall')
   if (waterfallBtn) {
-    waterfallBtn.addEventListener('click', () => {
-      nextPage('pageWaterfall')
-      appendPhoto()
+    waterfallBtn.addEventListener(
+      'click',
+      debounce(() => {
+        nextPage('pageWaterfall')
+        appendPhoto()
 
-      const bottomEl = document.getElementById('bottom-more')
-      let needCallAgain = false
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              needCallAgain = true
-              if (entry.target === bottomEl) {
-                appendPhoto()
-                setTimeout(() => {
-                  if (needCallAgain) {
-                    appendPhoto()
-                  }
-                }, 500)
+        const bottomEl = document.getElementById('bottom-more')
+        let needCallAgain = false
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                needCallAgain = true
+                if (entry.target === bottomEl) {
+                  appendPhoto()
+                  setTimeout(() => {
+                    if (needCallAgain) {
+                      appendPhoto()
+                    }
+                  }, 500)
+                }
+              } else {
+                needCallAgain = false
               }
-            } else {
-              needCallAgain = false
-            }
-          })
-        },
-        {
-          rootMargin: '0px',
-          threshold: 0,
-        }
-      )
-      bottomEl && observer.observe(bottomEl)
-    })
+            })
+          },
+          {
+            rootMargin: '0px',
+            threshold: 0,
+          }
+        )
+        bottomEl && observer.observe(bottomEl)
+      })
+    )
   }
   // 精彩直擊頁面
   // 1. 監聽立即參加按鈕
   const waterfallJoinBtn = document.getElementById('waterfall-join-btn')
   if (waterfallJoinBtn) {
-    waterfallJoinBtn.addEventListener('click', () => {
-      nextPage('pageIndex')
-    })
+    waterfallJoinBtn.addEventListener(
+      'click',
+      debounce(() => {
+        nextPage('pageIndex')
+      })
+    )
   }
   // 2. 監聽每個作品彈窗是否被點擊 > 點擊後關閉彈窗
   const photoModal = document.getElementById('photo-modal')
   if (photoModal) {
-    photoModal.addEventListener('click', () => {
-      photoModal.style.display = 'none'
-    })
+    photoModal.addEventListener(
+      'click',
+      debounce(() => {
+        photoModal.style.display = 'none'
+      })
+    )
   }
 
   // 選擇徽章頁
@@ -383,90 +390,102 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('.badge-card').forEach(card => {
     const id = card.getAttribute('id')
 
-    card.addEventListener('click', () => {
-      selectedBadge = id
-      badgeObj = badgeList.find(badge => badge.id === id)
+    card.addEventListener(
+      'click',
+      debounce(() => {
+        selectedBadge = id
+        badgeObj = badgeList.find(badge => badge.id === id)
 
-      document.querySelectorAll('.swiper-slide > img').forEach((slide, index) => {
-        slide.src = badgeObj.layout[index]
-        slide.alt = badgeObj.title
-      })
+        document.querySelectorAll('.swiper-slide > img').forEach((slide, index) => {
+          slide.src = badgeObj.layout[index]
+          slide.alt = badgeObj.title
+        })
 
-      if (swiper) {
-        swiper.destroy(true, true)
-      }
+        if (swiper) {
+          swiper.destroy(true, true)
+        }
 
-      console.log('swiper', swiper)
+        console.log('swiper', swiper)
 
-      swiper = new Swiper('.layout-swiper', {
-        initialSlide: 0,
-        slidesPerView: 1.3,
-        centeredSlides: true,
-        spaceBetween: 10,
-        navigation: {
-          nextEl: '.layout-swiper-next',
-          prevEl: '.layout-swiper-prev',
-        },
-        on: {
-          init() {
-            console.log('init')
-            const prevEl = document.querySelector('.layout-swiper-prev')
-
-            if (prevEl) {
-              prevEl.style.display = 'none'
-            }
+        swiper = new Swiper('.layout-swiper', {
+          initialSlide: 0,
+          slidesPerView: 1.3,
+          centeredSlides: true,
+          spaceBetween: 10,
+          navigation: {
+            nextEl: '.layout-swiper-next',
+            prevEl: '.layout-swiper-prev',
           },
-          slideChange() {
-            const prevEl = document.querySelector('.layout-swiper-prev')
-            const nextEl = document.querySelector('.layout-swiper-next')
+          on: {
+            init() {
+              console.log('init')
+              const prevEl = document.querySelector('.layout-swiper-prev')
 
-            if (this.activeIndex === 0) {
-              prevEl.style.display = 'none'
-            } else {
-              prevEl.style.display = 'flex'
-            }
+              if (prevEl) {
+                prevEl.style.display = 'none'
+              }
+            },
+            slideChange() {
+              const prevEl = document.querySelector('.layout-swiper-prev')
+              const nextEl = document.querySelector('.layout-swiper-next')
 
-            if (this.activeIndex === this.slides.length - 1) {
-              nextEl.style.display = 'none'
-            } else {
-              nextEl.style.display = 'flex'
-            }
+              if (this.activeIndex === 0) {
+                prevEl.style.display = 'none'
+              } else {
+                prevEl.style.display = 'flex'
+              }
+
+              if (this.activeIndex === this.slides.length - 1) {
+                nextEl.style.display = 'none'
+              } else {
+                nextEl.style.display = 'flex'
+              }
+            },
           },
-        },
-      })
+        })
 
-      nextPage('pageLayout')
-    })
+        nextPage('pageLayout')
+      })
+    )
   })
   // 2. 手作體驗-綁定領取
   const receiveBtn = document.getElementById('receive-btn')
   if (receiveBtn) {
-    receiveBtn.addEventListener('click', () => {
-      const progessContainer = document.querySelector('.progress-container')
-      const step = progessContainer.getAttribute('step')
-      if (parseInt(step) >= 3) {
-        window.open('https://maac.io/2LRej')
-        receiveBtn.style.display = 'none'
-        showCouponBtn.style.display = 'flex'
-      }
-    })
+    receiveBtn.addEventListener(
+      'click',
+      debounce(() => {
+        const progessContainer = document.querySelector('.progress-container')
+        const step = progessContainer.getAttribute('step')
+        if (parseInt(step) >= 3) {
+          window.open('https://maac.io/2LRej')
+          receiveBtn.style.display = 'none'
+          showCouponBtn.style.display = 'flex'
+        }
+      })
+    )
   }
   // 3. 手作體驗-前往領取
   const showCouponBtn = document.getElementById('show-coupon-btn')
   if (showCouponBtn) {
-    showCouponBtn.addEventListener('click', () => {
-      nextPage('pageCoupon')
-    })
+    showCouponBtn.addEventListener(
+      'click',
+      debounce(() => {
+        nextPage('pageCoupon')
+      })
+    )
   }
   // 兌換券
   const couponExchangeBtn = document.getElementById('coupon-exchange-btn')
   const couponModal = document.getElementById('coupon-modal-template')
   if (couponExchangeBtn) {
-    couponExchangeBtn.addEventListener('click', () => {
-      if (couponModal) {
-        couponModal.style.display = 'block'
-      }
-    })
+    couponExchangeBtn.addEventListener(
+      'click',
+      debounce(() => {
+        if (couponModal) {
+          couponModal.style.display = 'block'
+        }
+      })
+    )
   }
 
   const couponModalExchange = document.getElementById('coupon-modal-exchange')
@@ -475,50 +494,59 @@ document.addEventListener('DOMContentLoaded', async () => {
   const bottleCoupon = document.getElementById('bottle-coupon')
 
   if (couponModalExchange) {
-    couponModalExchange.addEventListener('click', () => {
-      if (coupontModalInput.value) {
-        couponModal.style.display = 'none'
-        if (bottleCoupon) {
-          // 已兌換樣式
-          bottleCoupon.classList.add('disabled')
+    couponModalExchange.addEventListener(
+      'click',
+      debounce(() => {
+        if (coupontModalInput.value) {
+          couponModal.style.display = 'none'
+          if (bottleCoupon) {
+            // 已兌換樣式
+            bottleCoupon.classList.add('disabled')
+          }
         }
-      }
-    })
+      })
+    )
   }
 
   if (cancelCouponModalBtn) {
-    cancelCouponModalBtn.addEventListener('click', () => {
-      couponModal.style.display = 'none'
-    })
+    cancelCouponModalBtn.addEventListener(
+      'click',
+      debounce(() => {
+        couponModal.style.display = 'none'
+      })
+    )
   }
 
   // 選擇版型頁
   // 1. 監聽確定按鈕
   if (layoutChooseBtn) {
-    layoutChooseBtn.addEventListener('click', () => {
-      nextPage('pageUploadImg')
-      resetUploadImg()
-      console.log('swiper', swiper.activeIndex)
-      switch (swiper.activeIndex) {
-        case 0:
-          current_photo_grid = photo_grid_1
-          photo_grid_1.style.display = 'block'
-          setBgImg(photo_grid_1)
-          break
-        case 1:
-          current_photo_grid = photo_grid_2
-          photo_grid_2.style.display = 'block'
-          setBgImg(photo_grid_2)
-          break
-        case 2:
-          current_photo_grid = photo_grid_3
-          photo_grid_3.style.display = 'block'
-          setBgImg(photo_grid_3)
-          break
-        default:
-          break
-      }
-    })
+    layoutChooseBtn.addEventListener(
+      'click',
+      debounce(() => {
+        nextPage('pageUploadImg')
+        resetUploadImg()
+        console.log('swiper', swiper.activeIndex)
+        switch (swiper.activeIndex) {
+          case 0:
+            current_photo_grid = photo_grid_1
+            photo_grid_1.style.display = 'block'
+            setBgImg(photo_grid_1)
+            break
+          case 1:
+            current_photo_grid = photo_grid_2
+            photo_grid_2.style.display = 'block'
+            setBgImg(photo_grid_2)
+            break
+          case 2:
+            current_photo_grid = photo_grid_3
+            photo_grid_3.style.display = 'block'
+            setBgImg(photo_grid_3)
+            break
+          default:
+            break
+        }
+      })
+    )
   }
   function resetUploadImg() {
     photo_grid_1.style.display = 'none'
@@ -703,98 +731,100 @@ document.addEventListener('DOMContentLoaded', async () => {
   let base64Url
   let base64Url_nologo
   if (photoUploadBtn) {
-    photoUploadBtn.addEventListener('click', async () => {
-      switch (swiper.activeIndex) {
-        case 0:
-          const btn = document.getElementById(`grid-1-cropper-btn`)
-          btn.click()
-          await new Promise(resolve => {
-            const wait = setInterval(() => {
-              console.log('wait')
-              clearInterval(wait)
-              resolve()
-            }, 100)
-          })
-          break
-        case 1:
-          document.getElementById('grid-2-left-cropper-btn').click()
-          document.getElementById('grid-2-right-cropper-btn').click()
-          await new Promise(resolve => {
-            const wait = setInterval(() => {
-              clearInterval(wait)
-              resolve()
-            }, 200)
-          })
-          break
-        case 2:
-          document.getElementById('grid-3-left-cropper-btn').click()
-          document.getElementById('grid-3-top-right-cropper-btn').click()
-          document.getElementById('grid-3-bottom-right-cropper-btn').click()
-          await new Promise(resolve => {
-            const wait = setInterval(() => {
-              clearInterval(wait)
-              resolve()
-            }, 300)
-          })
-          break
-        default:
-          break
-      }
-      const bgImg = current_photo_grid.querySelector('.bg-photo > img')
-      const canvas = document.createElement('canvas')
-      const context = canvas.getContext('2d')
-      const canvas2 = document.createElement('canvas')
-      const cxt = canvas2.getContext('2d')
-      const width = bgImg.getBoundingClientRect().width
-      const height = bgImg.getBoundingClientRect().height
-      canvas.width = width
-      canvas.height = height
-      canvas2.width = width
-      canvas2.height = height
-      context.imageSmoothingEnabled = true
-      cxt.imageSmoothingEnabled = true
+    photoUploadBtn.addEventListener(
+      'click',
+      debounce(async () => {
+        switch (swiper.activeIndex) {
+          case 0:
+            const btn = document.getElementById(`grid-1-cropper-btn`)
+            btn.click()
+            await new Promise(resolve => {
+              const wait = setInterval(() => {
+                console.log('wait')
+                clearInterval(wait)
+                resolve()
+              }, 100)
+            })
+            break
+          case 1:
+            document.getElementById('grid-2-left-cropper-btn').click()
+            document.getElementById('grid-2-right-cropper-btn').click()
+            await new Promise(resolve => {
+              const wait = setInterval(() => {
+                clearInterval(wait)
+                resolve()
+              }, 200)
+            })
+            break
+          case 2:
+            document.getElementById('grid-3-left-cropper-btn').click()
+            document.getElementById('grid-3-top-right-cropper-btn').click()
+            document.getElementById('grid-3-bottom-right-cropper-btn').click()
+            await new Promise(resolve => {
+              const wait = setInterval(() => {
+                clearInterval(wait)
+                resolve()
+              }, 300)
+            })
+            break
+          default:
+            break
+        }
+        const bgImg = current_photo_grid.querySelector('.bg-photo > img')
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        const canvas2 = document.createElement('canvas')
+        const cxt = canvas2.getContext('2d')
+        const width = bgImg.getBoundingClientRect().width
+        const height = bgImg.getBoundingClientRect().height
+        canvas.width = width
+        canvas.height = height
+        canvas2.width = width
+        canvas2.height = height
+        context.imageSmoothingEnabled = true
+        cxt.imageSmoothingEnabled = true
 
-      // 先畫拍立得底圖
-      context.drawImage(bgImg, 0, 0, width, height)
-      // 再找出拍立得上所有的 img
-      const allImages = current_photo_grid.querySelectorAll('img')
-      const filteredImages = Array.from(allImages).filter(img => {
-        return !img.closest('.bg-photo')
+        // 先畫拍立得底圖
+        context.drawImage(bgImg, 0, 0, width, height)
+        // 再找出拍立得上所有的 img
+        const allImages = current_photo_grid.querySelectorAll('img')
+        const filteredImages = Array.from(allImages).filter(img => {
+          return !img.closest('.bg-photo')
+        })
+        filteredImages.forEach(img => {
+          const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
+          const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
+          const _width = img.getBoundingClientRect().width
+          const _height = img.getBoundingClientRect().height
+          context.drawImage(img, xPos, yPos, _width, _height)
+        })
+        base64Url = canvas.toDataURL()
+        const noLogoImg = document.createElement('img')
+        noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
+
+        await new Promise(resolve => {
+          let wait2 = setInterval(() => {
+            clearInterval(wait2)
+            resolve()
+          }, 200)
+        })
+
+        // 先畫拍立得底圖
+        cxt.drawImage(noLogoImg, 0, 0, width, height)
+        filteredImages.forEach(img => {
+          const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
+          const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
+          const _width = img.getBoundingClientRect().width
+          const _height = img.getBoundingClientRect().height
+          cxt.drawImage(img, xPos, yPos, _width, _height)
+        })
+        base64Url_nologo = canvas2.toDataURL()
+
+        nextPage('pageShared')
+        document.getElementById('share-img').src = base64Url
+        document.getElementById('photo-nologo').src = base64Url_nologo
       })
-      filteredImages.forEach(img => {
-        const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
-        const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
-        const _width = img.getBoundingClientRect().width
-        const _height = img.getBoundingClientRect().height
-        context.drawImage(img, xPos, yPos, _width, _height)
-      })
-      base64Url = canvas.toDataURL()
-
-      const noLogoImg = document.createElement('img')
-      noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
-
-      await new Promise(resolve => {
-        let wait2 = setInterval(() => {
-          clearInterval(wait2)
-          resolve()
-        }, 200)
-      })
-
-      // 先畫拍立得底圖
-      cxt.drawImage(noLogoImg, 0, 0, width, height)
-      filteredImages.forEach(img => {
-        const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
-        const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
-        const _width = img.getBoundingClientRect().width
-        const _height = img.getBoundingClientRect().height
-        cxt.drawImage(img, xPos, yPos, _width, _height)
-      })
-      base64Url_nologo = canvas2.toDataURL()
-
-      nextPage('pageShared')
-      document.getElementById('share-img').src = base64Url
-      document.getElementById('photo-nologo').src = base64Url_nologo
-    })
+    )
   }
 
   // 分享好友頁面
@@ -816,6 +846,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const taskCard = document.getElementById(selectedBadge)
     if (taskCard) {
       taskCard.querySelector('img').src = badgeObj.icon
+    }
+    // 是否要阻擋上傳同份徽章
+    badgeCount++
+    const progressContainer = document.getElementById('progressContainer')
+    if (progressContainer) {
+      progressContainer.setAttribute('step', badgeCount)
     }
   }
 
@@ -927,6 +963,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
       mainContainer.setAttribute('bg', 'mask')
     }
+    window.scrollTo(0, 0)
   }
 
   function openPhotoModal(index, event) {
@@ -971,4 +1008,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('nologo-modal').style.display = 'none'
     })
   })
+
+  function debounce(func, limit = 200) {
+    let timer = null
+    return function () {
+      const args = arguments
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        // @ts-ignore
+        func.apply(this, args)
+      }, limit)
+    }
+  }
 })
