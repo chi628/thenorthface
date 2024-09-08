@@ -108,3 +108,28 @@ body {
 .common-btn > .icon-checkmark::before {
   background-color: #f7b933;
 }
+.nologo-btn {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+}
+.nologo-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+}
+.nologo-modal-container {
+  width: 100%;
+  display: flex;
+  flex-direction: columns;
+  justify-content: center;
+  align-items: center;
+}

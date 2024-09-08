@@ -245,7 +245,7 @@ let currentLayout = 'pageIndex'
 let current_photo_grid
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v2')
+  console.log('v3')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -493,7 +493,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const photo_grid_1 = document.getElementById('photo-grid-1') // 單張照片拍立得
   const photo_grid_2 = document.getElementById('photo-grid-2') // 兩張照片拍立得
   const photo_grid_3 = document.getElementById('photo-grid-3') // 三張照片拍立得
-
   // 取得每張拍立得的 img dom
   const photo1 = document.getElementById('grid-1')
   const photo2Left = document.getElementById('grid-2-left')
@@ -501,7 +500,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const photo3Left = document.getElementById('grid-3-left')
   const photo3TopRight = document.getElementById('grid-3-top-right')
   const photo3BottomRight = document.getElementById('grid-3-bottom-right')
-
   // 每個 img 建立自己的 cropper instance
   let photo1Cropper
   let photo2LeftCropper
@@ -553,7 +551,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       cropImg(event, 'grid-3-bottom-right')
     })
   }
-
   function cropImg(evt, id) {
     const image = document.getElementById(`${id}-img`)
     const cropperBtn = document.getElementById(`${id}-cropper-btn`)
@@ -575,29 +572,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('e', e)
       image.src = e.target.result
       const cropper = new Cropper(image, {
+        viewMode: 0,
         dragMode: 'move',
-        // autoCrop: false,
-        autoCropArea: 1,
         checkOrientation: false,
         background: false,
         highlight: false,
         modal: false,
         cropBoxMovable: false,
         cropBoxResizable: false,
-        // minContainerWidth: elWidth,
-        // minContainerHeight: eiHeight,
-        // minCanvasWidth: elWidth,
-        // minCanvasHeight: eiHeight,
-        // minCropBoxWidth: elWidth,
-        // minCropBoxHeight: eiHeight,
-        // aspectRatio: elWidth / eiHeight,
         ready() {
-          this.cropper.setCanvasData({
-            left: 0,
-            top: 0,
-            width: elWidth,
-            height: eiHeight,
-          })
+          // this.cropper.setCanvasData({
+          //   left: 0,
+          //   top: 0,
+          //   width: elWidth,
+          //   height: eiHeight,
+          // })
           this.cropper.setCropBoxData({
             left: 0,
             top: 0,
@@ -663,7 +652,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 組合拍立得照片，並轉成base64
+  // 監聽確定照片按鈕 >> 組合照片，並轉成 base64
   const photoUploadBtn = document.getElementById('photo-upload-btn')
   let base64Url
   let base64Url_nologo
@@ -673,9 +662,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         case 0:
           const btn = document.getElementById(`grid-1-cropper-btn`)
           btn.click()
-
           await new Promise(resolve => {
             const wait = setInterval(() => {
+              console.log('wait')
               clearInterval(wait)
               resolve()
             }, 100)
@@ -688,9 +677,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const wait = setInterval(() => {
               clearInterval(wait)
               resolve()
-            }, 100)
+            }, 200)
           })
-
           break
         case 2:
           document.getElementById('grid-3-left-cropper-btn').click()
@@ -700,7 +688,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const wait = setInterval(() => {
               clearInterval(wait)
               resolve()
-            }, 100)
+            }, 300)
           })
           break
         default:
@@ -718,6 +706,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       canvas2.width = width
       canvas2.height = height
       context.imageSmoothingEnabled = true
+      cxt.imageSmoothingEnabled = true
 
       // 先畫拍立得底圖
       context.drawImage(bgImg, 0, 0, width, height)
@@ -759,6 +748,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageUploadImg.style.display = 'none'
       pageShared.style.display = 'block'
       document.getElementById('share-img').src = base64Url
+      document.getElementById('photo-nologo').src = base64Url_nologo
       currentLayout = 'pageShared'
     })
   }
@@ -970,4 +960,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       taskCard.querySelector('img').src = badgeObj.icon
     }
   }
+
+  document.getElementById('nologo-btn').addEventListener('click', () => {
+    document.getElementById('nologo-modal').style.display = 'block'
+
+    document.getElementById('nologo-modal').addEventListener('click', () => {
+      document.getElementById('nologo-modal').style.display = 'none'
+    })
+  })
 })
