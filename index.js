@@ -247,7 +247,7 @@ let isDoneForm = false // 是否填過表單
 let badgeCount = 0
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v4')
+  console.log('v5')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -662,8 +662,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           //   height: eiHeight,
           // })
           this.cropper.setCropBoxData({
-            left: 0,
-            top: 0,
             width: elWidth,
             height: eiHeight,
           })
@@ -771,21 +769,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             break
         }
         const bgImg = current_photo_grid.querySelector('.bg-photo > img')
-        const canvas = document.createElement('canvas')
-        const context = canvas.getContext('2d')
-        const canvas2 = document.createElement('canvas')
-        const cxt = canvas2.getContext('2d')
         const width = bgImg.getBoundingClientRect().width
         const height = bgImg.getBoundingClientRect().height
+
+        const noLogoImg = document.createElement('img')
+        noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
+
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
         canvas.width = width
         canvas.height = height
+        context.imageSmoothingEnabled = true
+
+        const canvas2 = document.createElement('canvas')
+        const cxt = canvas2.getContext('2d')
         canvas2.width = width
         canvas2.height = height
-        context.imageSmoothingEnabled = true
         cxt.imageSmoothingEnabled = true
+
+        await new Promise(resolve => {
+          let wait2 = setInterval(() => {
+            clearInterval(wait2)
+            resolve()
+          }, 200)
+        })
 
         // 先畫拍立得底圖
         context.drawImage(bgImg, 0, 0, width, height)
+        cxt.drawImage(noLogoImg, 0, 0, width, height)
         // 再找出拍立得上所有的 img
         const allImages = current_photo_grid.querySelectorAll('img')
         const filteredImages = Array.from(allImages).filter(img => {
@@ -797,27 +808,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           const _width = img.getBoundingClientRect().width
           const _height = img.getBoundingClientRect().height
           context.drawImage(img, xPos, yPos, _width, _height)
-        })
-        base64Url = canvas.toDataURL()
-        const noLogoImg = document.createElement('img')
-        noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
-
-        await new Promise(resolve => {
-          let wait2 = setInterval(() => {
-            clearInterval(wait2)
-            resolve()
-          }, 200)
-        })
-
-        // 先畫拍立得底圖
-        cxt.drawImage(noLogoImg, 0, 0, width, height)
-        filteredImages.forEach(img => {
-          const xPos = img.getBoundingClientRect().x - bgImg.getBoundingClientRect().x
-          const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
-          const _width = img.getBoundingClientRect().width
-          const _height = img.getBoundingClientRect().height
           cxt.drawImage(img, xPos, yPos, _width, _height)
         })
+        base64Url = canvas.toDataURL()
         base64Url_nologo = canvas2.toDataURL()
 
         nextPage('pageShared')

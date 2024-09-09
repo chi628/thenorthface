@@ -489,20 +489,15 @@
   height: 24px;
   border-radius: 12px;
   border: 1px solid #080404;
-  background-color: #418fb9;
+  background-color: #ffc938;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
+  color: #080404;
   font-size: 12px;
   font-weight: bold;
 }
-.receive-btn {
-  background-color: #ffc938;
-  color: #080404;
-}
-.receive-btn > .icon-triangle,
-.coupon-btn > .icon-triangle {
+.receive-btn > .icon-triangle {
   display: inline-flex;
   width: 5px;
   height: 5px;
@@ -512,12 +507,6 @@
   width: 5px;
   height: 5px;
   background-color: #080404;
-}
-
-.coupon-btn > .icon-triangle::before {
-  width: 5px;
-  height: 5px;
-  background-color: #ffffff;
 }
 
 .progress-down {
