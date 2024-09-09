@@ -247,7 +247,7 @@ let isDoneForm = false // 是否填過表單
 let badgeCount = 0
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v5')
+  console.log('v5-1')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -654,10 +654,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         modal: false,
         cropBoxMovable: false,
         cropBoxResizable: false,
+        minContainerWidth: elWidth,
+        minContainerHeight: eiHeight,
         ready() {
           // this.cropper.setCanvasData({
-          //   left: 0,
-          //   top: 0,
           //   width: elWidth,
           //   height: eiHeight,
           // })
