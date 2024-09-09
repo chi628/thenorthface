@@ -247,7 +247,7 @@ let isDoneForm = false // 是否填過表單
 let badgeCount = 0
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v5-1')
+  console.log('v6')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -732,13 +732,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     photoUploadBtn.addEventListener(
       'click',
       debounce(async () => {
+        photoUploadBtn.style.display = 'none'
         switch (swiper.activeIndex) {
           case 0:
             const btn = document.getElementById(`grid-1-cropper-btn`)
             btn.click()
             await new Promise(resolve => {
               const wait = setInterval(() => {
-                console.log('wait')
                 clearInterval(wait)
                 resolve()
               }, 100)
