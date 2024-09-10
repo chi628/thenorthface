@@ -250,6 +250,7 @@ let canChangeBottle = true
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('v12 add tmp btn')
   document.getElementById('sold-out').addEventListener('click', () => {
+    document.getElementById('exchanged-btn').style.display = 'none'
     document.getElementById('progressContainer').setAttribute('sold-out', '')
   })
   await fetchData()
