@@ -248,7 +248,7 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v8 fixed modal coupon')
+  console.log('v9 fixed waterfall moadl zindex')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     waterfallJoinBtn.addEventListener(
       'click',
       debounce(() => {
-        nextPage('pageIndex')
+        nextPage('pageBadge')
       })
     )
   }
