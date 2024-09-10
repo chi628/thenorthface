@@ -248,7 +248,7 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v11 fixed ui&coupon bottle')
+  console.log('v11-1 fixed ui&coupon bottle')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -506,7 +506,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 已兌換樣式
             bottleCoupon.classList.add('disabled')
             canChangeBottle = false
-            document.getElementById('progress-bottle').setAttribute('exchanged', '')
+            showCouponBtn.style.display = 'none'
+            document.getElementById('progressContainer').setAttribute('exchanged', '')
           }
         }
       })

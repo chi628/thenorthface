@@ -157,12 +157,12 @@
   color: #e03024;
 }
 
-input::placeholder {
+.form-modal-body > .form-input > input::placeholder {
   color: #90b5c9;
   opacity: 1;
 }
 
-input::-ms-input-placeholder {
+.form-modal-body > .form-input > input::-ms-input-placeholder {
   /* Edge 12-18 */
   color: #90b5c9;
 }

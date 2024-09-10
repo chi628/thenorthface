@@ -188,7 +188,7 @@
 .bottle-coupon-container > input:focus {
   outline: none;
 }
-input::placeholder {
+.bottle-coupon-container > input::placeholder {
   color: #7b7b7b;
   opacity: 1;
 }

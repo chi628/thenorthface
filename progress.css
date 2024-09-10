@@ -48,7 +48,8 @@
 .progress-container[exchanged] > .upper > :nth-child(1) > .progress-icon > .redeem-stamp::before {
   content: '已兌換';
 }
-.progress-container[exchanged] > .down > :nth-child(1) > .receive-btn,
+.progress-container[exchanged] > .down > :nth-child(1) > #receive-btn,
+.progress-container[exchanged] > .down > :nth-child(1) > #show-coupon-btn,
 .progress-container[exchanged] > .down > :nth-child(1) > .sold-out-text {
   display: none;
 }
