@@ -248,7 +248,7 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v9 fixed waterfall moadl zindex')
+  console.log('v10 fixed error hint')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -870,9 +870,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       const memberCheck = document.getElementById('member')
       const privacyCheck = document.getElementById('privacy')
-      // if (!memberCheck.checked || !privacyCheck.checked) {
-      //   errorHint.innerText = '請勾選'
-      // }
+      if (!memberCheck.checked || !privacyCheck.checked) {
+        errorHint.innerText = '請同意勾選資料使用或隱私權政策'
+      }
 
       if (inputName.value && inputTel.value && memberCheck.checked && privacyCheck.checked) {
         // 假定已經填寫過資料
