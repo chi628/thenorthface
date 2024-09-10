@@ -248,7 +248,10 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v11-1 fixed ui&coupon bottle')
+  console.log('v12 add tmp btn')
+  document.getElementById('sold-out').addEventListener('click', () => {
+    document.getElementById('progressContainer').setAttribute('sold-out', '')
+  })
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
