@@ -71,8 +71,8 @@
         <div class="index-container">
           <div class="title">蒐集各徽章</div>
           <div class="bonus">
-            <img src="./images/left-bonus.webp" alt="" />
-            <img src="./images/right-bonus.webp" alt="" />
+            <img src="./images/left-bonus.png" alt="" />
+            <img src="./images/right-bonus.png" alt="" />
             <span class="cheer">\等你來拿/</span>
           </div>
           <div id="index-join-btn" class="common-btn index-join-btn">
@@ -145,14 +145,14 @@
       <!-- 徽章頁面 -->
       <div id="pageBadge" class="badge-container">
         <!-- 更改step就會有相對應的樣式-->
+        <!-- 在class="progress-container"加上 exchanged 顯示已兌換樣式-->
+        <!-- 在class="progress-container"加上 sold-out 顯示已兌畢樣式-->
         <div id="progressContainer" class="progress-container" step="0">
           <div class="upper">
-            <!-- 在class="progress-bottle"加上 exchanged 就會有相對應的樣式-->
-            <!-- <div id="progress-bottle" class="progress-uper" exchanged></div> -->
             <div id="progress-bottle" class="progress-uper">
               <div class="progress-icon">
                 <img src="./images/bottle.webp" alt="山植石微景瓶" />
-                <div class="redeem-stamp">已兌換</div>
+                <div class="redeem-stamp"></div>
               </div>
               <span>山植石微景瓶</span>
             </div>
@@ -206,6 +206,12 @@
               <div id="show-coupon-btn" class="receive-btn">
                 <span>前往領取</span>
                 <span class="icon--default icon-triangle"></span>
+              </div>
+              <div class="exchanged-btn">已領取</div>
+              <div class="sold-out-text">
+                <p>好可惜！</p>
+                <p>請繼續蒐集徽章</p>
+                <p>抽萬元好禮</p>
               </div>
             </div>
             <div class="progress-down">
@@ -267,7 +273,7 @@
             <img src="./images/02-N-badge.webp" alt="" />
             <div class="desc">
               <span class="title">水上玩咖</span>
-              <span>清涼一夏 ！請分享你的SUP最佳POSE照</span>
+              <span>清涼一夏 ！請分享SUP或獨木舟最佳POSE照</span>
               <div class="go-join">
                 <span>我要參加</span>
                 <span class="icon-arrow-right icon--default"></span>

@@ -4,9 +4,15 @@
 }
 
 .share-img {
-  width: 78vw;
-  height: 83vw;
+  width: 67vw;
   margin: 15px auto;
+}
+
+.share-img > img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 6px 3px 15px 0 rgba(0, 0, 0, 0.2);
 }
 
 .badge-section {
@@ -15,21 +21,33 @@
   text-align: center;
   margin: 20px auto;
   font-size: 20px;
+  font-weight: 900;
   width: 85%;
+  position: relative;
+}
+
+.badge-section > span {
+  margin-left: 6%;
 }
 
 .badge-section::before {
   content: '';
-  width: 6%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 96%;
   border-bottom: 2px dashed #000;
-  margin: 0 10px;
+  transform: translateY(-50%);
 }
 
 .badge-section::after {
   content: '';
-  width: 62%;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  right: 0;
   border-bottom: 2px dashed #000;
-  margin: 0 10px;
+  transform: translateY(-50%);
 }
 
 .badge-section span {

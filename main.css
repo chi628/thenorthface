@@ -133,9 +133,8 @@
   font-size: 20px;
   font-weight: 900;
   color: #080404;
-  font-family: NotoSansTC;
   width: 90vw;
-  margin: 85px auto 40px;
+  margin: 40px auto 40px;
   padding-left: 28%;
 }
 
@@ -144,21 +143,20 @@
   content: '';
   position: absolute;
   top: 50%;
-  width: 30%;
   border-top: 1px solid #080404;
   transform: translateY(50%);
 }
 
 .badge-title::before {
   left: 0;
-  right: 70%;
+  right: 65%;
   margin-right: 26px;
 }
 
 .badge-title::after {
   right: 0;
-  left: 70%;
-  margin-right: 26px;
+  left: 65%;
+  margin-left: 26px;
 }
 
 .index-badge-container {
@@ -193,5 +191,4 @@
   font-size: 18px;
   color: #080404;
   font-weight: 900;
-  font-family: NotoSansTC;
 }

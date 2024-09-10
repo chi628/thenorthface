@@ -1,8 +1,49 @@
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('font/NotoSansTC-Thin.otf');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('font/NotoSansTC-Light.otf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('font/NotoSansTC-Regular.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('font/NotoSansTC-Medium.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('font/NotoSansTC-Bold.otf') ormat('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('font/NotoSansTC-Black.otf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
 * {
   position: relative;
   box-sizing: border-box;
   scrollbar-width: none;
   transition: display 0.2s ease-out;
+}
+p {
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 body {
   position: relative;
@@ -10,6 +51,8 @@ body {
   max-width: 640px;
   height: 100vh;
   background-color: #bedfe3;
+  font-family: 'NotoSansTC';
+  font-weight: normal;
 }
 .main-container {
   position: relative;
@@ -132,14 +175,4 @@ body {
   flex-direction: columns;
   justify-content: center;
   align-items: center;
-}
-
-::placeholder {
-  color: #90b5c9;
-  opacity: 1;
-}
-
-::-ms-input-placeholder {
-  /* Edge 12-18 */
-  color: #90b5c9;
 }

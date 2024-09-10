@@ -64,7 +64,6 @@
 
 .user-info {
   position: relative;
-  font-family: NotoSansTC;
   font-size: 24px;
   color: #fff;
   display: flex;
@@ -110,34 +109,3 @@
   min-height: 10px;
   border-color: transparent;
 }
-
-/* .common-btn {
-  position: fixed;
-  width: 90vw;
-  max-width: 575px;
-  height: 61px;
-  border-radius: 30px;
-  background-color: #080404;
-  font-size: 20;
-  font-family: NotoSansTC;
-  font-weight: bold;
-  color: #f7b933;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-}
-
-.common-btn > .icon-checkmark {
-  display: inline-block;
-  width: 21px;
-  height: 21px;
-  margin-right: 5px;
-}
-
-.common-btn > .icon-checkmark::before {
-  background-color: #f7b933;
-} */

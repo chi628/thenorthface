@@ -25,7 +25,6 @@
   font-size: 30px;
   color: #080404;
   font-weight: 900;
-  font-family: NotoSansTC;
   margin-bottom: 6px;
 }
 .bottle-tag {
@@ -35,7 +34,6 @@
   color: #fff;
   text-align: center;
   font-size: 15px;
-  font-family: NotoSansTC;
   display: inline-block;
 }
 .bottle-expire {
@@ -59,7 +57,6 @@
   display: block;
 }
 .bottle-coupon-image > .redeem-stamp {
-  font-family: NotoSansTC;
   font-size: 45px;
   font-weight: bold;
   color: #fff;
@@ -78,7 +75,6 @@
 
 .bottle-coupon-notice {
   font-size: 13px;
-  font-family: NotoSansTC;
   color: #080404;
   border-top: 2px dashed #81afc7;
   padding-top: 22px;

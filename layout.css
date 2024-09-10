@@ -7,7 +7,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: NotoSansTC;
   font-size: 18px;
   font-weight: bold;
   color: #080404;
@@ -42,7 +41,6 @@
   color: #f7b933;
   font-size: 20px;
   font-weight: bold;
-  font-family: NotoSansTC;
   margin: 60px auto 0;
 }
 

@@ -31,7 +31,7 @@ const badgeList = [
       './images/layout_no_logo/02-layout-2.png',
       './images/layout_no_logo/02-layout-3.png',
     ],
-    shortDesc: '請分享你的SUP最佳POSE照',
+    shortDesc: '請分享SUP或獨木舟最佳POSE照',
   },
   {
     id: 'badge03',
@@ -482,12 +482,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     couponExchangeBtn.addEventListener(
       'click',
       debounce(() => {
-        if(canChangeBottle){
+        if (canChangeBottle) {
           if (couponModal) {
             couponModal.style.display = 'block'
           }
         }
-        
       })
     )
   }
@@ -507,7 +506,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 已兌換樣式
             bottleCoupon.classList.add('disabled')
             canChangeBottle = false
-            document.getElementById('progress-bottle').setAttribute('exchanged','')
+            document.getElementById('progress-bottle').setAttribute('exchanged', '')
           }
         }
       })
@@ -822,7 +821,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         nextPage('pageShared')
         document.getElementById('share-img').src = base64Url
         document.getElementById('photo-nologo').src = base64Url_nologo
-        photoUploadBtn.style.display='flex'
+        photoUploadBtn.style.display = 'flex'
       })
     )
   }
@@ -868,7 +867,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!telPattern.test(inputTel.value)) {
         errorHint.innerText = '請輸入正確號碼格式'
       }
-      if(!inputName.value) {
+      if (!inputName.value) {
         errorHint.innerText = '請輸入資料'
       }
       const memberCheck = document.getElementById('member')
@@ -877,11 +876,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         errorHint.innerText = '請同意勾選資料使用或隱私權政策'
       }
 
-      if (inputName.value && inputTel.value && telPattern.test(inputTel.value) && memberCheck.checked && privacyCheck.checked) {
+      if (
+        inputName.value &&
+        inputTel.value &&
+        telPattern.test(inputTel.value) &&
+        memberCheck.checked &&
+        privacyCheck.checked
+      ) {
         // 假定已經填寫過資料
         isDoneForm = true
         nextPage('pageIndex')
-      } 
+      }
       // else {
       //   errorHint.innerText = '請輸入資料'
       // }
