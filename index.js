@@ -248,7 +248,7 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v10 fixed error hint')
+  console.log('v10-1 fixed error hint')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -868,6 +868,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!telPattern.test(inputTel.value)) {
         errorHint.innerText = '請輸入正確號碼格式'
       }
+      if(!inputName.value) {
+        errorHint.innerText = '請輸入資料'
+      }
       const memberCheck = document.getElementById('member')
       const privacyCheck = document.getElementById('privacy')
       if (!memberCheck.checked || !privacyCheck.checked) {
@@ -878,9 +881,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 假定已經填寫過資料
         isDoneForm = true
         nextPage('pageIndex')
-      } else {
-        errorHint.innerText = '請輸入資料'
-      }
+      } 
+      // else {
+      //   errorHint.innerText = '請輸入資料'
+      // }
     })
   }
 
