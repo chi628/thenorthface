@@ -248,7 +248,7 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v10-1 fixed error hint')
+  console.log('v10-2 fixed error hint')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -877,7 +877,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         errorHint.innerText = '請同意勾選資料使用或隱私權政策'
       }
 
-      if (inputName.value && inputTel.value && memberCheck.checked && privacyCheck.checked) {
+      if (inputName.value && inputTel.value && telPattern.test(inputTel.value) && memberCheck.checked && privacyCheck.checked) {
         // 假定已經填寫過資料
         isDoneForm = true
         nextPage('pageIndex')
