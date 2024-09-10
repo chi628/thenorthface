@@ -245,7 +245,7 @@ let currentLayout = 'pageIndex'
 let current_photo_grid
 let isDoneForm = false // 是否填過表單
 let badgeCount = 0
-let canChangeBottle = false
+let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('v8 fixed modal coupon')
