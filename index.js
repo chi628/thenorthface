@@ -245,9 +245,10 @@ let currentLayout = 'pageIndex'
 let current_photo_grid
 let isDoneForm = false // 是否填過表單
 let badgeCount = 0
+let canChangeBottle = false
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v7 fixed upload btn')
+  console.log('v8 fixed modal coupon')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -481,9 +482,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     couponExchangeBtn.addEventListener(
       'click',
       debounce(() => {
-        if (couponModal) {
-          couponModal.style.display = 'block'
+        if(canChangeBottle){
+          if (couponModal) {
+            couponModal.style.display = 'block'
+          }
         }
+        
       })
     )
   }
@@ -502,6 +506,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (bottleCoupon) {
             // 已兌換樣式
             bottleCoupon.classList.add('disabled')
+            canChangeBottle = false
+            document.getElementById('progress-bottle').setAttribute('exchanged','')
           }
         }
       })
