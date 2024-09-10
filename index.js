@@ -247,7 +247,7 @@ let isDoneForm = false // 是否填過表單
 let badgeCount = 0
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v6')
+  console.log('v7 fixed upload btn')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -816,6 +816,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         nextPage('pageShared')
         document.getElementById('share-img').src = base64Url
         document.getElementById('photo-nologo').src = base64Url_nologo
+        photoUploadBtn.style.display='flex'
       })
     )
   }
