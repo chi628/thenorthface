@@ -248,7 +248,7 @@ let badgeCount = 0
 let canChangeBottle = true
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v10-2 fixed error hint')
+  console.log('v11 fixed ui&coupon bottle')
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
