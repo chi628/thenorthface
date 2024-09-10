@@ -247,8 +247,17 @@ let isDoneForm = false // 是否填過表單
 let badgeCount = 0
 let canChangeBottle = true
 
+function setVH() {
+  const vh = window.innerHeight
+  document.documentElement.style.setProperty('--vh', `${vh}px`)
+}
+
+setVH()
+
+window.addEventListener('resize', setVH)
+
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v12 add tmp btn')
+  console.log('v12-1 add tmp btn')
   document.getElementById('sold-out').addEventListener('click', () => {
     document.getElementById('exchanged-btn').style.display = 'none'
     document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -278,17 +287,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const mainContainer = document.querySelector('.main-container')
   const lookMore = document.getElementById('look-more')
   const indexBadgeTitle = document.getElementById('index-badge-title')
+  const indexBadge = document.getElementById('index-badge')
   const indexJoinBtn = document.getElementById('index-join-btn')
   const layoutChooseBtn = document.getElementById('layout-choose-btn')
 
   // 監聽首頁顯示 看更多
-  if (mainContainer && indexBadgeTitle && lookMore) {
+  if (mainContainer && indexBadge && lookMore) {
     const titleBottom = indexBadgeTitle.getBoundingClientRect().bottom
     let needHideTitle = false
 
     if (window.innerHeight - titleBottom < 110) {
       lookMore.style.display = 'flex'
-      indexBadgeTitle.style.visibility = 'hidden'
+      indexBadge.style.visibility = 'hidden'
       needHideTitle = true
     }
 
@@ -296,10 +306,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (needHideTitle) {
         if (window.scrollY > 0) {
           lookMore.style.display = 'none'
-          indexBadgeTitle.style.visibility = 'visible'
+          indexBadge.style.visibility = 'visible'
         } else {
           lookMore.style.display = 'flex'
-          indexBadgeTitle.style.visibility = 'hidden'
+          indexBadge.style.visibility = 'hidden'
         }
       }
     })

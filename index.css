@@ -45,11 +45,14 @@ p {
   padding: 0;
   text-align: center;
 }
+:root {
+  --vh: 100vh;
+}
 body {
   position: relative;
   width: 100vw;
   max-width: 640px;
-  height: 100vh;
+  height: var(--vh);
   background-color: #bedfe3;
   font-family: 'NotoSansTC';
   font-weight: normal;

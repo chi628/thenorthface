@@ -61,7 +61,7 @@
   content: '';
   position: absolute;
   top: 50%;
-  width: 6%;
+  width: calc(calc(90vw - 100px) * 0.085);
   left: 0;
   border-top: 2px dashed black;
   transform: translateY(-50%);
@@ -72,7 +72,7 @@
   position: absolute;
   top: 50%;
   right: 0;
-  width: 62%;
+  width: calc(calc(90vw - 100px) * 0.86);
   border-top: 2px dashed black;
   transform: translateY(-50%);
 }
@@ -128,13 +128,19 @@
   transform: rotate(-90deg);
 }
 
+.index-badge {
+  width: 90vw;
+  max-width: 576px;
+  margin: 40px auto 120px;
+}
+
 .badge-title {
   position: relative;
   font-size: 20px;
   font-weight: 900;
   color: #080404;
-  width: 90vw;
-  margin: 40px auto 40px;
+  width: 100%;
+  margin-bottom: 20px;
   padding-left: 28%;
 }
 
@@ -149,21 +155,20 @@
 
 .badge-title::before {
   left: 0;
-  right: 65%;
+  width: calc(calc(90vw - 140px) * 0.4);
   margin-right: 26px;
 }
 
 .badge-title::after {
   right: 0;
-  left: 65%;
+  width: calc(calc(90vw - 140px) * 0.5);
   margin-left: 26px;
 }
 
 .index-badge-container {
   position: relative;
-  width: 90vw;
-  max-width: 576px;
-  margin: 0 auto 124px;
+  width: 100%;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;

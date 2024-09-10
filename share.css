@@ -16,18 +16,13 @@
 }
 
 .badge-section {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 20px auto;
+  width: 85%;
+  margin: 10px auto;
   font-size: 20px;
   font-weight: 900;
-  width: 85%;
+  color: #080404;
   position: relative;
-}
-
-.badge-section > span {
-  margin-left: 6%;
+  padding-left: 7%;
 }
 
 .badge-section::before {
@@ -35,8 +30,8 @@
   position: absolute;
   top: 50%;
   left: 0;
-  right: 96%;
-  border-bottom: 2px dashed #000;
+  width: calc(calc(85vw - 100px) * 0.1);
+  border-top: 2px dashed #000;
   transform: translateY(-50%);
 }
 
@@ -44,14 +39,10 @@
   content: '';
   position: absolute;
   top: 50%;
-  left: 40%;
   right: 0;
-  border-bottom: 2px dashed #000;
+  width: calc(calc(85vw - 100px) * 0.84);
+  border-top: 2px dashed #000;
   transform: translateY(-50%);
-}
-
-.badge-section span {
-  white-space: nowrap; /* 確保文字不換行 */
 }
 
 .bonus {
@@ -78,7 +69,7 @@
   color: #f7b933;
   font-size: 20px;
   font-weight: bold;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 .tmp-btn > img {
