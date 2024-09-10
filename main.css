@@ -63,7 +63,7 @@
   top: 50%;
   width: calc(calc(90vw - 100px) * 0.085);
   left: 0;
-  border-top: 2px dashed black;
+  border-top: 1px dashed black;
   transform: translateY(-50%);
 }
 
@@ -73,7 +73,7 @@
   top: 50%;
   right: 0;
   width: calc(calc(90vw - 100px) * 0.86);
-  border-top: 2px dashed black;
+  border-top: 1px dashed black;
   transform: translateY(-50%);
 }
 

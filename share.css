@@ -31,7 +31,7 @@
   top: 50%;
   left: 0;
   width: calc(calc(85vw - 100px) * 0.1);
-  border-top: 2px dashed #000;
+  border-top: 1px dashed #000;
   transform: translateY(-50%);
 }
 
@@ -41,7 +41,7 @@
   top: 50%;
   right: 0;
   width: calc(calc(85vw - 100px) * 0.84);
-  border-top: 2px dashed #000;
+  border-top: 1px dashed #000;
   transform: translateY(-50%);
 }
 

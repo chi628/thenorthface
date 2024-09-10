@@ -257,7 +257,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v12-1 add tmp btn')
+  console.log('v13 animated')
   document.getElementById('sold-out').addEventListener('click', () => {
     document.getElementById('exchanged-btn').style.display = 'none'
     document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -275,6 +275,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     fragment.appendChild(div)
   })
 
+  const logo = document.getElementById('logo')
   const pageIndex = document.getElementById('pageIndex')
   const pageBadge = document.getElementById('pageBadge')
   const pageLayout = document.getElementById('page-layout')
@@ -290,6 +291,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const indexBadge = document.getElementById('index-badge')
   const indexJoinBtn = document.getElementById('index-join-btn')
   const layoutChooseBtn = document.getElementById('layout-choose-btn')
+
+  // 點擊Logo回主頁
+  if (logo) {
+    logo.addEventListener('click', () => {
+      nextPage('pageIndex')
+    })
+  }
 
   // 監聽首頁顯示 看更多
   if (mainContainer && indexBadge && lookMore) {
@@ -582,6 +590,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     photo_grid_3.querySelectorAll('img').forEach(img => {
       img.src = ''
     })
+    if (photo1Cropper) {
+      photo1Cropper.destroy()
+    }
+    if (photo2LeftCropper) {
+      photo2LeftCropper.destroy()
+    }
+    if (photo2RightCropper) {
+      photo2RightCropper.destroy()
+    }
+    if (photo3LeftCropper) {
+      photo3LeftCropper.destroy()
+    }
+    if (photo3TopRightCropper) {
+      photo3TopRightCropper.destroy()
+    }
+    if (photo3BottomRightCropper) {
+      photo3BottomRightCropper.destroy()
+    }
+
+    photo1.value = ''
+    photo2Left.value = ''
+    photo2Right.value = ''
+    photo3Left.value = ''
+    photo3TopRight.value = ''
+    photo3BottomRight.value = ''
   }
 
   // 選擇照片頁
@@ -973,6 +1006,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentLayout = 'pageForm'
         break
       case 'pageWaterfall':
+        mainContainer.classList.add('animated')
         pageWaterfall.style.display = 'block'
         currentLayout = 'pageWaterfall'
         break
@@ -982,6 +1016,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (['pageWaterfall', 'pageForm'].includes(page)) {
       mainContainer.setAttribute('bg', 'right')
+      mainContainer.style.left = '100%'
+      setTimeout(() => {
+        mainContainer.style.left = '0'
+        mainContainer.classList.remove('animated')
+      }, 300)
     } else if (page === 'pageIndex') {
       mainContainer.removeAttribute('bg')
     } else {
