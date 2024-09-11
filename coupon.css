@@ -20,6 +20,7 @@
   background-image: url(./images/bg-coupon.webp);
   background-repeat: no-repeat;
   background-size: contain;
+  box-shadow: 4px 12px 25px 0 rgba(0, 0, 0, 0.18);
 }
 .bottle-title {
   font-size: 30px;

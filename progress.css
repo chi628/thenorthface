@@ -54,7 +54,7 @@
   display: none;
 }
 .progress-container[exchanged] > .down > :nth-child(1) > .exchanged-btn {
-  display: block;
+  display: flex;
 }
 
 .progress-container[sold-out] > .upper > :nth-child(1) > .progress-icon > .redeem-stamp {
@@ -428,14 +428,15 @@
 }
 
 .down > .progress-down > .exchanged-btn {
-  border: 1px solid #080404;
-  border-radius: 5px;
-  background-color: #418fb9;
-  color: #fff;
-  text-align: center;
-  width: 64%;
-  height: 24px;
-  line-height: 24px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.down > .progress-down > .exchanged-btn {
   display: none;
 }
 
@@ -559,6 +560,7 @@
   align-items: center;
 }
 
+.progress-down > .exchanged-btn > .bg-dialog,
 .progress-down > .bg-dialog {
   position: absolute;
   left: 50%;
@@ -567,7 +569,7 @@
   height: 30px;
   transform: translateX(-50%);
 }
-
+.progress-down > .exchanged-btn > .bg-dialog::before,
 .progress-down > .bg-dialog::before {
   content: '';
   mask: url('./images/bg-dialog.svg') no-repeat center center / contain;
@@ -580,6 +582,7 @@
   left: 0;
 }
 
+.progress-down > .exchanged-btn > .qualify,
 .progress-down > .qualify,
 .progress-down > .no-qualify {
   width: 64%;
@@ -596,12 +599,15 @@
   display: none;
 }
 
+.progress-down > .exchanged-btn > .qualify > .icon-circle-check,
 .progress-down > .qualify > .icon-circle-check {
   display: inline-flex;
   width: 11px;
   height: 11px;
   margin-right: 2px;
 }
+
+.progress-down > .exchanged-btn > .qualify > .icon-circle-check::before,
 .progress-down > .qualify > .icon-circle-check::before {
   width: 11px;
   height: 11px;
