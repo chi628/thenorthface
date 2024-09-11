@@ -11,6 +11,16 @@
   gap: 5px;
 }
 
+.display-container::before{
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, rgba(190, 223, 227, 0), #bedfe3 2%, #bedfe3 59%, #bedfe3);
+}
+
 .display-img {
   width: 100%;
 }

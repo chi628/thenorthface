@@ -257,7 +257,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v13 animated')
+  console.log('v14')
   document.getElementById('sold-out').addEventListener('click', () => {
     document.getElementById('exchanged-btn').style.display = 'none'
     document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -963,7 +963,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         nextPage('pageShared')
         break
       case 'pageWaterfall':
+        mainContainer.classList.add('reverse-animated')
         nextPage('pageIndex')
+        mainContainer.style.left = '-100%'
+        setTimeout(() => {
+          mainContainer.style.left = '0'
+          mainContainer.classList.remove('reverse-animated')
+        }, 300)
         break
       default:
         break

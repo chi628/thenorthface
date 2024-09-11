@@ -103,7 +103,7 @@
 }
 
 .index-join-btn {
-  bottom: 50px;
+  bottom: 40px;
 }
 
 .look-more {
@@ -121,9 +121,15 @@
   display: none;
 }
 
+.look-more > .icon-pure-arrow-left {
+  display: inline-flex;
+  width: 14px;
+  height: 12px;
+}
+
 .look-more > .icon-pure-arrow-left::before {
   width: 14px;
-  height: 14px;
+  height: 12px;
   background-color: #080404;
   transform: rotate(-90deg);
 }
