@@ -965,9 +965,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       case 'pageWaterfall':
         mainContainer.classList.add('reverse-animated')
         nextPage('pageIndex')
-        mainContainer.style.left = '-100%'
         setTimeout(() => {
-          mainContainer.style.left = '0'
+          mainContainer.style.left = 0
           mainContainer.classList.remove('reverse-animated')
         }, 300)
         break
