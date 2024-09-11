@@ -68,7 +68,7 @@ body {
 }
 .main-container.reverse-animated {
   transition: transform 0.3s ease;
-  transform: translateX(100%);
+  transform: translateX(80%);
 }
 .main-container[bg='mask']::before {
   background-image: url(./images/normalbg.webp);
