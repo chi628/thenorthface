@@ -257,7 +257,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v14')
+  console.log('v14-1')
   document.getElementById('sold-out').addEventListener('click', () => {
     document.getElementById('exchanged-btn').style.display = 'none'
     document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -965,6 +965,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       case 'pageWaterfall':
         mainContainer.classList.add('reverse-animated')
         nextPage('pageIndex')
+        
+        mainContainer.style.left = '-80%'
         setTimeout(() => {
           mainContainer.style.left = 0
           mainContainer.classList.remove('reverse-animated')
