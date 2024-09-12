@@ -869,7 +869,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         nextPage('pageShared')
         document.getElementById('share-img').src = base64Url
-        document.getElementById('photo-nologo').src = base64Url_nologo
+        // document.getElementById('photo-nologo').src = base64Url_nologo
         photoUploadBtn.style.display = 'flex'
       })
     )
