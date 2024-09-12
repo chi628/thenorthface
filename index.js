@@ -258,10 +258,10 @@ window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('v16')
-  document.getElementById('sold-out').addEventListener('click', () => {
-    document.getElementById('exchanged-btn').style.display = 'none'
-    document.getElementById('progressContainer').setAttribute('sold-out', '')
-  })
+  // document.getElementById('sold-out').addEventListener('click', () => {
+  //   document.getElementById('exchanged-btn').style.display = 'none'
+  //   document.getElementById('progressContainer').setAttribute('sold-out', '')
+  // })
   await fetchData()
   const limit = 20
   dataList.forEach((data, index) => {
@@ -1100,13 +1100,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     return canvas
   }
 
-  document.getElementById('nologo-btn').addEventListener('click', () => {
-    document.getElementById('nologo-modal').style.display = 'block'
+  // document.getElementById('nologo-btn').addEventListener('click', () => {
+  //   document.getElementById('nologo-modal').style.display = 'block'
 
-    document.getElementById('nologo-modal').addEventListener('click', () => {
-      document.getElementById('nologo-modal').style.display = 'none'
-    })
-  })
+  //   document.getElementById('nologo-modal').addEventListener('click', () => {
+  //     document.getElementById('nologo-modal').style.display = 'none'
+  //   })
+  // })
 
   function debounce(func, limit = 200) {
     let timer = null
