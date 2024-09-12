@@ -59,3 +59,13 @@
   content: '';
   mask: url('./images/icon-triangle.svg') no-repeat center center / contain;
 }
+
+.icon-top-check::before {
+  content: '';
+  mask: url('./images/icon-top-check.svg') no-repeat center center / contain;
+}
+
+.icon-reload::before {
+  content: '';
+  mask: url('./images/icon-reload.svg') no-repeat center center / contain;
+}

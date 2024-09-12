@@ -257,7 +257,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v15')
+  console.log('v16')
   document.getElementById('sold-out').addEventListener('click', () => {
     document.getElementById('exchanged-btn').style.display = 'none'
     document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -284,6 +284,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pageForm = document.getElementById('pageForm')
   const pageWaterfall = document.getElementById('pageWaterfall')
   const pageCoupon = document.getElementById('coupon-template')
+  const pageResultModal = document.getElementById('result-modal')
 
   const mainContainer = document.querySelector('.main-container')
   const lookMore = document.getElementById('look-more')
@@ -883,7 +884,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     shareBtn.addEventListener('click', () => {
       badgeTaskDone()
       if (isDoneForm) {
-        nextPage('pageIndex')
+        nextPage('pageResultModal')
       } else {
         nextPage('pageForm')
       }
@@ -933,11 +934,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       ) {
         // 假定已經填寫過資料
         isDoneForm = true
-        nextPage('pageIndex')
+        nextPage('pageResultModal')
       }
       // else {
       //   errorHint.innerText = '請輸入資料'
       // }
+    })
+  }
+
+  // 監聽結果彈窗按鈕
+  const resultModalBtn = document.getElementById('result-modal-btn')
+  if (resultModalBtn) {
+    resultModalBtn.addEventListener('click', () => {
+      nextPage('pageIndex')
     })
   }
 
@@ -965,7 +974,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       case 'pageWaterfall':
         mainContainer.classList.add('reverse-animated')
         nextPage('pageIndex')
-
         mainContainer.style.left = '-80%'
         setTimeout(() => {
           mainContainer.style.left = 0
@@ -978,7 +986,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   function nextPage(page) {
-    const pageList = [pageIndex, pageBadge, pageLayout, pageUploadImg, pageShared, pageForm, pageWaterfall, pageCoupon]
+    const pageList = [
+      pageIndex,
+      pageBadge,
+      pageLayout,
+      pageUploadImg,
+      pageShared,
+      pageForm,
+      pageWaterfall,
+      pageCoupon,
+      pageResultModal,
+    ]
 
     pageList.forEach(page => {
       page.style.display = 'none'
@@ -1017,17 +1035,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         pageWaterfall.style.display = 'block'
         currentLayout = 'pageWaterfall'
         break
+      case 'pageResultModal':
+        if (isDoneForm) {
+          pageResultModal.style.display = 'block'
+          pageResultModal.classList.add('share')
+        } else {
+          pageResultModal.style.display = 'block'
+        }
+        currentLayout = 'pageResultModal'
+        break
       default:
         break
     }
 
     if (['pageWaterfall', 'pageForm'].includes(page)) {
       mainContainer.setAttribute('bg', 'right')
-      mainContainer.style.left = '100%'
-      setTimeout(() => {
-        mainContainer.style.left = '0'
-        mainContainer.classList.remove('animated')
-      }, 300)
+      if (page === 'pageWaterfall') {
+        mainContainer.style.left = '100%'
+        setTimeout(() => {
+          mainContainer.style.left = '0'
+          mainContainer.classList.remove('animated')
+        }, 300)
+      }
     } else if (page === 'pageIndex') {
       mainContainer.removeAttribute('bg')
     } else {
