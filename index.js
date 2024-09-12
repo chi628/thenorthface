@@ -257,7 +257,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v16')
+  console.log('v17')
   // document.getElementById('sold-out').addEventListener('click', () => {
   //   document.getElementById('exchanged-btn').style.display = 'none'
   //   document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -932,9 +932,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         memberCheck.checked &&
         privacyCheck.checked
       ) {
+        nextPage('pageResultModal')
         // 假定已經填寫過資料
         isDoneForm = true
-        nextPage('pageResultModal')
       }
       // else {
       //   errorHint.innerText = '請輸入資料'
@@ -1039,8 +1039,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (isDoneForm) {
           pageResultModal.style.display = 'block'
           pageResultModal.classList.add('share')
+          pageShared.style.display = 'block'
         } else {
           pageResultModal.style.display = 'block'
+          pageForm.style.display = 'block'
         }
         currentLayout = 'pageResultModal'
         break

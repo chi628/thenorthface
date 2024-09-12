@@ -27,7 +27,8 @@
   color: #0e7cb7;
   border: 1px solid #0e7cb7;
   border-radius: 8px;
-  top: -4px;
+  position: absolute;
+  top: -25px;
   left: 12px;
   width: 18%;
   text-align: center;
