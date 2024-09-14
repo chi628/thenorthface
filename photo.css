@@ -177,6 +177,15 @@
   bottom: 0;
 }
 
+.grid-1-upload[hasImg] > label::before,
+.grid-2-upload-left[hasImg] > label::before,
+.grid-2-upload-right[hasImg] > label::before,
+.grid-3-upload-left[hasImg] > label::before,
+.grid-3-upload-top-right[hasImg] > label::before,
+.grid-3-upload-bottom-right[hasImg] > label::before {
+  background-color: transparent;
+}
+
 .grid-1-upload > label::before,
 .grid-2-upload-left > label::before,
 .grid-2-upload-right > label::before,

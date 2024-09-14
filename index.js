@@ -257,7 +257,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v17')
+  console.log('v18')
   // document.getElementById('sold-out').addEventListener('click', () => {
   //   document.getElementById('exchanged-btn').style.display = 'none'
   //   document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -610,12 +610,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       photo3BottomRightCropper.destroy()
     }
 
-    photo1.value = ''
-    photo2Left.value = ''
-    photo2Right.value = ''
-    photo3Left.value = ''
-    photo3TopRight.value = ''
-    photo3BottomRight.value = ''
+    ;[photo1, photo2Left, photo2Right, photo3Left, photo3TopRight, photo3BottomRight].forEach(o => {
+      o.value = ''
+      const parentEl = o.parentNode
+      if (parentEl) {
+        parentEl.removeAttribute('hasImg')
+      }
+    })
   }
 
   // 選擇照片頁
@@ -650,6 +651,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  document.addEventListener('click', e => {
+    if (e.target.closest('.cropper-container')) {
+      const parentNode = e.target.closest('.cropper-container').parentNode
+      if (parentNode) {
+        const input = parentNode.querySelector('input')
+        if (input) {
+          input.click()
+        }
+      }
+    }
+  })
+
   if (photo1) {
     photo1.addEventListener('change', event => {
       cropImg(event, 'grid-1')
@@ -680,6 +693,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       cropImg(event, 'grid-3-bottom-right')
     })
   }
+
   function cropImg(evt, id) {
     const image = document.getElementById(`${id}-img`)
     const cropperBtn = document.getElementById(`${id}-cropper-btn`)
@@ -699,6 +713,48 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     reader.onload = function (e) {
       image.src = e.target.result
+
+      const id = evt.target.getAttribute('id')
+      switch (id) {
+        case 'grid-1':
+          if (photo1Cropper) {
+            photo1Cropper.destroy()
+          }
+          break
+        case 'grid-2-left':
+          if (photo2LeftCropper) {
+            photo2LeftCropper.destroy()
+          }
+          break
+        case 'grid-2-right':
+          if (photo2RightCropper) {
+            photo2RightCropper.destroy()
+          }
+          break
+        case 'grid-3-left':
+          if (photo3LeftCropper) {
+            photo3LeftCropper.destroy()
+          }
+          break
+        case 'grid-3-top-right':
+          if (photo3TopRightCropper) {
+            photo3TopRightCropper.destroy()
+          }
+          break
+        case 'grid-3-bottom-right':
+          if (photo3BottomRightCropper) {
+            photo3BottomRightCropper.destroy()
+          }
+          break
+        default:
+          break
+      }
+
+      const parentEl = evt.target.parentNode
+      if (parentEl) {
+        parentEl.setAttribute('hasImg', '')
+      }
+
       const cropper = new Cropper(image, {
         viewMode: 0,
         dragMode: 'move',
@@ -869,7 +925,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         nextPage('pageShared')
         document.getElementById('share-img').src = base64Url
-        // document.getElementById('photo-nologo').src = base64Url_nologo
+        const nologoPhoto = document.getElementById('photo-nologo')
+        if (nologoPhoto) {
+          nologoPhoto.src = base64Url_nologo
+        }
         photoUploadBtn.style.display = 'flex'
       })
     )
@@ -1102,13 +1161,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     return canvas
   }
 
-  // document.getElementById('nologo-btn').addEventListener('click', () => {
-  //   document.getElementById('nologo-modal').style.display = 'block'
+  const nologoBtn = document.getElementById('nologo-btn')
+  const nologoModal = document.getElementById('nologo-modal')
+  if (nologoBtn) {
+    nologoBtn.addEventListener('click', () => {
+      if (nologoModal) {
+        nologoModal.style.display = 'block'
 
-  //   document.getElementById('nologo-modal').addEventListener('click', () => {
-  //     document.getElementById('nologo-modal').style.display = 'none'
-  //   })
-  // })
+        nologoModal.addEventListener('click', () => {
+          nologoModal.style.display = 'none'
+        })
+      }
+    })
+  }
 
   function debounce(func, limit = 200) {
     let timer = null
