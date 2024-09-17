@@ -285,6 +285,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pageWaterfall = document.getElementById('pageWaterfall')
   const pageCoupon = document.getElementById('coupon-template')
   const pageResultModal = document.getElementById('result-modal')
+  const pageActivityRule = document.getElementById('pageActivityRule')
+  const pagePhotoAward = document.getElementById('pagePhotoAward')
 
   const mainContainer = document.querySelector('.main-container')
   const lookMore = document.getElementById('look-more')
@@ -296,6 +298,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 點擊Logo回主頁
   if (logo) {
     logo.addEventListener('click', () => {
+      if (mainContainer.classList.contains('activityRule')) {
+        mainContainer.classList.remove('activityRule')
+      }
       nextPage('pageIndex')
     })
   }
@@ -387,6 +392,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     )
   }
+  // 3. 監聽活動辦法按鈕
+  const activityRuleBtn = document.getElementById('activity-rule')
+  if (activityRuleBtn) {
+    activityRuleBtn.addEventListener('click', () => {
+      nextPage('pageActivityRule')
+    })
+  }
+  // 4. 監聽攝影大賞按鈕
+  const photoAwardBtn = document.getElementById('photo-award')
+  if (photoAwardBtn) {
+    photoAwardBtn.addEventListener('click', () => {
+      nextPage('pagePhotoAward')
+    })
+  }
+
   // 精彩直擊頁面
   // 1. 監聽立即參加按鈕
   const waterfallJoinBtn = document.getElementById('waterfall-join-btn')
@@ -1031,7 +1051,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         nextPage('pageShared')
         break
       case 'pageWaterfall':
+      case 'pageActivityRule':
+      case 'pagePhotoAward':
         mainContainer.classList.add('reverse-animated')
+        if (mainContainer.classList.contains('activityRule')) {
+          mainContainer.classList.remove('activityRule')
+        }
         nextPage('pageIndex')
         mainContainer.style.left = '-80%'
         setTimeout(() => {
@@ -1055,6 +1080,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       pageWaterfall,
       pageCoupon,
       pageResultModal,
+      pageActivityRule,
+      pagePhotoAward,
     ]
 
     pageList.forEach(page => {
@@ -1094,6 +1121,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         pageWaterfall.style.display = 'block'
         currentLayout = 'pageWaterfall'
         break
+      case 'pageActivityRule':
+        mainContainer.classList.add('animated', 'activityRule')
+        pageActivityRule.style.display = 'block'
+        currentLayout = 'pageActivityRule'
+        break
+      case 'pagePhotoAward':
+        mainContainer.classList.add('animated', 'activityRule')
+        pagePhotoAward.style.display = 'block'
+        currentLayout = 'pagePhotoAward'
+        break
       case 'pageResultModal':
         if (isDoneForm) {
           pageResultModal.style.display = 'block'
@@ -1111,17 +1148,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (['pageWaterfall', 'pageForm'].includes(page)) {
       mainContainer.setAttribute('bg', 'right')
-      if (page === 'pageWaterfall') {
-        mainContainer.style.left = '100%'
-        setTimeout(() => {
-          mainContainer.style.left = '0'
-          mainContainer.classList.remove('animated')
-        }, 300)
-      }
     } else if (page === 'pageIndex') {
       mainContainer.removeAttribute('bg')
     } else {
       mainContainer.setAttribute('bg', 'mask')
+    }
+
+    if (['pageWaterfall', 'pageActivityRule', 'pagePhotoAward'].includes(page)) {
+      mainContainer.style.left = '100%'
+      setTimeout(() => {
+        mainContainer.style.left = '0'
+        mainContainer.classList.remove('animated')
+      }, 300)
     }
     window.scrollTo(0, 0)
   }

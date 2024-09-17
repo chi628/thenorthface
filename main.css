@@ -203,3 +203,21 @@
   color: #080404;
   font-weight: 900;
 }
+
+.activity-rule {
+  width: 100%;
+  height: 1205vw;
+  background-image: url(./images/activity-rule.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: none;
+}
+
+.photo-award {
+  width: 100%;
+  height: 175vw;
+  background-image: url(./images/photo-award.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: none;
+}
