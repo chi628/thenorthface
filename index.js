@@ -205,6 +205,9 @@ const badgeList = [
   },
 ]
 
+const activityRuleImg = new Image()
+activityRuleImg.src = './images/activity-rule.png'
+
 badgeList.forEach(badge => {
   const imgList = [
     badge.icon,
@@ -903,30 +906,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         const height = bgImg.getBoundingClientRect().height
 
         const noLogoImg = document.createElement('img')
-        noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
+
+        await new Promise(resolve => {
+          noLogoImg.onload = () => resolve()
+          noLogoImg.src = badgeObj.layout_noLogo[swiper.activeIndex]
+        })
 
         const canvas = document.createElement('canvas')
         const context = canvas.getContext('2d')
-        canvas.width = width
-        canvas.height = height
+        context.scale(4, 4)
+        canvas.width = width * 4
+        canvas.height = height * 4
         context.imageSmoothingEnabled = true
 
         const canvas2 = document.createElement('canvas')
         const cxt = canvas2.getContext('2d')
-        canvas2.width = width
-        canvas2.height = height
+        cxt.scale(4, 4)
+        canvas2.width = width * 4
+        canvas2.height = height * 4
         cxt.imageSmoothingEnabled = true
 
-        await new Promise(resolve => {
-          let wait2 = setInterval(() => {
-            clearInterval(wait2)
-            resolve()
-          }, 200)
-        })
-
         // 先畫拍立得底圖
-        context.drawImage(bgImg, 0, 0, width, height)
-        cxt.drawImage(noLogoImg, 0, 0, width, height)
+        context.drawImage(bgImg, 0, 0, width * 4, height * 4)
+        cxt.drawImage(noLogoImg, 0, 0, width * 4, height * 4)
         // 再找出拍立得上所有的 img
         const allImages = current_photo_grid.querySelectorAll('img')
         const filteredImages = Array.from(allImages).filter(img => {
@@ -937,11 +939,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           const yPos = img.getBoundingClientRect().y - bgImg.getBoundingClientRect().y
           const _width = img.getBoundingClientRect().width
           const _height = img.getBoundingClientRect().height
-          context.drawImage(img, xPos, yPos, _width, _height)
-          cxt.drawImage(img, xPos, yPos, _width, _height)
+          context.drawImage(img, xPos * 4, yPos * 4, _width * 4, _height * 4)
+          cxt.drawImage(img, xPos * 4, yPos * 4, _width * 4, _height * 4)
         })
-        base64Url = canvas.toDataURL()
-        base64Url_nologo = canvas2.toDataURL()
+        base64Url = canvas.toDataURL('image/jpeg', 1.0)
+        base64Url_nologo = canvas2.toDataURL('image/jpeg', 1.0)
 
         nextPage('pageShared')
         document.getElementById('share-img').src = base64Url

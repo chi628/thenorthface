@@ -194,6 +194,12 @@ body {
   align-items: center;
 }
 
+.nologo-modal-container > img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 #sold-out {
   width: 20px;
   height: 20px;
