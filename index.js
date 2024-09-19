@@ -332,6 +332,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   }
 
+  const indexBadgeContainer = document.getElementById('index-badge-container')
   // 首頁
   // 1. 監聽立即參加按鈕
   if (indexJoinBtn) {
@@ -341,6 +342,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         nextPage('pageBadge')
       })
     )
+  }
+  if (indexBadgeContainer) {
+    indexBadgeContainer.addEventListener('click', () => {
+      nextPage('pageBadge')
+    })
   }
 
   function appendPhoto() {
@@ -486,6 +492,35 @@ document.addEventListener('DOMContentLoaded', async () => {
                 nextEl.style.display = 'none'
               } else {
                 nextEl.style.display = 'flex'
+              }
+            },
+            click(swiper) {
+              if (swiper.activeIndex === swiper.clickedIndex) {
+                resetUploadImg()
+                switch (swiper.activeIndex) {
+                  case 0:
+                    current_photo_grid = photo_grid_1
+                    photo_grid_1.style.display = 'block'
+                    setBgImg(photo_grid_1)
+                    break
+                  case 1:
+                    current_photo_grid = photo_grid_2
+                    photo_grid_2.style.display = 'block'
+                    setBgImg(photo_grid_2)
+                    break
+                  case 2:
+                    current_photo_grid = photo_grid_3
+                    photo_grid_3.style.display = 'block'
+                    setBgImg(photo_grid_3)
+                    break
+                  default:
+                    break
+                }
+                setTimeout(() => {
+                  nextPage('pageUploadImg')
+                }, 20)
+              } else {
+                swiper.slideTo(swiper.clickedIndex, 500)
               }
             },
           },
