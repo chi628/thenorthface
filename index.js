@@ -260,7 +260,7 @@ setVH()
 window.addEventListener('resize', setVH)
 
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('v18')
+  console.log('v19-noimg')
   // document.getElementById('sold-out').addEventListener('click', () => {
   //   document.getElementById('exchanged-btn').style.display = 'none'
   //   document.getElementById('progressContainer').setAttribute('sold-out', '')
@@ -903,6 +903,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         photoUploadBtn.style.display = 'none'
         switch (swiper.activeIndex) {
           case 0:
+            const grid1Img = document.getElementById('grid-1-img')
+            if (grid1Img && grid1Img.src === '') {
+              return
+            }
             const btn = document.getElementById(`grid-1-cropper-btn`)
             btn.click()
             await new Promise(resolve => {
@@ -913,6 +917,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
             break
           case 1:
+            const grid2LeftImg = document.getElementById('grid-2-left-img')
+            const grid2RightImg = document.getElementById('grid-2-right-img')
+            if(grid2LeftImg &&　grid2RightImg && grid2LeftImg.src === '' &&grid2RightImg.src === '') {
+              return
+            }
             document.getElementById('grid-2-left-cropper-btn').click()
             document.getElementById('grid-2-right-cropper-btn').click()
             await new Promise(resolve => {
@@ -923,6 +932,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
             break
           case 2:
+            const grid3LeftImg = document.getElementById('grid-3-left-img')
+            const grid3TopRightImg = document.getElementById('grid-3-top-right-img')
+            const grid3BottomRightImg = document.getElementById('grid-3-bottom-right-img')
+            if(grid3LeftImg && grid3LeftImg.src === '' && grid3TopRightImg && grid3TopRightImg.src === '' && grid3BottomRightImg &&grid3BottomRightImg.src === '') {
+              return
+            }
             document.getElementById('grid-3-left-cropper-btn').click()
             document.getElementById('grid-3-top-right-cropper-btn').click()
             document.getElementById('grid-3-bottom-right-cropper-btn').click()
