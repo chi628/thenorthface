@@ -770,6 +770,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const reader = new FileReader()
 
     reader.onload = function (e) {
+      console.log('reader', e.target.result)
       image.src = e.target.result
 
       const id = evt.target.getAttribute('id')
